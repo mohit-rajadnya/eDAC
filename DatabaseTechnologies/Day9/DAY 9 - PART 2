@@ -1,0 +1,359 @@
+							DAY 9 (PART 2)
+							
+			REVISION :- 
+			
+				HISTORY DATABASE
+				DATA STORE IN THE DATABASE
+				DIAGRAMATIC REPRESENTATION OF DATABASE
+				CODDS' RULES
+				CATEGORIES
+						DQL
+						DML
+						DDL
+						DCL
+						DTL
+				SELECT 
+					FROM 
+						WHERE 
+							GROUP BY 
+								HAVING
+									ORDER BY 
+										LIMIT 
+				FUNCTION :
+					NUMERIC
+					STRING
+					DATE
+					AGRREGATED 
+					
+				JOIN
+					INNER JOIN
+					OUTER JOIN
+					CROSS
+					NATURAL
+					SELF
+				
+				SUB QUERIES 
+					CORRELATED QUERIES
+				
+				INDEX
+				
+				VIEWS
+					INSERT 
+					UPDATE 
+					DELETE 
+					SELECT 
+				ENCAPSULATE DATA
+				
+				EXECUTION PLAN ABOUT THE QUERIES
+					
+					:- PROFILING :-
+					
+=======================================================================
+
+PROGRAMING :- 
+		PLSQL : 
+		PROGRAMMING LANGUAGE IN MYSQL
+		
+			
+		BLOCKS :- 
+			SET OF CODE WRITTEN AND STORED IN THE DATABASE...
+			
+			WTITTEN ONCE AND USED MULTIPLE TIME...
+			
+		BLOCKS :- 
+				THREE KEY WORD
+				
+				BEGIN -- INDICATE THE STARTING OF THE BLOCKS
+				
+				DECLARE -- ALLOWS USER TO DECLARE THE VARIABLE 
+							IN THE SYSTEM
+							SCOPE OF THESE VARIABLE ARE WITH IN THE BLOCK
+							
+				END;  -- INDICATES THE END OF PROGRAM....
+				
+		IN TERMS OF THE DATABASE :- 
+		
+				CALLED AS PROCEDURES...
+				
+	PROCEDURE :- 
+			SET OF CODE WHICH DO NOT RETURN VALUE..
+			
+			CALLING : 
+			CALL PROCEDURENAME;
+			
+			
+	FUNCTIONS : 
+			SET OF CODE WHICH RETURN A DATATYPE..
+			
+			SELECT FUNCTIONNAME;
+			
+		SYNTAX FOR PROCEDURE :- 
+
+			CREATE PROCEDURE PROCEDURENAME()
+			BEGIN
+			
+			STATEMENTS .....
+			
+			END ;
+				
+				
+P1 : 
+		FETCH ALL THE RECORDS FROM THE EMPLOYEES WITH THE HELP OF PROCEDURES....
+		
+		
+			CREATE PROCEDURE EMP_PROC
+			BEGIN
+			
+			SELECT * FROM EMPLOYEES;
+								-- IS THE TERMINATOR FOR THE STATEMENTS...
+			
+			END;
+			
+==================================================================
+
+CREATE PROCEDURE OR FUNCTION 
+:		CHANGE THE DELIMITER FOR THE EXECUTION...
+
+		DELIMITER //
+		
+		CREATE PROCEDURE EMP_PROC()
+		BEGIN	
+		SELECT * FROM EMPLOYEES;								
+		END;
+		
+		DELIMITER ;
+		
+=========================
+	CALL MY PROCEDURE :-
+			CALL EMP_PROC;
+				
+-------------------------------------------------------------------
+
+P2 : 
+		CREATE VARIABLE INSIDE THE PROCEDURES..
+		
+		DECLARE VARIABLE_NAME DATATYPE;
+		
+		KEYWORD  NAME			TYPE OF VARIBALE.
+		
+	STORE VALUES RETURN FROM THE SELECT QUERY :-
+		
+			SELECT COUNT(*) FROM EMPLOYEES;
+			
+			NEED TO STORE COUNT(*) IN SOME VARIABLE, SYNTAX OF SELECT GOT LITTLE CHANGES TO 
+			
+				SELECT COUNT(*) INTO VARIABLENAME FROM EMPLOYEES;
+				
+			DELIMITER //
+			
+			CREATE PROCEDURE P2()
+			BEGIN
+			
+			DECLARE X INT;
+			SELECT COUNT(*) INTO X FROM EMPLOYEES;
+			
+			SELECT X;
+			
+			END //
+			
+			DELIMITER ;
+			
+		---------------------
+
+			NEED TO MOVE MULTIPLE VALUES AT THE SAME TIME FOR THE QUERY TO THE VARIABLE....
+			
+P3 :
+			DELIMITER //
+			
+			CREATE PROCEDURE P3()
+			BEGIN
+			
+			DECLARE X INT;
+			DECLARE Y INT;
+			
+			SELECT COUNT(*),MAX(SALARY) INTO X,Y FROM EMPLOYEES;
+			
+			SELECT X,Y;
+			
+			END //
+			
+			DELIMITER ;
+			
+P4 :
+			DELIMITER //
+			
+			CREATE PROCEDURE P3()
+			BEGIN
+			
+			DECLARE X INT;
+			DECLARE Y INT;
+			DECLARE Z VARCHAR(20);
+			
+			SELECT COUNT(*),MAX(SALARY) INTO X,Y FROM EMPLOYEES;
+			
+			SET Z = CONCAT(X,' ',Y);
+			
+			SELECT Z;
+			
+			END //
+			
+			DELIMITER ;
+
+---------------------------------------------------------------------
+
+PARAMETERIZED PROCEDURES :- 
+
+				IN    -- USE THIS AS A VALUE (INPUT TYPE)
+						WE CAN ONLY USE THESE VARIABLE 
+							ON THE RIGHT SIDE OF THE COMPARISON 
+								OR ASSIGNMENT..
+							X IN
+							
+							VAR I = X;
+							DEFAULT ALL VARIBALE ARE OF IN TYPE
+							
+				OUT  -- NEED TO STORE THE VALUE INSIDE THIS LOCATION...
+						NEED TO STORE VALUES TO THE VARIABLE 
+							WE CAN USE OUT TYPE VARIABLES
+							OUT X
+							
+							X = 7878;
+							
+				INOUT -- ACCEPT VALUES AND ALSO STORE VALUE...
+				
+						X = X + 1;
+						
+
+
+P5 :- 
+
+		NEED TO FETCH EMPLOYEE DATA FROM THE PROCEDURE 
+			WHICH BELONGS TO THE DEPARTMENT PROVIDED BY THE END USER...
+			
+		DELIMITER //
+		
+		CREATE PROCEDURE P5(X INT)
+		BEGIN
+		
+		SELECT * FROM EMPLOYEES 
+				WHERE DEPARTMENT_ID = X;
+				
+		END //
+		
+		DELIMITER ;
+
+
+
+
+P6 : 
+	
+		GET THE COUNT OF EMPLOYEES WORKING IN THE DEFINED DEPARTMENT
+		
+		
+		DELIMITER //
+		
+		CREATE PROCEDURE P6(X INT,OUT COT INT)
+		BEGIN
+		
+		SELECT COUNT(*) INTO COT FROM EMPLOYEES
+				WHERE DEPARTMENT_ID = X;
+				
+		END //
+		
+		DELIMITER ;
+
+
+		CALL P6(20,@Y);
+		---	@Y 
+			DO CERTAIN THINGS :- 
+				1) CREATE A VARIBALE Y IN THE SESSION
+							Y (ADDRESS, LOCATION OF THE VARIABLE..)
+				2) @Y : PASSES THE ADDRESS OF THE Y VARIABLE IN THE PROGRAM...
+		CALL P6(20,'REFD3243SDS32');	
+
+			---
+		PROCEDURE : X = 20 AND COT = 'REFD3243SDS32'
+		
+			MOVE COUNT(*) INTO THIS ADDRESS LOCATION
+		
+		SELECT @Y;
+		
+		
+P7 : 
+
+		ADDING TWO VALUES 
+			ONE COMING FROM USER AND SECOND LIES IN MY SYSTEM
+				
+			INOUT
+			
+			DELIMITER //
+			
+			CREATE PROCEDURE P7(X INT,INOUT Z INT)
+			BEGIN
+			
+			SET Z = Z + X;
+		
+			END //
+			
+			DELIMITER ;
+			
+======================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+			
+				
+		
+
+						
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										

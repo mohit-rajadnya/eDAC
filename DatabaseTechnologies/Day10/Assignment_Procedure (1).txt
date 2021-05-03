@@ -1,0 +1,126 @@
+Procedure
+==========
+1. Prepare a program which can perform following operation
+	- Lookout for tables which has missing constraints
+	SELECT 
+  TABLE_NAME,COLUMN_NAME,CONSTRAINT_NAME, REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME
+  FROM
+  INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+
+	- Display list of those tables
+	
+- delimiter //
+drop procedure if exists q1//
+create procedure q1()
+begin
+SELECT 
+  TABLE_NAME,COLUMN_NAME,CONSTRAINT_NAME, REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME
+  FROM
+  INFORMATION_SCHEMA.KEY_COLUMN_USAGE;
+end; //
+delimiter ;
+call q1();
+------
+DELIMITER $$
+DROP PROCEDURE IF EXISTS GET_MISSING_CONSTRAINT_INFO1$$
+CREATE PROCEDURE GET_MISSING_CONSTRAINT_INFO1()
+BEGIN
+SELECT TABLE_NAME from INFORMATION_SCHEMA.TABLES
+WHERE TABLE_NAME NOT IN ( SELECT DISTINCT TABLE_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE)
+;
+END $$
+DELIMITER ; 
+
+------
+2. Prepare a program to delete the data from emp. It will receive two inputs employee number and employee name. 
+If employee number is passed as null then delete the data based on employee name.
+Backup the deleted data to employee_backup table.
+- delimiter // 
+create table q2_backup like q2_table ;
+drop procedure if exists q2//
+create procedure q2(emp_id int , emp_name varchar(20))
+begin
+if emp_id is null 
+then insert into q2_backup select * from q2_table
+where employee_name = emp_name;
+delete from q2_table where employee_name = emp_name;
+else
+insert into q2_backup select * from q2_table
+where employee_id = emp_id;
+delete from q2_table where employee_id = emp_id;
+end if;
+end; //
+delimiter ;
+-----------------------------------------------------------------------------
+
+3. Prepare a program to insert new record in employee table. it will take the input of employee data.
+If salary is provided as null then consider the salary as highest salary earned by any employee in same department. 
+If comm is not provided then assume it as 200$
+delimiter //
+drop procedure if exists q3//
+create procedure q3(emp_id int, dept_id int , f_name varchar(20) , l_name varchar(20), salary int ,
+ comm int, email_id varchar(50) , hire date , jobs_id varchar(20))
+begin
+if salary is null
+then set salary = (select max(salary) from employees where department_id = dept_id group by department_id);
+end if;
+if comm = 0 or comm is null then
+set salary = salary + 200;
+end if;
+insert into employees (employee_id , department_id,first_name,last_name,salary,commission_pct,email,
+phone_number , hire_date,job_id,manager_id)
+values (emp_id , dept_id, f_name , l_name , salary , comm , email_id ,null,hire,jobs_id,null);
+end; //
+delimiter ;
+
+select max(salary) from employees where department_id = dept_id group by department_id;
+call q3(502, 30 , 'mohit' , 'rajadnya' , 20000 , 0.23 , 'afs@gg' , '1999-12-25','SA_rep' );
+desc employees;
+select * from employees where first_name = 'shivam';
+call q3(503, 80 , 'shivam' , 'nikam' , 2000 , 0 , 'sn@amba' , '2020-12-25','SA_REP' );
+---------------------------------------------------------------------------------
+
+4. Prepare a program to receive the input as table name and column name. Add primary key constraint on provided table's column.
+---------------------------------------------------------------------------------
+
+5. Prepare a program to list those employee who are earning less then avg of there deparment. 
+This program may take input as (p_salary_fix BOOLEAN). If the input is given as true then these employees salary must be set to AVG Salary + 100$.
+
+call q5(false);
+call q5(true);
+
+delimiter //
+drop procedure if exists q5 //
+create procedure q5(p_sal_fix boolean)
+begin
+declare cnum int;
+declare emp_id int;
+declare f_name varchar(50);
+declare dept_id int;
+declare sal int;
+declare avg_sal int;
+declare cur cursor for select employee_id , first_name , department_id , salary from employees;
+select count(*) into cnum from employees;
+open cur;
+l_loop : loop
+if cnum <= 0 then 
+leave l_loop;
+end if;
+fetch cur into emp_id , f_name , dept_id , sal;
+
+if p_sal_fix 
+then set avg_sal = (select avg(salary) from employees group by department_id 
+having department_id = dept_id);
+update employees set salary = avg_sal + 100 where employee_id = emp_id;
+set cnum = cnum - 1;
+end if;
+set cnum = 0 ;
+end loop l_loop;
+close cur;
+select employee_id , first_name , last_name ,  e1.salary from employees e1
+where e1.salary < (select avg(e2.salary) from employees e2 where e2.department_id = e1.department_id);
+
+
+end;//
+delimiter ;
+

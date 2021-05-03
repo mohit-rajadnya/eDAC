@@ -1,0 +1,458 @@
+
+								DAY 11
+							
+TOPICS COVERED :- 
+
+	PLSQL :- 
+		
+			1) BLOCKS
+			2) PROCEDURE
+				2.1) VARIOUS TYPES PARAMETERS
+					IN / OUT / INOUT
+				2.2) DECLARE : VARIABLE DECLARATIONS
+				2.3) CONDITIONAL OPERATION : IF ELSE END, CASE
+				2.4) LOOP END LOOP , WHILE DO END WHILE....
+				2.5) SELECT COLUMN INTO VARIABLES....
+				
+				2.6) CURSOR : 
+						CONTAINS A STATEENT(SELECT)
+						
+						OPEN / FETCH / CLOSE
+						
+				2.7) EXCEPTION :- HANDLERS WHICH PROTECT OUR PROGRAM 
+					FROM ERROR AND EXCEPTION ....
+						AND DISPLAY A STATEMENT FOR THE END USER..
+					
+					EXIT / CONTINUE....
+					
+===================================================================
+
+FUNCTION :- 
+		USED WHENEVER WE NEED TO TO EXECUTE CERTAIN OPERATIONS AND RETURN SOME DATATYPE FROM NY PROGRAM...
+		
+		
+		SYNTAX :-
+				CREATE FUNCTION FUNCTIONNAME()
+					RETURNS DATATYPE
+				BEGIN
+					BODY OF THE FUNCTION
+				END //
+				
+	------------------------------------------------------------
+
+		CREATE FUNCTION SUMOFTWOVARIABLES(X INT , Y INT)
+			RETURNS INT
+		BEGIN
+			RETURN X + Y;
+			
+		END //
+		
+-------------------------------------------------------------------
+
+SPELL OUT THE DAY OF THE MONTH :- 
+			1 TO 31 DAY OF THE MONTH...
+			
+			
+	0- 11 , 11 - 19, 20, 21 - 29, 30 AND 31
+	
+		'ZERO ONE  TWO  THREEFOUR FIVE SIX  SEVENEIGHTNINE TEN  '
+	
+		SUBSTR(STRING,POISTION,LENGHT)
+		SUBSTR(STR,(X * 5) + 1,5)
+			
+			0  : 0* 5 + 1  = 1
+			1  : 1 * 5 + 1 = 6
+			2  : 2 * 5 + 1 = 11
+			3  : 3 * 5 + 1 = 16
+			
+			(X * 5) + 1
+			
+		11 TILL 19
+		
+		'ELEVEN   TWELVE   THIRTEEN FOURTEEN FIFTEEN  SIXTEEN  SEVENTEENEIGHTEEN NINETEE  '
+		
+		MAX LENGHT = 9 
+		11
+		
+		 11 -  1 = (X - 11) * 9 + 1 = (X - 11) + 1
+									12 : (12 - 11) * 9 + 1
+									14 : (14 - 11) * 9 + 1
+									18 : (18 - 11) * 9 + 1
+		 
+		 12 - 10 = (X - 11) * 9 + 1
+		 13  = (X - 11) * 9 + 1 = 19
+		 
+		 SUBSTR(STR,(X - 11) * 9 + 1,9)
+		
+		20 21 22 23 24 25....
+		
+			
+			DELIMITER //
+			
+			DROP FUNCTION IF EXISTS DACSPELL_OUT //
+			
+			CREATE FUNCTION DACSPELL_OUT(X INT)
+				RETURNS VARCHAR(200)
+			BEGIN
+			
+			DECLARE STR,STR1,STR2,STR3,STR4 VARCHAR(500);
+			
+			IF X < 11 AND X >= 0 THEN
+			
+				SET STR1 = 'ZERO ONE  TWO  THREEFOUR FIVE SIX  SEVENEIGHTNINE TEN  ';
+				
+				SET STR = TRIM(SUBSTR(STR1,(X*5) + 1,5));
+			
+			ELSEIF X < 20 THEN
+			
+				SET STR2 = 'ELEVEN   TWELVE   THIRTEEN FOURTEEN FIFTEEN  SIXTEEN  SEVENTEENEIGHTEEN NINETEE  ';
+
+				SET STR = TRIM(SUBSTR(STR2,(X - 11) * 9 + 1,9));
+				
+			ELSEIF X < 30 THEN
+				
+				SELECT DACSPELL_OUT(X%10) INTO STR3;
+				
+				SET STR = CONCAT('TWENTY ',STR3);
+				
+			END IF;
+
+			RETURN STR;
+			
+			END //
+			
+			DELIMITER ;
+
+mysql> SELECT DACSPELL_OUT(23);
+ERROR 1424 (HY000): Recursive stored functions and triggers are not allowed.	
+				
+	SO LET CONVERT THE STORED FUNCTION TO STORED PROCEDURE....
+	
+	
+	STORED PROCEDURE :- 
+	
+	
+		DELIMITER //
+			
+			DROP PROCEDURE IF EXISTS DACSPELL_OUT //
+			
+			CREATE PROCEDURE DACSPELL_OUT(X INT, OUT STR VARCHAR(200))
+			BEGIN
+			
+			DECLARE STR1,STR2,STR3,STR4 VARCHAR(500);
+			
+			IF X < 11 AND X >= 0 THEN
+			
+				SET STR1 = 'ZERO ONE  TWO  THREEFOUR FIVE SIX  SEVENEIGHTNINE TEN  ';
+				
+				SET STR = TRIM(SUBSTR(STR1,(X*5) + 1,5));
+			
+			ELSEIF X < 20 THEN
+			
+				SET STR2 = 'ELEVEN   TWELVE   THIRTEEN FOURTEEN FIFTEEN  SIXTEEN  SEVENTEENEIGHTEEN NINETEE  ';
+
+				SET STR = TRIM(SUBSTR(STR2,(X - 11) * 9 + 1,9));
+				
+			ELSEIF X < 30 THEN
+				
+				CALL DACSPELL_OUT(X%10,STR3);
+				
+				SET STR = CONCAT('TWENTY ',STR3);
+				
+			END IF;
+			
+			END //
+			
+			DELIMITER ;
+				
+		---------------------------------------------------
+		
+		DELIMITER //
+		
+			DROP FUNCTION IF EXISTS DACSPELL //
+		
+			CREATE FUNCTION DACSPELL(X INT)
+				RETURNS VARCHAR(500)
+				
+			BEGIN
+			
+				DECLARE SPELL VARCHAR(500);
+				
+				CALL DACSPELL_OUT(X,SPELL);
+				
+				RETURN SPELL;
+			
+			END //
+			
+		DELIMITER ;
+	
+
+---------------------------------------------------------------------	
+				
+			STILL LEFT WITH 20, 30 , 31 
+				AND EXCEPTION HANDLING....
+				
+				JUST COMPLETE THIS IN THE LAB AND 
+					LET ME KNOW....
+					
+				RANGE ENTERED 
+					1 TO 31
+					
+						THROWS A STATEMENT :-
+						
+						DAYS ALWAYS LIES BETWEEN 1 TO 31...
+
+------------------------------------------------------------------------
+
+TRIGGERS :- 
+
+	1) A SET OF STATEMENTS EXECUTED ON SOME EVENTS.....
+	
+	2) AUTO BLOCK - BASED ON THE EVENTS....
+	
+	EVENTS : 
+			INSERT / UPDATE / DELETE 
+			
+					INSERT {
+					STATEMENTS 1
+					STATEMENTS 2
+					}
+					SO WHENEVER...
+						END USER EXCUTE/RUN
+							INSERT FROM THERE CONSOLE...
+								AUTOMATICALLY 
+									TRIGER ATTACHED TO THAT INSERT 
+										EXECUTED....
+										
+		SYNTAX : 
+
+	UPDATE EMPLOYEES SET SALARY = SALARY + 1000 WHERE DEPARTMENT_ID = 20;
+	
+	
+			CREATE TRIGGER TRIGGERNAME
+				BEFORE / AFTER 
+					INSERT / UPDATE / DELETE 
+						ON TABLENAME
+							FOR EACH ROW
+			BEGIN
+			
+			BODY :::::::::::
+			
+			END //
+			
+		** BEFORE : NEED TO EXECUTE THE TRIGGER BODY BEFORE COMPLITION OF THE EVENT....
+
+		
+		TWO THINGS :- 
+
+		1) 	END USER : WHO IS EXECUTING 
+					INSERT / UPDATE / DELETE 
+					INSERT .....
+			INSERT INTO TABLE
+					HAVE A LOGS IN PLACE 
+							WHICH USER AND WHAT TIME 
+									THIS RECORDS ENTERED...
+									
+		2) TRIGGER BODY...
+		
+			
+		DECIDE - HOW THE EXECUTION WILL TAKE PLACE....
+		
+		BEFORE / AFTER 
+		
+		BEFORE : EXECUTE TRIGGER BODY BEFORE EXECUTION INSERT...
+		
+		AFTER : EXECUTE TRIGGER BODY AFTER EXECUTION INSERT...
+		
+					
+----------------------------------------------------------------------
+
+
+EXAMPLE :- 
+
+			CREATE TABLE EMPTR
+			(
+			ID INT PRIMARY KEY AUTO_INCREMENT,
+			NAME VARCHAR(20),
+			SALARY INT,
+			COMMISSION FLOAT(2,1)
+			);
+			
+			CREATE TABLE DACLOGS
+			(
+			ID INT PRIMARY KEY AUTO_INCREMENT,
+			SUBJECT VARCHAR(20),
+			DESCRIPTION VARCHAR(200),
+			ADDEDDATE DATETIME DEFAULT NOW(),
+			ADDEDBY VARCHAR(100)
+			);
+			
+			DELIMITER //
+			
+			CREATE TRIGGER EMPTR_TRIG
+				AFTER
+					INSERT ON EMPTR
+						FOR EACH ROW
+			BEGIN
+			
+			INSERT INTO DACLOGS(SUBJECT,DESCRIPTION,ADDEDBY)
+					VALUES('INSERT','NEW VALUES ENTER IN TABLE EMPTR',USER());
+			
+			END //
+			
+			
+			
+			
+	------------------------------------------------------
+
+TRIGGER AND EVENTS :- 
+
+		DATABASE CREATE TWO VARIABLES :- 
+		
+				FOR EVERY EVENT 
+						NEW 
+						OLD
+						
+		UPDATE EMPLOYEES SET SALARY =  SALARY + 1000 WHERE EMPLOYEE_ID = 102;
+		
+		CONSIDER : 	OLDSALARY   SALARY 6000  OLD
+					NEWSALARY   SALARY 7000  NEW
+						
+		INSERT INTO EMPLOYEES(ID,NAME,SALARY) VALUES(101,'RAHUL',5000);
+				CREATES A NEW RECORDS....
+				
+			OLD VALUE  : NULL 
+			NEW VALUES : 101,'RAHUL', 5000
+			
+		DELETE FROM EMPLOYEES WHERE EMPLOYEE_ID = 102;
+		
+			OLD VALUES : 101,RAHUL,5000
+			NEW VALUES : NULL
+			
+		
+				OLD		 			NEW
+				
+		INSERT	NULL				NEW.SALARY
+		UPDATE  OLD.SALARY(5000)	NEW.SALARY(6000)
+		DELETE 	OLD.SALARY			NULL
+			
+			
+----------------------------------------------------------------
+
+WRITE A TRIGGER 
+				IF SALARY > 20000 
+						COMMISSION 0.1
+				IF SALARY < 20000 
+						COMISSION 0.5
+			
+	HARD CODED REULE FOR THE ORGANIZATION...
+
+      -- INSERT INTO EMPTR(NAME,SALARY) VALUES('NIKHIL',24000);
+	  
+			NEW.NAME = NIKHIL
+			NEW.SALARY = 24000
+			
+			OLD.SALARY = NULL
+			OLD.NAME = NULL
+
+		DELIMITER //
+		
+		DROP TRIGGER IF EXISTS EMPTR_SAL // 
+		
+		CREATE TRIGGER EMPTR_SAL
+			AFTER 
+				INSERT ON EMPTR
+					FOR EACH ROW
+		BEGIN
+		
+		IF NEW.SALARY > 20000 THEN 
+			UPDATE EMPTR SET COMMISSION = 0.1;
+		ELSEIF NEW.SALARY < 20000 THEN 
+			UPDATE EMPTR SET COMMISSION = 0.5;
+		ELSE
+			UPDATE EMPTR SET COMMISSION = 0.3;
+		END IF;
+		
+		END //
+		
+EXECUTE  	
+mysql> INSERT INTO EMPTR(NAME,SALARY) VALUES('NIKHIL',24000);
+    -> //
+ERROR 1442 (HY000): Can't update table 'emptr' in stored function/trigger because it is already used by statement which invoked this stored function/trigger.
+mysql>
+			
+
+	    DELIMITER //
+		
+		DROP TRIGGER IF EXISTS EMPTR_SAL // 
+		
+		CREATE TRIGGER EMPTR_SAL
+			BEFORE 
+				INSERT ON EMPTR
+					FOR EACH ROW
+		BEGIN
+		
+		IF NEW.SALARY > 20000 THEN 
+			SET NEW.COMMISSION = 0.1;
+		ELSEIF NEW.SALARY < 20000 THEN 
+			SET NEW.COMMISSION = 0.5;
+		ELSE
+			SET NEW.COMMISSION = 0.3;
+		END IF;
+		
+		END //
+					
+
+-------------------------------------------------------------------
+
+TRIGGER :- 
+
+	IF SOMEBODY UPDATE THE EXISTING VALUES....
+		I NEED TO KEEP A TRACK OF OLDVALUES AND NEW VALUES..
+		
+		
+
+		DELIMITER //
+		
+		DROP TRIGGER IF EXISTS EMPTR_UPDATE // 
+		
+		CREATE TRIGGER EMPTR_UPDATE
+			AFTER 
+				UPDATE ON EMPTR
+					FOR EACH ROW
+		BEGIN
+		
+		DECLARE STR VARCHAR(500);
+		
+		SET STR = CONCAT('OLD VALUES : ',OLD.NAME,' ',OLD.SALARY,' ','NEW VALUES : ',NEW.NAME,' ',NEW.SALARY);
+		
+		INSERT INTO DACLOGS(SUBJECT,DESCRIPTION,ADDEDBY)
+					VALUES('UPDATE',STR,USER());
+		
+		END //
+=====================================================================
+
+			CREATING LOGS
+			INSERTING VALUES IN THE DEPENDEND TABLES...
+			
+			NEW AND OLD
+				THEY CREATED FOR ALL THE COLUMN OF THE TABLE ROW..
+				
+
+======================================================================
+
+						TRIGGER WORKS 
+						--------------
+					
+--------------------------ER DIAGRAM-------------------------
+
+			------------- Thankyou---------------
+
+	
+				
+				
+				
+				
+				
+				
+				

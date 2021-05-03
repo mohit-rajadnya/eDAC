@@ -1,0 +1,536 @@
+			
+								DAY 14
+								MONGODB
+								
+								
+import the csv file in the mongodb :- 
+
+	1) reach to the bin folder  -
+	
+		C:\Program Files\MongoDB\Server\4.2\bin
+		
+		we find various exe exist 
+			1) mongoimport
+			
+		
+mongoimport.exe --type csv -d humanresource -c employees --headerline 
+	--drop "path of your csv file" 
+	
+	
+mongoimport.exe --type csv -d humanresource -c employees --headerline 
+	--drop "C:\Users\Priyanka Goel\Desktop\No SQL\employees.csv" 
+	
+-----------------------------------------------------------------------
+
+INSTALLATION :- 
+
+		1) DOWNLOAD THE MSI FILE WHICH IS RELATED TO YOU OPERATING SYSTEM
+		
+		2) INSTALL IN YOUR SYSTEM
+		
+		3) INSTALLATION WILL HAPPEN IN THE C DRIVE...
+		
+		C:\Program Files\MongoDB\Server\4.2\bin
+		
+** DEFAULT INSTALLATION IN THE C DRIVE....
+		
+		SYSTEM ALLOWS USER TO STORE THE DATA AS PER THERE REQUEST..
+		
+		
+	* CREATE DATABASE DIRECTORY :- 
+
+		ITS A DIRECTORY WHERE MONGODB STORES DATA. DEFAULT DATA DIRECTORY PATH IS THE \DATA\DB ON THE DRIVE FOR WHICH WE HAVE START THE MONGODB....
+		
+		
+		CD C:\
+		md "\data\db"
+		
+	* START YOUR MONGODB DATABASE...
+	
+		
+		CD C:\Program Files\MongoDB\Server\4.2\bin
+		
+		MONGOD.EXE... (ALLOWS ME TO OPEN THE SERVER WITH THE DEFINE PATH)
+		
+		
+		"CD C:\Program Files\MongoDB\Server\4.2\bin\mongod.exe"
+			--dbpath="c:\data\db"
+			
+		Servr start running ....
+		
+	* CONNECT YOUR DATABASE SERVER :- 
+
+		JUST OPEN A ANOTHER COMMAND PROMPT..
+		
+		CD C:\Program Files\MongoDB\Server\4.2\bin\mongo.exe
+		
+		Press Enter :- 
+		
+		>
+		
+		Using all queries.....
+		
+---------------------------------------------------------------------		
+MONGODB IS THE NOSQL DATABASE AND LAUNCH IT'S OWN QUERY LANGUAGE TO INTERACT WITH THE DATABASE....
+
+	** CREATE COLLECTION....
+	
+	** YOU DON'T HAVE EXPLICITY CREATE YOUR COLLECTIONS..
+	
+	AS YOU INSERT THE FIRST RECORD , SYSTEM WILL AUTOMATICALLY CREATE 	
+		A COLLECTION FOR YOU.....
+		
+	OBJECT ORIENTED :-
+	
+		OBJECT. OBJECT.METHODS...
+		
+		MAIN OBJECT IN MONGODB :-
+				"db" - object which allows to perform all operation 
+				in the mongodb...
+		
+	** New Collection :	CREATE TABLE (STRUCTURE)
+		
+		> db.createCollection("NameofCollection");
+		
+			NOT MANDATORY STEP 
+			
+			MONDODB  :- 
+							JSON 
+			A DOCUMENT :- 			
+				{
+					NAME : "RAHUL",
+					SALARY : 5000
+				}
+
+======================================================================
+
+CREATE OPERATIONS :- 
+
+	FIRST COMMAND : 
+			INSERT ONE DOCUMENT INSIDE MY DATABASE.....
+			
+	insert() : method allows me to insert a new document in the database....
+	document will be created inside the collection....
+	
+	database > collections > documents > json(key and value)
+	
+	* IF THE COLLECTION DOES NOT EXIST, insert() creates the collection during the 1st insert.....
+	
+	SYNTAX : 
+	
+	> db.collectionname,insert(json);
+	
+	> db.employeedata.insert(
+				{
+				 "fname" : "John",
+				 "lname" : "Singh",
+				 "salary" : 8000,
+				 " mobileno" : 98767867,
+				 "hire_date" : ISODate("2008-10-10T22:00:00")
+				}
+				);
+		
+	** we do not want to declare th datatype to the values....
+	
+			they are all automatically assigned by the database....
+			
+				""  - string
+				8989 - integers
+				345.66 - floats
+				"2020-20-20" - date..
+				special treatment need to provide...
+			
+			DECLARE THE DATES :- 					
+				ISODate("2020-10-10T22:00:00");
+				
+------------------------------------------------------------------			
+MYSQL : 								MONDODB
+			
+		SHOW DATABASES;					show dbs;
+		
+		show tables;					show collections;
+	
+	
+
+-----------------------------------------------------------------------
+
+
+A DOCUMENT CREATED IN THE DATABASE : INSIDE A COLLECTION NAMED
+	AS EMPLPOYEEDATA...
+	
+	TO IDENTIFY EACH DOCUMENT INSIDE THE DATABASE :- 
+	
+	MONGODB ASSIGN A UNIQUE, PRIMARY KEY TO THE DOCUMENT 
+			DEFAULT KEY ASSIGNED TO YOUR DOCUMENT 
+				T IDENTIFIED...
+				
+		NAME : 
+			"_ID" : PRIMARY KEY FOR EACH DOCUMENT....
+			
+			A KEY ASSIGNED BY THE DATABASE...
+					UNIQUE IN NATURE...
+					
+			
+
+		db.employeedata.insert(
+				{
+				 "fname" : "John",
+				 "lname" : "Singh",
+				 "salary" : 8000,
+				 " mobileno" : 98767867,
+				 "hire_date" : ISODate("2008-10-10T22:00:00")
+				}
+				);
+
+				{
+				 "_id" : "EREWFSDF234WFDSS23E",
+				 "fname" : "John",
+				 "lname" : "Singh",
+				 "salary" : 8000,
+				 " mobileno" : 98767867,
+				 "hire_date" : ISODate("2008-10-10T22:00:00")
+				}
+				
+---------------------------------------------------------------------
+
+db.employeesdata.insert(
+				{
+				 "_id" : 1,  -- not allowed to insert duplicate values
+				 "fname" : "John",
+				 "lname" : "Singh",
+				 "salary" : 8000,
+				 " mobileno" : 98767867,
+				 "hire_date" : ISODate("2008-10-10T22:00:00")
+				}
+			);
+
+** insert into table values(),(),();
+
+Multiple documents :- 
+
+		db.employeedata.insert([
+					{
+						"_id" : 2,
+						"name" : "nikhil",
+						"salary" : 8000
+					},
+					{
+						"name" : "krish",
+						"salary" : 90000,
+						"phonenumber"  : [97787979,987789789],
+						"address" : 
+								{
+									"street" : 103,
+									"city" : "pune",
+									"country" : "india",
+									"zipcode" : 411014
+								}
+					}
+					]);
+
+-------------------------------------------------------
+
+CREATE TABLE EMPLPOYES
+(
+	ID
+	NAME
+	ADDRESS
+	STATE
+	CITY
+	COUNTRY 
+	ZIPCODE
+)
+
+====================================================================
+
+							READ OPERATIONS
+
+HOW TO SELECT :- 
+
+	THE find() method selects documents in a collection and return a json...
+	
+	SYNTAX: 
+		db.collection.find(query,projection);
+		
+		-- db.employeedata.find();
+		
+	** parameters of the find() method
+		
+			** query : only used to specify selection criteria.
+				if we omitted first parameter the it returns all the documents in a collection....
+				
+				like : select * from employees where department_id = 20;
+				
+			** Projection : only used if you wish to control which feilds are to be returned ...
+			
+				like : select columnname,columnname... from employees;
+				
+			projection comes with two values :- 
+			
+			* 1  : to include
+			* 0  : to exclude
+				
+	------------------------------------------------------------			
+	1) Select * from employeedata;
+
+		db.employeedata.find();
+		
+		need to improve the display of the output...
+		
+			method : pretty() : print the output in the readable format...
+			
+	2) SELECT * FROM EMPLOYEES WHERE DEPARTMENT_ID = 20;
+
+		db.employees.find({department_id : 20}).pretty();
+		
+	3) Select first_name,last_name,salary from employees where 
+				department_id = 20;
+				
+		db.employees.find(
+						{department_id : 20},
+						{first_name:1,last_name:1,salary:1,"_id" : 0}
+						);
+		
+	4) 	Select all column except one column like salary....
+
+		Select c1,c2,c3,c4,c5,,,,,, from employees;
+		
+		db.employees.find(
+						{department_id : 20},
+						{salary : 0}
+						);
+		---------------
+		
+		need only projection : (2nd parameter )
+		
+		db.employees.find({}) -- default consider as query parameter
+		db.employees.find({},{salary:0}) - need to have only projection..
+									define first parameter as empty..
+									
+		
+	5) Select * from employees where 
+					department_id = 90 and salary = 24000;
+				
+		db.employees.find(
+					{department_id : 90,salary : 17000}
+					);
+				
+	selection criteria :- 
+
+			returns all the documents in the collection 
+					where department_id = 90
+					and salary = 24000
+				
+COMPARISON OPERATORS :- 
+
+EQUALS TO :
+
+	TO EXPRESS EQUALS TO (EG : =) IN THE MONGODB QUERY , USE A 
+			JSON {KEY : VAUE}
+			
+			KEY  = VALUE 
+			
+			DEPARTMENT_ID = 20
+			
+			DEPARTMENT_ID : 20
+
+------------------------ 5 MINUTE BREAK-----------------------------
+			
+				
+* NOT EQUALS TO  : != OR <>
+
+		$ne : value of the field is not equals to the specified value
+		
+		select * from employee where department_id != 90;
+		
+		db.employees.find(
+						{department_id : {$ne : 90}}
+						);
+						
+						
+		select * from employees where first_name != 'alexzendra';
+		
+		db.employees.find(
+						{first_name : {$ne : "Lex"}}
+						);
+
+		return all the documents from the employees collection where 
+			first_name is not alexzendra....
+				and 
+					include all the documents 
+							which do not contain the first_name field
+	
+	Records return from the above query id huge then
+			basically mongo	
+				return the data in the junck of 
+						20 document in one slot....
+						
+		Query Executed : 
+					100 records..
+						mongo 
+						only shows - 20 document in slot...
+							page will contain 20 document
+			
+			Type "it" for more
+					bring next 20 document 
+					
+	-------------------------------------------------------
+
+* >, >= ,< , <=
+
+mongo : $gt > , $gte >=, $lt <, $lte <= 	
+
+example : 
+		NEED TO FIND ALL THE EMPLOYEES WHOSE SALARY 
+		> 5000 AND < 10000
+			
+			
+		SELECT * FROM EMPLOYEES WHERE SALARY > 5000 AND SALARY < 10000;
+			
+		db.employees.find(
+						{salary : {$gt:5000,$lt:10000}}
+						);
+		
+		select * from employees where department_id = 90 and salary > 5000 and salary < 10000;
+		
+		db.employees.find(
+					{department_id : 90,salary : {$gt : 5000,$lt : 10000}}
+					)
+
+** in : allows me to compare with multiple values...
+
+	find all the emplyees belongs to department 20,30,40
+	
+	select * from employees where department_id in (20,30,40);
+	
+	
+	db.employees.find(
+					{department_id : {$in : [20,30,40]}}
+					);
+	retuns all the documents where department_id field is 
+		either 20 or 30 or 40....
+		
+** not in : returns documents where fields does not contains specified values or does not exist...
+
+		$nin
+		
+	find all the employees not belongs to department 20, 30, 40
+
+	db.employees.find(
+					{department_id : {$nin : [20,30,40]}}
+					);
+
+** CONDITION SAYS : EITHER MY DOCUMENTS WILL CONTAINS SPECIFIC FIELDS 	OR NOT...
+			what are the documents which contains address field....
+			
+			does not contains address as fields
+
+			
+*** $exists : return all the documents that contains the field
+			if boolean is true or not if boolean false
+			
+			true or false 
+				
+		db.employeedata.find(
+						{"address" : {$exists:false}}
+						);		
+
+
+		db.employeedata.find(
+						{"address" : {$exists:true}}
+						);
+------------------------------------------------------------------
+
+	
+		CATEGORY 1 :	ADDRESS IS NOT EXIST 
+		CATEGORY 2 :    ADDRESS IS EMPTY
+					
+					
+	address is empty : 	{address : null}
+	
+	address not exist : {address : {$exists : false}}	
+		
+	***** need to find all the document doesn't have address fields 
+			or addess is empty
+			
+		azat5i4=jjj\
+		-0
+
+	select * from employees where department_id = 20 or salary = 6000;
+	
+		db.employees.find(
+					{$or : [{department_id : 20},{salary : 6000}]}
+					);
+		return all the documents 
+				where department_id = 20 or salary = 6000
+					
+
+
+$or 
+syntax : 
+		{$or : [{},{},{}]}
+
+
+** and operator :
+
+		db.employees.find({departmnet_id : 20,salary : 6000});
+
+		db.employees.find(
+					{$and : [{department_id : 20},{salary : 6000}]}
+					);
+----------------------------------------------------------------------
+
+Order :- 
+
+		asc or desc
+		
+in order to control order of your query based on the macthing documents just append with sort();
+
+				sort() : ordering the data
+
+	for each 
+			any field in ascending : {$column : 1}
+				positive 1 : Assending order
+				negative : desecnding
+				
+db.employees.
+	find(
+	{DEPARTMENT_ID : 20. SALARY : 4000},
+	{salary : 1,department_id : 1,"_id" : 0}).sort({salary:1});
+	
+	SELECT SALARY , DEPARTMENT_ID FROM EMPLOYEES 
+				WHERE DEPARTMENT_ID = 20 AND SALARY = 4000
+					ORDER BY SALARY ;
+					
+	
+	SELECT SALARY , DEPARTMENT_ID FROM EMPLOYEES 
+				WHERE DEPARTMENT_ID = 20 AND SALARY = 4000
+					ORDER BY SALARY DESC;
+	
+
+db.employees.
+	find(
+	{DEPARTMENT_ID : 20. SALARY : 4000},
+	{salary : 1,department_id : 1,"_id" : 0}).sort({salary:-1});
+
+	
+	
+
+---------------------------------------------------------------
+
+	
+
+
+
+
+
+
+
+
+
+
+
+		
+		
+		
+

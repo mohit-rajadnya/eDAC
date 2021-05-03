@@ -1,0 +1,285 @@
+								DAY 12
+								
+COVERED TOPICS :- 
+
+				PLSQL
+				BASIC COVERAGE OF FEW CONCEPTS :- 
+				
+					PROCEDURES
+					FUNCTIONS
+					TRIGGERS
+					CURSORS
+					
+				
+========================================================================
+
+Q1) Prepare a program to delete the data from emp. It will receive two inputs employee number and employee name. If employee number is passed as null then delete the data based on employee name.
+Backup the deleted data to employee_backup table.
+
+
+		NOTES :- 
+			1) DELETE THE DATA FROM TABLE EMP
+			2) TWO INPUT PARAMETERS 
+					EMPLOYEE_NO, EMPLOYEE_NAME
+					
+				NEED TO HAVE PROCEDURE IN PLACE WHICH ALLOWS 
+						TWO PARAMETER OF INPUT TYPE...
+			3) CONDTIONS :- 
+					EMPLOYEE_NO = NULL 
+						THEN 
+						DELETE THE RECORD WITH THE HELP OF 
+										EMPLOYEE_NAME
+										
+		DELETE  : DELETE FROM EMPLOYEES WHERE FIRST_NAME = ''
+			4) TAKE A BACKUP OF THE DATA GETTING DELETE WITH THE
+						ABOVE CONDITION IN EMPLOYEE_BACKUP TABLE.
+								
+
+
+FISRT :- 
+		CREATE TABLE EMPLOYEE_BACKUP LIKE EMPLOYEES;
+		
+		
+		DELIMITER //
+		
+		DROP PROCEDURE IF EXISTS EMP_DELETE_EMP_ID_NAME //
+		
+		CREATE PROCEDURE EMP_DELETE_EMP_ID_NAME(EMPNO INT,EMPNAME VARCHAR(20))
+		BEGIN
+		
+			IF EMPNO IS NULL THEN 
+			
+				INSERT INTO EMPLOYEE_BACKUP
+					SELECT * FROM EMPLOYEES_BCK WHERE FIRST_NAME = EMPNAME;
+				DELETE FROM EMPLOYEES_BCK WHERE FIRST_NAME = EMPNAME;
+			ELSE
+				DELETE FROM EMPLOYEES_BCK WHERE EMPLOYEE_ID = EMPNO;
+			END IF;
+			
+		END //
+		
+========================================================================
+
+2) Prepare a program which can perform following operation
+	- Lookout for tables which has missing constraints
+	- Display list of those tables		
+
+
+	NOTES :- 
+		1) CREATE A PROCEDURE 
+		2) 
+			2.1) ALL TABLES WHICH ARE THE PART OF YOUR DATABASE
+			2.2) ALL TABLES WHICH HAS CONSTRAINTS ATTACHED TO It
+			2.3) WE HAVE TO COMPARE 2.1 AND 2.2 TO FIND THE MISSING 
+					CONSTRAINTS TABLES NAME..
+					
+					ALL TABLES - ALL TABLES HAVING CONSTRAINT
+		3) LIST OF TABLES...
+
+  ** INFORMATION_SCHEMA
+				TABLES : CONTAINS ALL THE TABLES
+					SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'HRDATABASE';
+				TABLE_CONSTRAINTS : CONTAINS ALL THE CONSTRAINTS ON THE TABLES..
+				
+					SELECT DISTINCT TABLE_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE TABLE_SCHEMA = 'HRDATABASE';
+
+		
+************* 
+			1) LETS USE THE CURSORS
+			2) TO PRINT TABLES FROM THE PROGRAM 
+					TAKE A USE OF TEMPORARY TABLES...
+			3) HANDLE EXCEPTION WHICH IS NOT FOUND	
+			4) MULTIPLE LOOPS
+				4.1) MOVE OUT FROM THE LOOPS AS REQUIRED...
+					
+-----------------------------------------------------------------------
+
+		CURSOR : POINTERS 
+				OPEN AND FETCH AND CLOSE
+				+ HANDLE NOT FOUND
+
+-----------------------------------------------------------------------
+
+
+			DELIMITER //
+			
+			CREATE PROCEDURE TABLE_COMPARE_PRINT()
+			BEGIN
+			
+			DECLARE V_FINISH INT DEFAULT 0;
+			DECLARE STR1,STR2 VARCHAR(50);
+			
+			-- DECLAREING THE CURSORS
+			DECLARE EMP_TABLES CURSOR
+						FOR SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'HRDATABASE' AND TABLE_NAME IS NOT NULL;
+			
+			DECLARE EMP_TABLES_CONST CURSOR
+						FOR SELECT DISTINCT TABLE_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE TABLE_SCHEMA = 'HRDATABASE';
+						
+			DECLARE CONTINUE HANDLER FOR NOT FOUND
+						SET V_FINISH = 1;
+			
+			CREATE TEMPORARY TABLE EMP_CONST(NAME VARCHAR(100));
+			-- OPEN CURSOR
+			
+			OPEN EMP_TABLES;
+			
+			L_OUTER : LOOP
+			
+				FETCH EMP_TABLES INTO STR1;
+				
+				IF V_FINISH = 1 THEN
+					LEAVE L_OUTER;
+				END IF;
+				
+				OPEN EMP_TABLES_CONST;
+				
+					L_INNER : LOOP
+					
+						
+				 FETCH EMP_TABLES_CONST INTO STR2;
+
+						IF V_FINISH = 1 THEN
+							LEAVE L_INNER;
+						END IF;
+						
+				IF STR1 = STR2 AND STR1 IS NOT NULL AND STR2 IS NOT NULL THEN 
+				INSERT INTO EMP_CONST VALUES(STR1);
+				END IF;
+						
+					END LOOP L_INNER;
+			
+				SET V_FINISH = 0;
+				CLOSE EMP_TABLES_CONST;
+				
+			END LOOP L_OUTER;
+			
+			CLOSE EMP_TABLES;
+			
+			SELECT * FROM EMP_CONST;
+			
+			DROP TABLE EMP_CONST;
+				
+			END //
+			
+			DELIMITER ;
+
+	-------------------------------------------------------------------
+
+
+		EXAMPLE :- 
+		
+				DEVELOPER DID SOME CHANGE IN THE FUNCTIONALITY
+				
+		PATIENTID / PATIENT PRESCRIPTION / LOCATION OF THE PATIENT
+		
+			DEV TEAM : 
+				ADDED A COLUMN(LOCATION) TO STORE LOCATION OF THE PATIENT 
+				DEFAULT NULL 
+					UPDATE PRESCRIPTION SET LOCATION  = 0;
+				
+			RETREVING THE DATA OF THE PATIENT TO PRESENT ON THE SCREEN,,,
+			
+				SELECT * FROM PRESCRIPTION WHERE LOCATION IS NOT NULL;
+				
+----------------------------------------------------------------------
+
+SCREEN :- 
+		WHICH WAS SHOWING THE PATIENT RECORDS 
+				AFTER PUSHING THIS CODE
+					SCREEN COMING BLANK......
+					
+----------------------------------------------------------------------
+
+		5 MINUTES BREAK :
+				9:20 AM
+				
+------------------------------------------------------------------------
+
+EXAMPE XYZ :- 
+
+		CASCADE :- 
+				FOREIGN KEY
+					ON DELETE SET NULL 
+					ON UPDATE CASCADE 
+					ON DELETE CASCADE
+					
+------------------------------------------------------------------------
+
+		ON UPDATE CASCADE	
+		
+** CONSIDERING WE HAVE TWO TABLES
+		DEPARTMENTS
+		EMPLOYEES
+				EMPLOYEE : DEPARTMENT_ID 
+				DEPARMENT : DEPARTMENT_ID
+				
+			WHEN EVER SOME BODY UPDATE DEPARTMENT TABLE (DEPARTMENT_ID COLUMN) 
+				NEED TO UPDATE THE EMPLOYEES WITH THE UPDATED VALUES....
+				
+		ACHIVING THIS 
+		
+		NOTES :- 
+			1) HAVE A TRIGGER IN PLACE
+			2) TRIGGER MUST BE WRITTEN ON DEPARTMENTS TABLE
+			3) TRIGGER MUST BE FOR UPDATE CLAUSE
+			4) CONDITION 
+					IF SOMEBODY UPDATE 
+							DEPARTMENT_ID 
+								THEN WE NEED TO UPDATE EMPLOYEES..
+		
+			TRIGGERS :- 
+				DML : 
+					NEW AND OLD
+	
+			DELIMITER //
+			
+			CREATE TRIGGER DEPT_CASCADE_UPDATE
+				AFTER 
+					UPDATE ON DEPT_BCK
+						FOR EACH ROW
+			BEGIN
+			
+				IF OLD.DEPARTMENT_ID != NEW.DEPARTMENT_ID THEN
+					UPDATE EMPLOYEES_BCK 
+						SET DEPARTMENT_ID = NEW.DEPARTMENT_ID 
+							WHERE DEPARTMENT_ID = OLD.DEPARTMENT_ID;
+				END IF;
+			
+			END //
+			
+			DELIMITER //
+
+----------------------------------------------------------------------
+
+		UPDATION IN THE DEPENDENCY TABLE
+			OR NEED TO CREATE LOGS ...
+			
+----------------------------------------------------------------------
+
+			MULTIPLE EXAMPLE ADDED IT THE ASSIGNMENT 
+					SOLVING 
+						STUCK 
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

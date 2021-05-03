@@ -1,0 +1,316 @@
+1) Display total number of records in Emp table?
+-select count(*) as 'Number of records' from employees;
+
+
+2) Display emp table with salary descending order?
+-select * from employees order by salary desc;
+
+3) Display all the records in emp table order by ascending deptno, descending salary?
+-select * from employees order by department_id , salary desc ;
+
+
+4) Display all employees with how many years they have been servicing in the company?
+-select * , timestampdiff(year,hire_date,current_date) as 'serving period' from employees;
+
+5) Add 3 months with hiredate in EMP table and display the result?
+-select hire_date , date_add(hire_date, interval 3 month) as 'Afterthreemonths' from employees;
+
+6) Find the date, 15 days after today’s date.
+-select curdate(), date_add(curdate(), interval 15 day) as dateAfter15Days;
+
+7) Write a query to display current date?
+-select curdate();
+
+8) Display distinct job from emp table?
+-select distinct job_id from employees;
+
+9) Display all the records in emp table where employee hired after 28-SEP-81 and before 03-DEC-81?
+-select * from employees where hire_date between '1981-09-28' and '1996-12-03';
+
+10) Write a query that displays the employee’s names with the first letter capitalized and all other letters lowercase for all employees whose name starts with J, A, or M
+- select concat(ucase(mid(first_name,1,1)), lcase(mid(last_name,2))) as Fullname from employees
+where first_name regexp '^[j,a,m]';
+
+11) Display all jobs that are in department 10. Include the location of department in the output.
+- select distinct job_id , l.location_id , city
+from employees as e inner join departments  as d
+on d.department_id = e.department_id
+inner join locations as l
+on d.location_id = l.location_id
+where e.department_id = 10;          
+
+12) Write a query to display the employee name, department name of all employees who earn a commission
+-select first_name ,department_id from employees where commission_pct is not null;
+
+13) Display the empno, ename, sal, and salary increased by 15%.
+-select employee_id,first_name , salary, salary * 1.15 hike from employees;
+
+14) Display ename, sal, grade. Use emp, salgrade table
+-
+15) Display all employees and corresponding managers
+- select e1.first_name as employee , e2.first_name as manager 
+from employees e1
+join employees e2 on e1.manager_id= e2.employee_id;
+
+16) Display all the departments where employee salary greater then average salary of that department.
+- select  d.department_name as dname , e.salary ,avg(salary)
+from employees e inner join  departments as d
+on e.department_id = d.department_id
+group by d.department_id 
+having salary > avg(salary);
+
+17) Display employees where length of ename is 5
+-select first_name from employees where length(trim(first_name))=5;
+
+18) Display all employees where ename start with J and ends with S
+-select * from employees where first_name like 'j%' and first_name like '%s';
+
+19) Display all employees where employee does not belong to 10,20,40
+-select * from employees where department_id not in (10,20,40);
+
+20) Display all employees where jobs does not belong to PRESIDENT and MANAGER?
+-select e.first_name , e.last_name , j.job_title 
+from employees e 
+inner join jobs j
+on e.job_id = j.job_id
+where job_title not like '%President%' and job_title not like '%manager%';
+
+21) Display all three figures salary in emp table
+-select salary from employees where salary < 1000;
+
+22) Display all records in emp table for employee who does not receive any commission
+-select * from employees where commission_pct is not null;
+
+23) Display all ename where first character could be anything, but second character should be L?
+-select first_name from employees where first_name like '_l%';
+
+
+24) Display nth highest and nth lowest salary in emp table?
+-select FIRST_NAME, Salary AS 'LOWEST SALARY ' from(
+select FIRST_NAME, Salary, dense_rank() 
+over(order by Salary ) r from EMPLOYEES) as p
+where p.r=1 LIMIT 1 ;
+
+-select FIRST_NAME, Salary, dense_rank() 
+over(order by Salary ) r from EMPLOYEES
+
+-select FIRST_NAME, Salary, rank() 
+over(order by Salary ) r from EMPLOYEES
+
+-select FIRST_NAME, Salary, ROW_NUMBER() 
+over(order by Salary ) r from EMPLOYEES
+
+-select FIRST_NAME, Salary, dense_rank() 
+over(order by Salary ) r from EMPLOYEES
+
+-select FIRST_NAME, Salary AS 'HIGHEST SALARY ' from(
+select FIRST_NAME, Salary, dense_rank() 
+over(order by Salary DESC ) r from EMPLOYEES) as p
+where p.r=1;
+
+-select FIRST_NAME, Salary, dense_rank() 
+over(order by Salary DESC ) r from EMPLOYEES
+
+
+25) Display all the departments where department has 3 employees?
+-select d.department_id , department_name 
+from departments d inner join employees e
+on e.department_id = d.department_id
+group by d.department_id
+having count(e.employee_id) = 3;
+
+26) Display emp name and corresponding subordinates. Use CONNECT BY clause.
+
+27) Display all ename, sal, deptno,dname from emp, dept table where all department which has employees as well as department does not have any employees. This query should include non matching rows.
+-select d.department_name , d.department_id, first_name , salary
+from departments d left join employees e
+on d.department_id = e.department_id;
+
+28) Display all ename, sal, deptno from emp, dept table where all employees which has matching department as well as employee does not have any departments. This query should include non matching rows.
+
+-select d.department_name , d.department_id, first_name , salary
+from employees e left join departments d
+on d.department_id = e.department_id;
+
+Note: In the below query, employee will always have matching record in dept table. Emp, dept table may not be good example to answer this question.
+
+29) Display all ename, sal, deptno from emp, dept table where all employees which has matching and non matching department as well as all departments in dept table which has matching and non matching employees. This query should include non matching rows on both the tables. 
+-select d.department_name , d.department_id, first_name , salary
+from employees e left join departments d
+on d.department_id = e.department_id
+union
+select d.department_name , d.department_id, first_name , salary
+from departments d left join employees e
+on d.department_id = e.department_id;
+
+Note: In the below query, employee will always have matching record in dept table. Emp, dept table may not be good example to answer this question.
+
+30) Display all ename, empno, dname, loc from emp, dept table without joining two tables
+- SELECT employee_id, CONCAT(E.FIRST_NAME,', ',E.LAST_NAME) NAME ,
+(SELECT D.DEPARTMENT_NAME FROM DEPARTMENTS D
+WHERE D.DEPARTMENT_ID = E.DEPARTMENT_ID) as DEPTNAME,
+(SELECT location_id FROM DEPARTMENTS D
+WHERE D.DEPARTMENT_ID = E.DEPARTMENT_ID) as Location
+FROM EMPLOYEES E ;
+
+31) Display all the departments where department does not have any employees
+- select department_name , d.department_id
+from departments d left join employees e
+on d.department_id = e.department_id
+group by d.department_id
+having sum(e.employee_id) is null;
+
+32) Display all the departments where department does have atleast one employee
+- select department_name , d.department_id
+from departments d left join employees e
+on d.department_id = e.department_id
+group by d.department_id
+having sum(e.employee_id) is not null;
+
+33) Display all employees those who are not managers?
+- select e.first_name , e.last_name , j.job_title 
+from employees e 
+inner join jobs j
+on e.job_id = j.job_id
+where job_title not like '%manager%';
+
+34) Display ename, deptno from emp table with format of {ename} belongs to {deptno}
+- select concat(first_name , ' belongs to ',department_id) employeeDept from employees;
+
+35) Display total number of employees hired for 1980,1981,1982. The output should be in one record.
+- select sum(emp_id) from (select count(employee_id) as emp_id , year(hire_date)
+from employees 
+where year(hire_date) in (1999,1994,1997)
+group by year(hire_date) ) T ;
+
+36) Display ename, deptno from employee table. Also add another column in the same query and it should display ten for dept 10, twenty for dept 20, thirty for dept 30, fourty for dept 40
+- select first_name, department_id,
+case
+when department_id = 10 then 'Ten'
+when department_id = 20 then 'Twenty'
+when department_id = 30 then 'Thirty'
+when department_id = 40 then'Forty'
+else 'Null'
+end as department_id_spell
+from employees;
+
+37) Display all the records in emp table. The ename should be lower case. The job first character should be upper case and rest of the character in job field should be lower case.
+-select lower(first_name) as firstname, concat(upper(substr(job_title,1,1)), lower(substr(job_title,2))) as job_title
+from employees inner join jobs
+on employees.job_id = jobs.job_id;
+
+38) Display all employees those who have joined in first week of the month ?
+- select * from employees where week(hire_date) = 1;
+
+39) Display all empoyees those who have joined in the 49th week of the year?
+-select * from employees where week(hire_date) = 49;
+
+40) Display empno, deptno, salary, salary difference between current record and previous record in emp table. Deptno should be in descending order.
+- SELECT employee_id, first_name,salary,
+       LAG(salary, 1, 0) OVER (ORDER BY salary) AS sal_prev,
+       salary - LAG(salary, 1, 0) OVER (ORDER BY salary) AS sal_diff
+FROM   employees;
+---
+SELECT employee_id, first_name,
+       job_id,
+       salary,
+       LEAD(salary, 1, 0) OVER (ORDER BY salary) AS sal_next,
+       LEAD(salary, 1, 0) OVER (ORDER BY salary) - salary AS sal_diff
+FROM   employees;
+
+41) Create table emp1 and copy the emp table for deptno 10 while creating the table
+- create table emp2 (select * from employees where department_id = 10);
+
+42) Create table emp2 with same structure of emp table. Do not copy the data
+- CREATE TABLE  emp AS SELECT * FROM employees
+	WHERE 1=2;
+---- or 
+CREATE TABLE  emp like SELECT * FROM employees
+	
+
+43) Insert new record in emp1 table, Merge the emp1 table on emp table.
+- insert ignore into employees select * from emp;
+Answer is pending................
+
+44) Display all the records for deptno which belongs to employee name JAMES? 
+- select * from departments d inner join employees e
+on e.department_id = d.department_id
+where first_name like 
+'%james%';
+
+45) Display all the records in emp table where salary should be less then or equal to ADAMS salary?
+- select * from employees 
+where salary >= (select salary from employees where first_name like '%adam%');
+
+46) Display all employees those were joined before employee WARD joined?
+- select * from employees 
+    where hire_date>(select hire_date from employees where first_name='ward');
+
+47) Display all subordinate those who are working under BLAKE?
+
+48) Display all subordinate(all levels) for employee BLAKE?
+
+49) Display all record in emp table for deptno which belongs to KING's Job? 
+- select * from employees 
+where department_id = (select department_id from employees where first_name = 'douglas');
+
+50) Write a SQL statement to increase the salary of employees under the department 40, 90 and 110 according to the company rules that, 
+salary will be increased by 25% for the department 40, 15% for department 90 and 10% for the department 110 
+and the rest of the departments will remain same.
+- UPDATE employees SET salary= CASE 
+                          WHEN 40 THEN salary+(salary*.25) 
+                          WHEN 90 THEN salary+(salary*.15)
+                          WHEN 110 THEN salary+(salary*.10)
+                          ELSE salary
+                        END
+             WHERE department_id IN (40,90,110);
+			 
+51) Display list of ename those who have joined in Year 81 as MANAGER?
+-select concat(first_name ,' ' , last_name) as 'Full name'
+from employees e inner join jobs j 
+on e.job_id = j.job_id and job_title like '%manager%'
+where year(hire_date) = 1999;
+
+52) Display who is making highest commission?
+-select concat(first_name ,' ' , last_name) as 'Full name' , commission_pct
+from employees e
+where commission_pct = (select max(commission_pct) from employees);
+
+53) Display who is senior most employee? How many years has been working?
+select concat(first_name ,' ' , last_name) as 'Full name' , timestampdiff(year,hire_date,curdate()) as 'Experience'
+from employees e 
+where hire_date = (select min(hire_date) from employees);
+
+54) Display who is most experienced and least experienced employee?
+- select * from employees where
+hire_date =any
+(select min(hire_date) from employees) or
+hire_date= any
+(select max(hire_date) from employees);
+-----
+select first_name,hire_date from employees where datediff(curdate(),hire_date) in ( select max(datediff(curdate(),hire_date)) from employees)
+or datediff(curdate(),hire_date) in ( select min(datediff(curdate(),hire_date)) from employees)
+
+55) Display ename, sal, grade, dname, loc for each employee.
+- select first_name , salary , department_name , city
+from employees e inner join departments d on e.department_id = d.department_id
+inner join locations l on d.location_id = l.location_id;
+
+56) Display all employee whose location is DALLAS?
+- select first_name , salary , department_name , city
+from employees e inner join departments d on e.department_id = d.department_id
+inner join locations l on d.location_id = l.location_id
+where city = 'seattle';
+
+57) Display ename, job, dname, deptno for each employee by using INLINE view?
+
+58) List ename, job, sal and department of all employees whose salary is not within the salary grade?
+
+59) Use EMP and EMP1 table. Query should have only three columns. Display empno,ename,sal from both tables inluding duplicates. 
+- use union all
+
+60) Display the employees for empno which belongs to job PRESIDENT?
+-  select concat(first_name,' ' ,last_name) FullName, department_name, country_id , city
+from employees e inner join departments d on e.department_id = d.department_id
+inner join locations l on l.location_id = d.location_id
+where job_id = any ( select job_id from jobs where job_title like '%president%');

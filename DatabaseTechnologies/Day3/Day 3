@@ -1,0 +1,611 @@
+							
+							DAY 3
+=========================================================================
+
+Covered Topics :- 
+
+	Cateogries in which SQL 9 commands divided :- 
+	
+		DDL 
+		
+		DML
+		
+		DCL		-	
+		
+		DQL		-
+
+DDL : - Create 
+
+				Create tables Tablename
+				(
+				Columns DataTypes Constraints,
+				.
+				.
+				);
+	
+		DataTypes :- 
+			
+				INT
+					TinyINT
+					SMALLINT
+					MEDIUMINT
+					INT
+					BIGINT
+					
+				VARCHAR 
+				CHAR
+				TEXT
+				
+				DATE
+				
+				DATETIME
+
+Constraints :- 
+
+				Restriction for the end user to enter values in the table based on my requirenment .....
+
+				Primary Key :- 
+						NOt NUll
+						No Duplicates
+						Single Primary
+				Unique :- 
+						No Duplicates
+						Accept NUll
+						 Because Every Null has a unique values
+						May have multiple Unique Keys
+
+				Not Null :-
+						Not accept null values
+						
+				Foerien Key :- 
+					Two Tables and create a relation of 
+						Parent And Child
+						
+						
+FOREIGN KEY :- 
+
+Parent Table :- On which my child(Table) has dependency for certain columns
+
+				Like 
+					My Employees are belongs to the department
+					To make my table logically grouped
+							Seperated my tables and named them 
+							
+							Employees and Department
+							
+							
+					Department  : Parent
+					Employee : Child
+
+
+				Create Table Department
+				(
+				id int primary key,
+				name varchar(20)
+				);
+				
+				Create table employees
+				(
+				id int primary key,
+				name varchar(20),
+				sal int,
+				mobno bigint not null,
+				did int,
+				foreign key(did) references Department(id)
+				
+				-- Understanding when i have to explictly mark which columns need to be in the relationship
+				
+				-- There is no strict rule to have same column name..
+				);
+				
+				
+======================================================================
+
+Foreign Key :-
+
+			1) Not able to insert values in the child table if that value not exist in the parent table.
+			2) User is allowed to have null values in that column...
+			3) When ever you update any value it will only allow if that value exist in the parent table.....
+			
+			4) Relationship between parent and child 
+				with foerign key
+				
+				We are not allowed to delete values from the parent table if we have references exist in the child table...
+				
+				Department :-
+				
+					10 Marketing
+					20 Finanace
+					
+				Employee :- 
+					101 Rahul 245454 10
+					102 Nilesh 87687 20
+					103 Kridh  55454 10
+			
+		If i need to remove the records from department table, system will not allow me to remove the values from department
+			because referneces exist in the child table.
+
+
+========================================================================
+
+May be possiblity to remove certain row or value from my parent table
+	What system will do in that case :- 
+	
+
+	Cascading :- 
+		
+				Rule which says any impact on the parent value 
+						will autmatically impact the child
+				
+				
+	On Delete Cascade :- 
+	
+				Clause comes with Foreign Key
+				
+				* When we delete anything some from my parent 
+						it will also delete all the refrences from 
+								the child table
+			
+Before Deleting Department 10:-
+			
+					Department :-
+				
+					10 Marketing
+					20 Finanace
+					
+				Employee :- 
+					101 Rahul 245454 10
+					102 Nilesh 87687 20
+					103 Kridh  55454 10
+
+			
+After Deleting Department 10:-
+			
+					Department :-
+				
+					20 Finanace
+					
+				Employee :- 
+					102 Nilesh 87687 20
+
+Syntax for on delete cascade :- 
+
+		Foreign Key(Child Table Column) 
+				References ParentTable(Parent Table Column)
+					On Delete Cascade
+
+
+					Create table deptdeletecascade1
+					(
+						id int primary key,
+						name varchar(20)
+					);
+
+					Create table empdeletecascade1
+					(
+						id int primary key,
+						name varchar(20),
+						sal int,
+						did int,
+						Constraint empdeletecascade_fk1
+							foreign key(did) references deptdeletecascade1(id)
+					);	
+
+					Insert into deptdeletecascade1 values(10,'Marketing');
+					Insert into deptdeletecascade1 values(20,'HR');
+					Insert into deptdeletecascade1 values(30,'Quality');
+					
+					Insert into empdeletecascade1 values(101,'Rahul',2000,10);
+					Insert into empdeletecascade1 values(102,'Nikhil',6000,20);
+					Insert into empdeletecascade1 values(103,'Rishi',8000,30);
+					Insert into empdeletecascade1 values(104,'Krishan',2000,10);
+					
+		Delete someting from table :- 
+		
+			Delete from Table Tablename where condition;
+			
+			Delete from deptdeletecascade where id = 10;
+			
+==========================================================================
+
+				Create table deptdeletecascade1
+					(
+						id int primary key,
+						name varchar(20)
+					);
+
+				Create table empdeletecascade1
+					(
+						id int primary key,
+						name varchar(20),
+						sal int,
+						did int,
+						Constraint empdeletecascade_fk1
+							foreign key(did) references deptdeletecascade1(id)
+					);	
+
+					Insert into deptdeletecascade1 values(10,'Marketing');
+					Insert into deptdeletecascade1 values(20,'HR');
+					Insert into deptdeletecascade1 values(30,'Quality');
+					
+					Insert into empdeletecascade1 values(101,'Rahul',2000,10);
+					Insert into empdeletecascade1 values(102,'Nikhil',6000,20);
+					Insert into empdeletecascade1 values(103,'Rishi',8000,30);
+					Insert into empdeletecascade1 values(104,'Krishan',2000,10);		
+
+===================================================================
+
+** Situation :- 
+		Need to close one of my department
+				But do not want to fire my employees
+						belongs to that perticular department
+				
+On Delete Set Null
+
+				When ever you are going to delete something from the parent table 
+					It will update the department id of the references 
+							with Null
+							
+							
+Before Deleting Department 10:-
+			
+					Department :-
+				
+					10 Marketing
+					20 Finanace
+					
+				Employee :- 
+					101 Rahul 245454 10
+					102 Nilesh 87687 20
+					103 Kridh  55454 10
+
+			
+After Deleting Department 10:-
+			
+					Department :-
+				
+					20 Finanace
+					
+				Employee :- 
+					101 Rahul 245454 Null
+					102 Nilesh 87687 20
+					103 Kridh  55454 Null
+
+
+
+	Syntax for On Delete Set Null :- 
+	
+		Foreign Key(ChildTable Column Name)
+			References ParentTable(Parent ColumnName)
+				On Delete Set Null
+		
+
+				
+
+-------
+				Create table deptsetnullcascade
+					(
+						id int primary key,
+						name varchar(20)
+					);
+
+				Create table empsetnullcascade
+					(
+						id int primary key,
+						name varchar(20),
+						sal int,
+						did int,
+						Constraint empsetnullcascade_fk
+							foreign key(did) references deptsetnullcascade(id)
+								on delete set null
+					);	
+
+					Insert into deptsetnullcascade values(10,'Marketing');
+					Insert into deptsetnullcascade values(20,'HR');
+					Insert into deptsetnullcascade values(30,'Quality');
+					
+					Insert into empsetnullcascade values(101,'Rahul',2000,10);
+					Insert into empsetnullcascade values(102,'Nikhil',6000,20);
+					Insert into empsetnullcascade values(103,'Rishi',8000,30);
+					Insert into empsetnullcascade values(104,'Krishan',2000,10);
+
+=======================================================================
+
+On Update Cascade :- 
+
+			* When ever any update happed in my parent table 
+					it will automatcally update my child table
+					
+			Sytax :- 
+			
+				Foereign key(ChildTable Column Name)
+					References ParentTable(ParentColumn Name)
+						On update Cascade
+						
+						
+Before Update Department 10:-
+			Update department 10 with 30
+			
+					Department :-
+				
+					10 Marketing
+					20 Finanace
+					
+				Employee :- 
+					101 Rahul 245454 10
+					102 Nilesh 87687 20
+					103 Kridh  55454 10
+
+			
+After Update Department 10 to 30:-
+			
+					Department :-
+				
+					30 HR
+					20 Finanace
+					
+				Employee :- 
+					101 Rahul 245454 30
+					102 Nilesh 87687 20
+					103 Kridh  55454 30
+					
+Try For Your Lab :- 
+
+				Practice :- 
+					On Update Cascade
+					
+				-
+					On Delete Cascade
+					On Update Cascade
+
+======================================================================
+
+				Create table deptupdatecascade
+					(
+						id int primary key,
+						name varchar(20)
+					);
+
+				Create table empupdatecascade
+					(
+						id int primary key,
+						name varchar(20),
+						sal int,
+						did int,
+						Constraint empupdatecascade_fk
+							foreign key(did) references deptupdatecascade(id)
+								on update cascade
+					);	
+
+					Insert into deptupdatecascade values(10,'Marketing');
+					Insert into deptupdatecascade values(20,'HR');
+					Insert into deptupdatecascade values(30,'Quality');
+					
+					Insert into empupdatecascade values(101,'Rahul',2000,10);
+					Insert into empupdatecascade values(102,'Nikhil',6000,20);
+					Insert into empupdatecascade values(103,'Rishi',8000,30);
+					Insert into empupdatecascade values(104,'Krishan',2000,10);
+
+
+===================================================================
+
+Foreign Key :- 
+
+		Composite Foreign Key 
+		
+		A Foreign Key with multiple columns
+			Composite Foreign Key
+			
+			
+				Create table Product
+				(
+				PId int,
+				PVersion float,
+				PdName varchar(20),
+				Pdvalue int,
+				Primary Key(PId,PVersion)
+				);
+				
+				Create table invoice
+				(
+				IId int,
+				IAgainst varchar(20),
+				IDate date,
+				PId int,
+				PVersion float,
+				Foregin Key(PId,PVersion) references Product(PId,PVersion)
+				);
+	
+		Functionaltity Remain Same as Foreign Key
+				Now It will check with the composite values in your
+					parent table instead of single value....
+					
+		
+=========================================================================
+
+Single Transaction :- 
+					Read
+					Calculate
+					Write
+					
+					Provision to rollback complete transaction
+					
+					
+=======================================================================
+
+Default :- 
+
+	When ever we want default values to be entered 
+		I use default
+		
+			Sytax :- 
+			
+			Department as Resource Pool
+			
+				Create Table Empdefault
+				(
+				Eid int primary key,
+				EName varchar(20),
+				Esal int,
+				Did int default 10
+				);
+				
+				Create Table Employees
+				(
+				Eid int primary key,
+				EName varchar(20),
+				Esal int,
+				status varchar(20) default 'True'
+				);
+				
+------------------------
+
+	Organizational Table IN place :-
+			Some Extra Column Present in the Table
+				Like 
+						Status 
+						AddedBy
+						AddedDateTime
+						UpdateBy
+						UpdatedDatetTime
+						
+			Create Table defaultDateTime
+				(
+				id int,
+				name varchar(20),
+				sal int,
+				addeddatetime datetime default now()
+				);
+				
+====================================================================
+Constraint :- 
+	
+Check
+		It's constraint or restriction to the column based on the condition provided 
+		
+			Situation :- 
+					CEO : We do not have any employee with salary < 55000
+					
+				If Salary > 55000
+				{
+					Return True 
+							-- If True Insert that record in the table
+				}
+				Else 
+				{
+					Return False
+						-- Throws Error of Check constraint
+				}	
+				
+							
+				
+		
+			Create table empcheck
+			(
+			empid int,
+			empname varchar(20),
+			sal int check(sal > 55000)  -- do not accept sal < 55000
+			);
+					
+
+===========================================================================
+
+Auto_Increment :-
+
+			Constraint :- 
+				Sequeance in MySql
+				
+					I want to have my one column with automatic increment with the last value
+					
+			Employee : 
+				Emp ID
+						10002
+						10003
+						10004  Status Left
+						10005
+						10006
+						
+			Auto_Increment :- Sequences....
+			
+					Default starts with 1
+					Increment with 1
+					
+					
+			Create table empauto
+			(
+			id int auto_increment primary key,
+			name varchar(20),
+			sal int
+			);
+			
+			1) Auto_increment starts by default with 1
+			2) Whenever new record inserted  it always max value of that column  + 1
+			
+			3) You want to start the serises with your define series 
+			
+				3.1) You can insert first record with that value
+				3.2) Alter statement 
+				
+				Alter Table empauto Auto_Increment = 1000;
+
+
+==========================================================================
+
+So Over Hear :- 
+
+				Constraint :- 
+						
+							Default
+							Not Null
+							Primary key 
+								Composite Primary Key
+							Foreign Key
+								Composite Foreign Key
+							Check
+							Default
+							Auto_Increment
+							Unique
+							
+last Constranit :-
+
+					ENUM 
+						Set of Values
+						Force me to insert only those values exist in the Enum
+						
+					Like 
+					Create table shirts
+					(
+					id int,
+					brand varchar(20),
+					size enum('Large','Small','ExtraLarge')
+					);
+					
+==========================================================================
+
+				------  Todays Session ------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+							

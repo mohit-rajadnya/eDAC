@@ -1,0 +1,599 @@
+							DAY 6
+							
+Covered Areas :- 
+
+			DDL / DML / DCL / DTL / DQL
+			
+			DQL : 
+			
+			Select
+			
+					FROM 
+					
+							WHERE (OPTIONAL)
+							
+								ORDER BY (LAST CLAUSE OF YOUR SELECT STATEMENT)
+								(OPTIONAL)
+								
+		 MANIPULATION :- 
+		 
+				+ , - / ALL CALCULATIONS
+				
+				WITH YOUR COLUMNS OF THE TABLE..
+				
+		PSEUDO COLUMNS : 
+				COLUMNS NOT EXIST IN THE TABLE..
+				
+		ALIAS TO YOU COLUMNS
+				NEW NAME TO THE COLUMNS....
+				
+=======================================================================
+
+INBUILD FUNCTIONS :-
+
+		1) NUMERIC FUNCTIONS
+		
+		2) STRING FUNCTIONS
+		
+		3) DATE FUNCTIONS
+		
+		4) AGGREGATE FUNCTION - GROUP FUNCTIONS
+		
+1) NUMERIC FUNCTIONS :- 
+
+			* ABS() TO REMOVE THE SIGN FROM THE NUMBER...
+				RETURN THE ABSOLUTE VALUE
+				
+				SELECT ABS(878.334);
+					878.334
+				SELECT ABS(-2232.232)
+					2232.232......
+			
+			* ROUND()
+					WHICH RETURN ROUND OF THE ARGUMENT
+
+				ROUND BASED ON THE DECIMALS BASED ON THE VALUE OF THE NUMBER
+					
+						>= 5 UPPER NUMBER
+						<5   LOWER NUMBER
+						
+						34.56    35
+						34.23    34
+						
+				ROUND FUNCTIONAL WITH A PARAMETERS
+				
+				ROUND(NUMBER, POSITION OF THE PRECISION REQUIRED);
+				
+				
+				
+				
+				SELECT ROUND(234.343334,2);
+
+				CURRENCY : 
+						
+						ORINAL PRICE OF YOUR MEDICINE
+						
+						CROCIN  : 0.4534 
+						STIPR OF CROCIN 20 TABLETS
+						PURCHSE : 3456
+						
+						3456 * (0.4534)
+						
+				ROUND(NUMBER, NEGETIVE PRESICION)'
+				
+				
+				
+				SELECT ROUND(234.5,-2) 
+				
+				234.5,-2  TOWARDS LEFT OF DECIMALS
+
+			* CEIL
+					RETURNS THE SMALLEST INTEGER VALUE NOT LESS THEN THE 
+							ARGUMENT...
+
+			 CEIL(345.34)  : 346
+			 
+			 34.23          35
+			 
+			 23.03			24
+			 
+			 * FLOOR :-
+			 
+				FLOOR(345.45) 
+							345
+							
+
+			 * TRUNCATE
+					TRUNCATE TO SPECIFY NUMBER OF THE DECIMAL PLACES
+					
+				TRUNCATE(NUMBER,POISITION)
+				
+				TRUNCATE(2345.345,2)
+				
+					2345.34
+					
+				234.23456, 4
+								234.2345
+								
+				456.234,0
+								456
+
+			* SELECT 2345/34;
+			
+			DIV : TWO PARAMETERS
+			
+				NUMBER DIV DEVISOR
+				
+				2335 DIV 34
+								VALUE WITHOUT DECIMALS
+								
+			* MOD : MODULUS
+			
+				5 MODULUS 2 
+						: 	RETUNS ALWAYS REMINDER
+						
+			 MOD(5,2)    1
+			 
+			* POWER : RETUNS A NUMBER RAISE TO THE POWER
+			
+				2 RAISE TO POWER 3
+						
+					3 ^ 2    9
+					2^10    1024
+					
+			* SQRT
+				
+					SQUARE ROOT OF 4 = 2
+			
+					SQRT(343434) : SQUARE ROOT
+					
+						
+=======================================================================
+
+STRING FUNCTIONS :- 
+
+					WORKS ON STRING 
+					
+			
+	 1) LENGTH OF THE STRING  : RETURN THE LENGTH OF THE STRING
+			SELECT LENGTH('RAHUL BANSAL');
+			
+			
+	 2) UPPER : TO CHANGE THE CASE IN UPPER
+		
+		SELECT UPPER('bansal');
+				BANSAL
+
+/	3) LOWER : TO CHANGE THE CASE IN LOWER
+			
+		SELECT LOWER('KUNAL');
+			kunal
+				
+	4) BILLS  : NAME (RAHUL, BANSAL)
+			NAME :   BANSAL, RAHUL
+			NAME : BANSAL RAHUL
+			
+		CONCAT : WHICH RETURNS THE STRING AFTER DOING CONCATINATION
+
+			JOINING ALL STRINGS TOGEATHER..
+			
+			CONCAT('RAHUL','BANSA')
+			
+			
+			UPPER(CONCAT(FIRST_NAME,', ',LAST_NAME))
+			
+			FUNCTIONS INSIDE THE FUNCTIONS
+					AS PER THE REQUIRENMENTS....
+	
+	5) SUBSTRING : 	RETURNS THE SUBSTRING FROM THE STRING
+
+		TAKES 3 PARAMETERS
+		
+		SUBSTR(STRING,FROM WHICH POSITION,LENGHT OF THE STRING REQUIRED)
+		
+		SUBSTR('RAHUL',3,2);
+		
+	6) TRIM : TRIM THE SPACES FROM YOUR STRING 
+	
+	
+	7) LPAD : LEFT PADDING
+	
+			3 PARAMETERS
+			
+			LPAD(STRING,LENGHT OF STRING,STRING NEED TO BE REPLACED FOR THE EXTRA POSITIONS)
+			
+			RAHUL  15 *
+			
+				15 - LENGHT('RAHUL')
+					15 - 5 : 10
+			
+			**********RAHUL
+			
+			LPAD('*',FLOOR(SALARY/1000),'*')
+			
+			SALARY TO BE PRINTED * BASED ON TE CONCEPT
+			
+				EVERY * = RS 1000
+				
+				24000 / 1000  = 24
+				
+				LPAD('*',SALARY/1000,'#')
+				
+				************************
+	
+	8) RPAD : RIGHT PADDING
+		
+			RPAD('*',SALARY/1000,'*')
+				
+				
+				
+	9) REPLACE 
+		TO REPLACE CERTAINT STINGS WITH DEFINED STRING 
+		
+		REPLACE TAKES 3 PARAMETERS
+		
+			1) STRING
+			2) STRING TO REPLACE
+			3) STRING WHICH WHICH I NEED TO REPLACE
+			
+			REPLACE('NIKHIL','KH','RA');
+			
+					NIRAIL
+					
+					
+				NIKHIL,'KH','RA')
+				
+				
+=========================================================================
+
+DATE FUNCTIONS :- 
+
+			1) TODAYS DATE WITH TIME
+			
+				NOW();
+				
+				RETURN TODAYS DATE WITH TIME...
+				
+			2) TODAYS DATE 
+			
+				CURDATE()
+				
+			3) DATE_FORMAT
+
+					DATE INTO SPECIFIC FORMAT
+					
+				DATE IN DD-MM-YYYY
+				
+				DD DAY
+				MM MONTH
+				YYYY YEAR
+				
+				TWO PARAMETERS
+					
+					DATE_FORMAT(DATE,FORMAT)
+					
+					DATE : VALID DATE
+					FORMAT : KEYWORDS WHICH IDENTIFIES DAY,MONTH,YEAR,HOURS,MINUTE, TIME 
+						WITH % AS A SYMBOL
+						
+						
+					%d day of the month 28/10/2020
+						28
+					%D day with the english sufix
+						28th
+						1st
+						2nd
+					%m month
+							
+					%M Full Month name 
+					
+					%y  two digit from the year
+					
+					%Y  returns years
+					
+					%h hours in 12 hours format
+					
+					%H hours in 24 hours format
+					
+					%i minute
+					
+					%s seconds
+					
+					%b return three characters of month
+					
+	
+** AIRTHMETIC OPERATION ON YOUR DATE....
+
+
+				ORACLE :-
+						NOW() + 1 TO GET TOMM DATE
+					
+				
+				MYSQL :-
+					
+						NOW() + INTERVAL 1 DAY
+				
+				INTERVAL KEYWORDS
+				
+				1 NUMBER 
+				
+				VARIOUS VALUES LIKE DAY/MONTH/YEAR
+				
+				
+				DATE + INTERVAL 3 MONTH
+				
+				
+		4) DATE_ADD
+				
+		5) DATE_SUB
+		
+		6) YEAR  / MONTH / DAY
+		
+		7) DAYNAME(NOW()) 
+		
+		8) STRING TO DATE :- 
+		
+			CONVERT STRING TO DATE...
+			
+			STR_TO_DATE(STRING,FORMAT);
+			
+			STRING : STRING RECEIVED 
+			
+			FORMAT : EXPLANATION OF THE STRING 
+			
+			'10-10-2020','%d-%m-%Y'
+			
+			
+======================================================================
+
+Function : CASE
+
+			CASE COLUMNAME 
+				WHEN CONDITION THEN RETURN VALUE
+				WHEN CONDITION THEN RETURN VALUE.
+				....
+				..
+				.
+				.
+				ELSE
+			END
+			
+		
+	EXAMPLE :-
+			
+			DIVIDE MY EMPLOYEES BASED ON THE SALARY 
+			
+				SALARY > 15000 :: HIGHLY PAID
+				
+				SALARY > 8000 AND < 15000 : AVERAGE BAND
+				
+				SALARY < 8000 : FRESHERS
+		
+				
+			CASE 
+				WHEN CONDITION THEN RESULT1
+				WHER CONDITION THEN RESULT2
+				WHEN CONDITION THEN RESULT3
+				
+				ELSE RESULT1
+			END
+			
+			FOR LOOP WITH EVERY ROW :-
+				IF SALARY > 15000
+					SYSTEM.OUT.PRINTLN('HIGH PAID');
+				ELSEIF SALARY > 8000 AND SALARY < 15000
+					SYSTEM.OUT.PRINTLN('AVERAGE PAID');
+				ELSE 
+					SYSTEM.OUT.PRINTLN('LOW PAID');
+				
+				
+[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]]
+
+CONDITIONAL LOOPING :- 
+
+SELECT EMPLOYEE_ID,SALARY,
+	CASE
+		WHEN SALARY > 15000 THEN 'HIGHLY PAID'
+		WHEN SALARY BETWEEN 8000 AND 15000 THEN 'AVERAGE PAID'
+		ELSE 'LOW PAY GRADE'
+	END AS 'EMPLOYEE STATUS'
+		FROM 
+			EMPLOYEES LIMIT 10;
+		
+
+=====================================================================
+
+** IFNULL USED FOR COMPARISON WITH NULL
+
+	IFNULL(COLUMNS,0)
+		COLUMN  : 
+			IF NULL THEN RETURN THE SECOND PARAMETERS
+			ELSE RETURN COLUMN VALUE
+			
+=======================================================================
+
+AGGREGATE FUNCTIONS :- 
+		
+		
+		ALWAYS RETURN SINGLE VALUE : SIGLE ROW COLUMN....
+			
+
+	* FIND THE NO OF ROWS IN THE TABLE
+		
+	COUNT :-
+			COUNT(*) : RETURNS NUMBER OF ROWS IN THE TABLE....
+			
+			COUNT(COLUMNNAME) : RETUNS THE COUNT OF ROWS	
+									EXCLUDING NULL IN THAT COLUMN
+									
+
+	* FIND SUM OF THE SALARY PROVIDING IN THE ORGANIZATION.
+	
+		SUM(COLUMNS) : INTERGER AND RETURN THE SUM
+		
+		
+	==================================================================
+		
+**********
+	ASKED : PROVIDE ME SALARIES PROVIDED TO EACH DEPARTMENT
+
+
+
+INTRODUCED A CLAUSE :- 
+
+	GROUP BY
+		
+			1) USED TO CREATE GROUPS BASED ON THE CRITERIA
+			2) GROUP COLUMNS AND PERFORM AGGREGATE FUNCTION / GROUP FUNCTION
+			3) DISPLAY THE RESULT..
+			
+		 SELECT SUM(SALARY) FROM EMPLOYEES WHERE DEPARTMENT_ID = 10;
+		 SELECT SUM(SALARY) FROM EMPLOYEES WHERE DEPARTMENT_ID = 90;
+		 
+		 
+	
+
+		SELECT DEPARTMENT_ID,SUM(SALARY)
+			FROM 
+				EMPLOYEES 
+						GROUP BY DEPARTMENT_ID;
+						
+			101 RAHUL 20 5000
+			103 NIKHIL 30 3000
+			104 RISHI 20 5000
+			105 PRIYANKA 10 8000
+			106 KRISHAN 20 2000
+			
+			
+		
+		GROUP BY EXECUTED WITH 4 STEPS := 
+		
+		1) BRINGS COLUMNS REQUIRED IN THE TEMP MEM 
+		
+				20 5000
+				30 3000
+				20 5000
+				10 8000
+				20 2000
+		
+		2) SORTS THE DATA BASED ON THE COLUMN PROVIDED IN THE GROUP BY CLAUSE. 
+					10 8000	
+					20 2000
+					20 5000
+					20 5000
+					30 3000
+					
+		3) CREATES GROUP BASED ON THE COLUMN PASSED IN THE GROUP BY CLAUSE
+		
+					10 8000	GROUP 1
+					
+					20 2000 GROUP 2
+					20 5000
+					20 5000
+					
+					
+					30 3000 GROUP 3
+
+		4) EXECUTE THE GROUP FUNCTION ON  THE GROUPS :: SUM(SALARY)
+				
+					10 8000
+					20 12000
+					30 3000
+				
+				
+	FEW RULES :- 
+
+			1) ALL COLUMS ELSE THEN THE GROUP FUNCTION NEED TO BE INCLUDED IN THE GROUP BY CLAUSE
+
+				
+		SELECT DEPARTMENT_ID,SUM(SALARY)
+			FROM 
+				EMPLOYEES 
+						GROUP BY DEPARTMENT_ID;
+						
+						
+			2) COLUMNS USED IN TH GROUP BY CLAUSE MAY OR MAY NOT BE A PART OF THE SELECT 
+			
+			
+			
+			10 MANAGER 20909
+			10 PRESIDENT 30000
+			20 DEVELOPER 3000000
+			30 CLERK  345555
+			30 QUALITY 700000
+			
+=======================================================================
+
+
+	SELECT DEPARTMENT_ID,JOB_ID,SUM(SALARY)
+			FROM 
+				EMPLOYEES 
+						GROUP BY DEPARTMENT_ID;
+						
+			101 DEV RAHUL 20 5000
+			103 DEV NIKHIL 30 3000
+			104 DEV RISHI 20 5000
+			105 QUALITY PRIYANKA 10 8000
+			106 QUALITY KRISHAN 20 2000			
+			
+				105 QUALITY PRIYANKA 10 8000 GROUP1
+				
+					10 QUALITY 8000
+				
+				101 DEV RAHUL 20 5000  GROUP2
+				104 DEV RISHI 20 5000				
+				106 QUALITY KRISHAN 20 2000	 
+				
+				20 DEV 12000
+				
+				
+				103 DEV NIKHIL 30 3000  GROUP3
+				
+
+==========================================================================				
+				HAVING : APPLY ON THE OUTPUT TO FILTER THE DATA 
+				
+					IT COMES WITH GROUP BY CLAUSE
+					
+					
+	WHERE  :- 
+			ALWAYS FILTER DATA FROM THE PHYSICAL LOCATION OF THE TABLES
+			
+	HAVING :-
+			FILTER ON THE OUTPUT...
+			
+	===================================================================
+
+	SELECT  (MANDATORY)
+	
+		FROM (MANDATORY)
+				
+				WHERE (OPTINAL)
+					
+						GROUP BY  (OPTINAL)
+							
+								HAVING  (OPTINAL)
+								
+									ORDER BY (OPTINAL)
+
+
+==========================THANKS =================================
+
+			...... REVISE GROUP BY AND HAVING ......
+			
+			
+
+
+
+
+
+
+
+
+
+	
+				
+				
+				
+				
+				

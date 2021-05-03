@@ -1,0 +1,360 @@
+Question :- 
+2. Prepare a program to delete the data from emp. It will receive two inputs employee number and employee name. If employee number is passed as null then delete the data based on employee name.
+Backup the deleted data to employee_backup table.
+
+
+			delete from emp where condition...
+			
+			
+			
+			DELIMITER //
+			
+			CREATE TABLE employee_backup LIKE EMPLOYEES //
+			
+			
+			CREATE PROCEDURE EMP_DELETE(X INT,Y VARCHAR(20))
+			BEGIN
+			
+			IF X IS NULL THEN 
+			INSERT INTO employee_backup SELECT * FROM EMPLOYEES_REF WHERE FIRST_NAME  = Y;
+				
+				DELETE FROM EMPLOYEES_REF WHERE FIRST_NAME = Y;
+			ELSE 
+			DELETE FROM EMPLOYEES_REF WHERE EMPLOYEE_ID = X AND FIRST_NAME = Y;
+			
+			END IF;
+			
+			END //
+			
+			DELIMITER ;
+			
+			
+---  
+3. Prepare a program to insert new record in employee table. it will take the input of employee data.
+If salary is provided as null then consider the salary as highest salary earned by any employee in same department. If comm is not provided then assume it as 200$			
+			
+			
+			
+1. Prepare a program which can perform following operation
+	- Lookout for tables which has missing constraints
+	- Display list of those tables
+
+	
+			
+			
+			DELIMITER //
+			
+			DROP PROCEDURE IF EXISTS HRDATABASE_TABLE //
+			
+			CREATE PROCEDURE HRDATABASE_TABLE()
+			BEGIN
+			
+			DECLARE STR,STR1 VARCHAR(200);
+			DECLARE X,Y,Z,L INT DEFAULT 0;
+			
+			DECLARE HRDATABASE_TABLE CURSOR
+						FOR SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE  TABLE_SCHEMA = 'hrdatabase';
+			DECLARE HRDATABASE_TABLE_CONST CURSOR
+						FOR SELECT DISTINCT TABLE_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE  TABLE_SCHEMA = 'hrdatabase';
+						
+			SELECT COUNT(*) INTO Y FROM INFORMATION_SCHEMA.TABLES WHERE  TABLE_SCHEMA = 'hrdatabase';
+			
+			SELECT COUNT(*) INTO Z FROM 
+			(SELECT DISTINCT TABLE_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE  TABLE_SCHEMA = 'hrdatabase') U;
+			
+			CREATE TEMPORARY TABLE EMP_T(NAME VARCHAR(200));
+			SET L = Z;		
+			OPEN HRDATABASE_TABLE;
+			
+			L_LEVEL: LOOP
+			
+				IF Y <= 0 THEN 
+						LEAVE L_LEVEL;
+				END IF;
+				FETCH HRDATABASE_TABLE INTO STR;
+			OPEN HRDATABASE_TABLE_CONST;
+			L_CONLEVEL: LOOP
+					IF Z <= 0 THEN 
+						LEAVE L_CONLEVEL;
+					END IF;
+						
+					FETCH HRDATABASE_TABLE_CONST INTO STR1;
+					IF STR = STR1 THEN
+						SET X = 1;
+						INSERT INTO EMP_T VALUES(STR);
+					END IF;
+					SET Z = Z - 1;
+			END LOOP L_CONLEVEL;
+				
+				SET Z = L;
+				SET Y = Y - 1;
+			CLOSE HRDATABASE_TABLE_CONST;
+			END LOOP L_LEVEL;
+			
+			CLOSE HRDATABASE_TABLE;
+			
+			SELECT * FROM EMP_T;		
+			
+			END //
+			
+			DELIMITER ;
+			
+			
+	===========================================================
+
+TRIGGERS :- 
+
+	1) A SET OF STATEMENTS EXECUTED ON SOME EVENTS.....
+	
+	2) AUTO BLOCK - BASED ON THE EVENTS....
+	
+	EVENTS : 
+			INSERT / UPDATE / DELETE 
+			
+					INSERT {
+					STATEMENTS 1
+					STATEMENTS 2
+					}
+					SO WHENEVER...
+						END USER EXCUTE/RUN
+							INSERT FROM THERE CONSOLE...
+								AUTOMATICALLY 
+									TRIGER ATTACHED TO THAT INSERT 
+										EXECUTED....
+										
+		SYNTAX : 
+
+	UPDATE EMPLOYEES SET SALARY = SALARY + 1000 WHERE DEPARTMENT_ID = 20;
+	
+	
+			CREATE TRIGGER TRIGGERNAME
+				BEFORE / AFTER 
+					INSERT / UPDATE / DELETE 
+						ON TABLENAME
+							FOR EACH ROW
+			BEGIN
+			
+			BODY :::::::::::
+			
+			END //
+			
+		** BEFORE : NEED TO EXECUTE THE TRIGGER BODY BEFORE COMPLITION OF THE EVENT....
+
+		
+		TWO THINGS :- 
+
+		1) 	END USER : WHO IS EXECUTING 
+					INSERT / UPDATE / DELETE 
+					INSERT .....
+			INSERT INTO TABLE
+					HAVE A LOGS IN PLACE 
+							WHICH USER AND WHAT TIME 
+									THIS RECORDS ENTERED...
+									
+		2) TRIGGER BODY...
+		
+			
+		DECIDE - HOW THE EXECUTION WILL TAKE PLACE....
+		
+		BEFORE / AFTER 
+		
+		BEFORE : EXECUTE TRIGGER BODY BEFORE EXECUTION INSERT...
+		
+		AFTER : EXECUTE TRIGGER BODY AFTER EXECUTION INSERT...
+		
+					
+----------------------------------------------------------------------
+
+
+EXAMPLE :- 
+
+			CREATE TABLE EMPTR
+			(
+			ID INT PRIMARY KEY AUTO_INCREMENT,
+			NAME VARCHAR(20),
+			SALARY INT,
+			COMMISSION FLOAT(2,1)
+			);
+			
+			CREATE TABLE DACLOGS
+			(
+			ID INT PRIMARY KEY AUTO_INCREMENT,
+			SUBJECT VARCHAR(20),
+			DESCRIPTION VARCHAR(200),
+			ADDEDDATE DATETIME DEFAULT NOW(),
+			ADDEDBY VARCHAR(100)
+			);
+			
+			DELIMITER //
+			
+			CREATE TRIGGER EMPTR_TRIG
+				AFTER
+					INSERT ON EMPTR
+						FOR EACH ROW
+			BEGIN
+			
+			INSERT INTO DACLOGS(SUBJECT,DESCRIPTION,ADDEDBY)
+					VALUES('INSERT','NEW VALUES ENTER IN TABLE EMPTR',USER());
+			
+			END //
+			
+			
+			
+			
+	------------------------------------------------------
+
+TRIGGER AND EVENTS :- 
+
+		DATABASE CREATE TWO VARIABLES :- 
+		
+				FOR EVERY EVENT 
+						NEW 
+						OLD
+						
+		UPDATE EMPLOYEES SET SALARY =  SALARY + 1000 WHERE EMPLOYEE_ID = 102;
+		
+		CONSIDER : 	OLDSALARY   SALARY 6000  OLD
+					NEWSALARY   SALARY 7000  NEW
+						
+		INSERT INTO EMPLOYEES(ID,NAME,SALARY) VALUES(101,'RAHUL',5000);
+				CREATES A NEW RECORDS....
+				
+			OLD VALUE  : NULL 
+			NEW VALUES : 101,'RAHUL', 5000
+			
+		DELETE FROM EMPLOYEES WHERE EMPLOYEE_ID = 102;
+		
+			OLD VALUES : 101,RAHUL,5000
+			NEW VALUES : NULL
+			
+		
+				OLD		 			NEW
+				
+		INSERT	NULL				NEW.SALARY
+		UPDATE  OLD.SALARY(5000)	NEW.SALARY(6000)
+		DELETE 	OLD.SALARY			NULL
+			
+			
+----------------------------------------------------------------
+
+WRITE A TRIGGER 
+				IF SALARY > 20000 
+						COMMISSION 0.1
+				IF SALARY < 20000 
+						COMISSION 0.5
+			
+	HARD CODED REULE FOR THE ORGANIZATION...
+
+      -- INSERT INTO EMPTR(NAME,SALARY) VALUES('NIKHIL',24000);
+	  
+			NEW.NAME = NIKHIL
+			NEW.SALARY = 24000
+			
+			OLD.SALARY = NULL
+			OLD.NAME = NULL
+
+		DELIMITER //
+		
+		DROP TRIGGER IF EXISTS EMPTR_SAL // 
+		
+		CREATE TRIGGER EMPTR_SAL
+			AFTER 
+				INSERT ON EMPTR
+					FOR EACH ROW
+		BEGIN
+		
+		IF NEW.SALARY > 20000 THEN 
+			UPDATE EMPTR SET COMMISSION = 0.1;
+		ELSEIF NEW.SALARY < 20000 THEN 
+			UPDATE EMPTR SET COMMISSION = 0.5;
+		ELSE
+			UPDATE EMPTR SET COMMISSION = 0.3;
+		END IF;
+		
+		END //
+		
+EXECUTE  	
+mysql> INSERT INTO EMPTR(NAME,SALARY) VALUES('NIKHIL',24000);
+    -> //
+ERROR 1442 (HY000): Can't update table 'emptr' in stored function/trigger because it is already used by statement which invoked this stored function/trigger.
+mysql>
+			
+
+	    DELIMITER //
+		
+		DROP TRIGGER IF EXISTS EMPTR_SAL // 
+		
+		CREATE TRIGGER EMPTR_SAL
+			BEFORE 
+				INSERT ON EMPTR
+					FOR EACH ROW
+		BEGIN
+		
+		IF NEW.SALARY > 20000 THEN 
+			SET NEW.COMMISSION = 0.1;
+		ELSEIF NEW.SALARY < 20000 THEN 
+			SET NEW.COMMISSION = 0.5;
+		ELSE
+			SET NEW.COMMISSION = 0.3;
+		END IF;
+		
+		END //
+					
+
+-------------------------------------------------------------------
+
+TRIGGER :- 
+
+	IF SOMEBODY UPDATE THE EXISTING VALUES....
+		I NEED TO KEEP A TRACK OF OLDVALUES AND NEW VALUES..
+		
+		
+
+		DELIMITER //
+		
+		DROP TRIGGER IF EXISTS EMPTR_UPDATE // 
+		
+		CREATE TRIGGER EMPTR_UPDATE
+			AFTER 
+				UPDATE ON EMPTR
+					FOR EACH ROW
+		BEGIN
+		
+		DECLARE STR VARCHAR(500);
+		
+		SET STR = CONCAT('OLD VALUES : ',OLD.NAME,' ',OLD.SALARY,' ','NEW VALUES : ',NEW.NAME,' ',NEW.SALARY);
+		
+		INSERT INTO DACLOGS(SUBJECT,DESCRIPTION,ADDEDBY)
+					VALUES('UPDATE',STR,USER());
+		
+		END //
+=====================================================================
+
+			CREATING LOGS
+			INSERTING VALUES IN THE DEPENDEND TABLES...
+			
+			NEW AND OLD
+				THEY CREATED FOR ALL THE COLUMN OF THE TABLE ROW..
+				
+
+======================================================================
+
+						TRIGGER WORKS 
+						--------------
+					
+--------------------------ER DIAGRAM-------------------------
+
+			------------- Thankyou---------------
+
+	
+				
+					
+			
+			
+			
+			
+			
+			
+			
+			
+			

@@ -1,0 +1,354 @@
+22/10/2020
+
+Basics of DBMS
+In todays world of internet every thing is data even when u click something on the internet it also generates a large amount of data.
+1. Database---->
+2. DBMS---->When we want to manage our data the technology or std sets of codes  comes forward is called as DBMS
+Expectation from DBMS
+1. Concurrency--->
+2. Security----->DB controls(whoever try to access cannot login until i provide login cedentials),,Data redaction 
+(data masking so that someother person as well as the manager or creater wont be able to read it until and unless they know about encryption technique)
+3. Accessibility----->easily accessible ,
+
+History of DB
+started from cave paintungs than comes manuscript than to paper documentation we have come along way in DB and now we are having computer HDD to manage 
+data which is both readable and writable.
+In 1960s IBM uses different data heirarchy called IMS
+
+IBM was the 1st to manage the data.
+charles bachman
+ted 
+C.J. date
+EF codd--->introduced the concept of relational dB model.
+Don Chamberline-->Introduced SQL(Structured Query Inguage)
+Larry ellison----->Oracle founder(in 1979 as relational software ltd later named to oracle)
+
+
+EF codd develop 12 rules for someone who is going to his model to manage data.
+
+ACID---
+Atomic-->all or nothing transactions cannot be subdivide.Trnsform db from one consistent sate to another.
+Consitent-->Until and unless my state change my other user won't get inot picture or there is one transaction running than no other transaction ca take place on one DB.
+For ex:in ATM when we are withdrawing than at that time we canot deposit the money until the withdrawing amount is updated on DB but when withdrawing let us say
+ something happen like connection lost than the system will back all the changes which is nothing but consistency.
+ISOLATED-->Transactons execute independently of one anther.i.e Database changes cannot be revealed until user completes its transaction,
+Durable-->DB chnages should be permanent.
+
+client server system--->
+Introdution to client -server architecturm
+ 
+codd's rule----->
+
+23-10-2020
+
+For relation between 2 tables the column we are choosing should have same datatype but not cumpolsory to have the same name
+columns is also known as attributes.
+
+data types--->3
+1. numerics
+used to store numbers
+a. Tinyint--->(-128 to127)
+b. smallint-------->(-32768 to 32767)
+c. mediumint----->(-8388608 to 8388607)
+d. int--------->(-2147483648 tp 2147483647)
+e. bigint----->(-9223372036854775808 to 9223372036854775808)--->2^63 bytes
+f. float(4,2)-----
+4-->number of digits including decimal number 64.56,78.65
+2--->precision
+
+int default range 2 or 4 bytes
+if range is less than 32767
+then 
+	it will be 2 BYTES
+else
+	it will be 4 bytes
+
+For tinyint it will be 1 byte
+
+we can write all the int datatype with range ALSO like int(5)-->this means int will have 5 digt numbers only.
+
+2. String
+a. char --->0 to 255 characters
+char(20)----> have 20 characters
+char(1)--->will have 1 characters
+
+b. varchar2--->0 to 65535 characters
+varchar2(20)--->will have 20 characters
+varchar2(1)---->will have 1 characters
+
+their is a difference between char and varcha2 which is when i say char it is fixed length while varchar is dynamic .
+
+			fixed							dynamic
+char(5)	"abc"		right padded the value with blank space of size same as char		it stores the value as it is
+			"abc  "
+char(5)  "abcdef"  		will have "abcde" a value and rest will be 			'abcde' will have 6 bytes as 1 byte is used for prefix(length of string)
+
+varchar(5)			discarded as the size of char is 5.				
+
+c. Text is of size 2^ 8 bytes
+char search is much faster than varchar--->as in varchar it 1st checks the precision than reads the data while in char it directly reads the data .We use char for 
+smaller values rather than for larger values for which we have to know the length.
+
+oracle:-1998
+	varchar is used in oracle with length of 2000 bytes
+	varchar2 is used in oracle with length of 4000 bytes
+mysql:-2000
+	varchar 2^8
+
+varchar(20)  : 20 characters         inside memory 21 bytes are reserved.
+3. date and time
+a. date--->Date without time      '2020-10-10'
+b. datetime---->date with time  '2020-10-10  23:09:45'
+c. timestamp---->date and time with locality( like india has locality of UTC +5.30)
+
+
+==================================================================================================================================
+To interact with database we should have Structured query lang 
+SQL-->allows me to talk to my database
+IBM took 2 yrs to design 9 basic cmds
+Fetching somethng--->select
+Insert data------>Insert
+Update data---->update
+remove data---->delete
+new table---->create
+Modify table----->alter
+remove my table------>drop
+provide access------>grant
+remove the access--->revoke
+
+
+they categorize 9 cmds into 4 subparts based on their Nature:-
+SQL:- 
+	DQL-->Data query lang
+		select cmd comes under this category
+	DML--->Data manipulation language
+		update--->modify/update the existing values of table
+		delete---->delete the data from table.
+		insert----->inserting new data in to the table
+Tables:-
+	structure:-col. names , dattype,constraints	
+	data:- values of col/rows  int string,date type
+
+	DDL---->Data definition language
+		structure of tables
+		create---> used to create a table
+		alter---->use to alter the fields of table like name or datatype
+		drop---->remove the table as a whole
+
+	DCL-->Data control lang
+		Grant-->gives access permission to user
+		revoke--->revoke the permission from user.
+		
+
+====================================================================================================================
+
+DDL
+	Create -->
+		Syntax:
+			CREATE TABLE tablename
+			(
+				colname	datatype 	constraints,
+				colname1 datatype	constraints,
+				colname2 datatype   constraints,
+				.
+				.
+				.
+				so on
+			);
+		EXAMPLE:
+			Employee 
+				emp_id,emp_name,emp_sal,_emp_age,emp_hiredate;
+
+				CREATE TABLE Employee
+				(
+					emp_id int,
+					emp_name varchar(100),
+					emp_age int,
+					emp_sal int,
+					emp_hiredate dattime
+				);
+			
+to add tables into database
+hierarchy of creating a database
+	database>tables>rows and col>data......
+
+	Create a datatbase
+		CREATE DATABASE databasename;
+		
+		CREATE DATABASE HRSchema;
+	Move inside database:-
+		USE databasename;
+
+		USE HRSchema;
+	view structure of table:-
+		describe tablename	;
+		OR
+		desc tablename;
+		OR
+		explain tablename;
+		
+DEFAULT VALUES FOR ALL THE ROWS/COL WILL BE "NULL".
+
+	view all the tbales in my database:-
+		SHOW tables;
+	
+CONSTRAINTS:- applying restrictions for the enduser to enter values in the columns.........
+for ex: in employee table we don't won't duplicate id or we can say unique id
+Different Constraints:-
+
+1. Primary Keys:-
+	1. it won't accept NULL values--->means if i apply ths as constraint than it won't accept null values
+	2. No duplicate values-->it won't accept duplicate values
+	3. Single primary key in the table--->we cannot have more than 1 primary key in table
+	Allowed:-	
+	CREATE TABLE Employee
+	(	
+		emp_id int Primary Key, --
+		emp_name int age,
+		so on
+	);
+	Not Allowed:- as we could not have more than 1 primary key
+	CREATE TABLE Employee
+	(	
+		emp_id int Primary Key, --
+		emp_name int age Primary Key,
+		so on
+	);
+
+Any of the reason :- I am in a situstion to have multiple col with unique elements then:-
+	System : u can have a Composite Primary Key
+	Composite primary key : Combination of columns
+		Syntax:-
+			CREATE TABLE tablename
+			(
+			Column datatype,
+			Column1 datataype,
+			.
+			.
+			So On,
+			Primary Key(Column,Column1)
+			);
+	Consider A example :-
+		Patient's Data :-
+			Name,DoB,MobileNumber,Prescription,Address
+			Here we set Name,DoB,MobileNumber to be unique as there will be very rare situation where we can have all three fields to be same		
+ 			CREATE TABLE tablename
+			(
+			Name varchar(100),
+			DOB date,
+			Mobile bigint,
+			prescription int,
+			address varchar(500),
+			Primary key(Name,DOB,Mobile)
+			);
+
+		Name		DOB		Mobile		Prescription		Address
+		Rahul		1987-10-10	6768766767	198			XYZ
+Allowed		Rahul		1987-10-10	6762876379	198			XYZ
+Not Allowed	Rahul		1987-10-10	6768766767	198			XYZ
+
+===================================================================================================================
+to view all the available databases
+show databases;
+
+by default mysql provide with some database one of them is :-
+
+Information_schema database:-
+	which have all the things which we are using in our databases including structure,datatype,constraints,etc.
+	Whatever We do with my database metadata(Structures)
+	All get stored inside information_schema.
+	-Table
+	-Columns
+	-Constraints
+===================================================================================================================
+in mysql we have a provisong for defining self define constraints hat means i can define name to te constraints
+	Syntax:-
+		Create table tablename:-
+		(
+		Column datatype,
+		Column1 dattype,
+		Constraint constraintname definitions
+		);
+
+		Create Table Employee
+		(
+		Emp_id int,
+		Emp_name varchar(100),
+		Constraint Employee_PK Primary Key(Emp_id)
+		);
+==================================================================================================================
+Having another colmn as unique
+
+2. Unique :- 
+	1. N number of unique contraints in the table
+	2. Won't allow duplicate values
+	3. It allows NULL
+	
+this means there is a single we could set NULL but this is not the case Every NULL in database is unique in nature:-
+	AS NULL =NULL always return false as every null is unique in nature.This means we could have many NULL but each NULL would be unique.
+	NULL:- meaning of null
+		Missing value
+		No value
+		Data not known
+		Null value
+
+	Syntax:-
+		Create Table Employee 		
+		(
+		Emp_id int primay key,
+		Emp_sal int,
+		Emp_Name varchar,
+		Emp_Mobile bigint Unique
+		);
+
+3. NOT NULL:- This mean null is not allowed
+		Create Table Employee 		
+		(
+		Emp_id int primay key,
+		Emp_sal int NOT NULL,          
+		Emp_Name varchar,
+		Emp_Mobile bigint Unique
+		);
+This means salary never allows null value while mobile could have Null.
+===============================================================================================================================
+4. Foreign Key:-
+	
+	1. Parent table and Child table
+	* Create relationship between 2 tables
+	*I need to force user not to enter in the child table which does'nt exist in the parent table
+	*U allowed to have NULL
+Example:- We have employee database which have 2 table EMP and Dept
+	EMP				Dept
+	ID				Dept_id
+	Name				Dept_name
+	Sal
+	Mobile
+	Address		
+	Dept_id(id with datatype same as datatype of Dept_id)
+
+Need to have all employees belongs to the dept whose dept_id mapped with each employee must exist in the dept table.......
+therefore 
+Dept : Becomes Parent
+Emp:becomes child
+
+Syntax :-
+Foreign key(childtable col) references Parent table(prent table col)
+	Create table dept
+	(
+		deptid int primary key,
+		dept name varchar(20)
+	);
+
+		Create Table Employee 		
+		(
+		Emp_id int primay key,
+		Emp_sal int NOT NULL,          
+		Emp_Name varchar,
+		Emp_Mobile bigint Unique
+		Emp_Dept_id int,
+		Constraint Employee_FK
+			Foreign Key (Emp_Dept_id ) references dept(deptid )
+		);
+
+
+Each time Emp_Dept_id receives a dept id it checks in the dept table whether it exist or not if exist then it will allow otherwise it won't allow

@@ -1,0 +1,219 @@
+1) CREATE TABLE with NULL CONSTRAINT
+
+	CREATE TABLE newauthor
+		(
+		aut_id varchar(8) NOT NULL,	   
+		aut_name varchar(50) NOT NULL,   
+		country varchar(25) NOT NULL,	   
+		home_city varchar(25) NOT NULL 
+		); 
+		
+	CREATE TABLE EMPLOYEE
+		(
+			EMP_ID INT NOT NULL,
+			EMP_NAME VARCHAR(20) NOT NULL,
+			EMP_SAL INT NOT NULL,
+			EMP_HIREDATE DATETIME NOT NULL
+		);
+
+	Analyse After Describing The Table :- 
+
+2) CREATE TABLE to check values with CHECK CONSTRAINT
+
+	Create Table newbook
+		(
+			book_id varchar(20) Not Null Unique,
+			book_name varchar(20),
+			book_ibsno varchar(20) Not Null Unique,
+			no_page int check(no_page > 0),
+			book_size varchar(20)			
+		);
+		
+		
+		Create Table newbook
+		(
+			book_id varchar(20) Not Null Unique,
+			book_name varchar(20),
+			book_ibsno varchar(20) Not Null Unique,
+			no_page int check(no_page > 0 and book_ibsno like 'E%'),
+			book_size varchar(20)			
+		);
+
+
+	Select * from 
+		information_schema.TABLE_CONSTRAINTS 
+			where TABLE_NAME = 'employees';
+			
+			
+	Select Column_Name from 
+		information_schema.COLUMNS
+			where TABLE_NAME = 'employees' and TABLE_SCHEMA = 'hrdatabase';
+
+3) CREATE TABLE with CHECK CONSTRAINT using IN operator
+
+	Create Table newauthor
+		(
+		aut_id int Primary Key,
+		aut_name varchar(20) Not Null,
+		Country varchar(20) Not Null Check(Country in ('USA','INDIA','UK')),
+		home_city varchar(20) not null
+		);
+		
+
+4) CREATE TABLE with CHECK CONSTRAINT and LIKE operator
+
+			Where emp_name = 'Rahul';
+			
+			Where emp_name like '%ah%'
+								_
+		Create Table newauthor
+		(
+		aut_id int Primary Key,
+		aut_name varchar(20) Not Null,
+		Country varchar(20) Not Null Check(Country in ('USA','INDIA','UK')),
+		home_city varchar(20) not null Check(home_city like 'P%')
+		);	
+			
+
+5) CREATE TABLE with AND and OR operator and CHECK CONSTRAINT
+
+		CREATE TABLE NEWPUBLISHER
+		(
+		PUB_ID VARCHAR(20),
+		COUNTRY VARCHAR(20),
+		PUB_CITY VARCHAR(20),
+		PUB_DATE DATE CHECK((PUB_CITY = 'PUNE' and COUNTRY = 'INDIA')
+			OR (PUB_CITY = 'TORANTO' and COUNTRY = 'USA')),
+		PRIMARY KEY(PUB_ID)
+		);
+		
+6) UNIQUE CONSTRAINT
+
+		CREATE TABLE NEWAUTOR
+		(
+		AUT_ID VARCHAR(20) NOT NULL,
+		COUNTRY VARCHAR(20),
+		UNIQUE(AUT_ID)
+		);
+		
+7) UNIQUE CONSTRAINT check unique value
+
+		CREATE TABLE NEWAUTOR
+				(
+				AUT_ID VARCHAR(20) NOT NULL UNIQUE,
+				COUNTRY VARCHAR(20),
+				);
+8) CREATE TABLE with DEFAULT CONSTRAINT
+
+		CREATE TABLE NEWAUTOR
+				(
+				AUT_ID VARCHAR(20) NOT NULL UNIQUE,
+				COUNTRY VARCHAR(20) DEFAULT 'INDIA',
+				PUB_DATE DATETIME DEFAULT NOW()
+				);
+	
+9) CREATE TABLE with AUTO INCREMENT
+
+		CREATE TABLE NEWAUTOR
+				(
+				AUT_ID VARCHAR(20) NOT NULL AUTO_INCREMENT,
+				COUNTRY VARCHAR(20),
+				PRIMARY KEY(AUT_ID)
+				);
+				
+10) PRIMARY KEY CONSTRAINT
+		
+		CREATE TABLE NEWAUTOR
+				(
+				AUT_ID VARCHAR(20),
+				COUNTRY VARCHAR(20),
+				PRIMARY KEY(AUT_ID)
+				);
+				
+11) CREATE TABLE PRIMARY KEY CONSTRAINT on single column
+
+		CREATE TABLE NEWAUTOR
+				(
+				AUT_ID VARCHAR(20) PRIMARY KEY,
+				COUNTRY VARCHAR(20),
+				);
+			
+12) CREATE TABLE PRIMARY KEY UNIQUE CONSTRAINT
+
+		CREATE TABLE EMPLOYEE
+		(
+		EMP_ID INT PRIMARY KEY,
+		EMP_NAME VARCHAR(20) NOT NULL,
+		EMP_CITY VARCHAR(20) NOT NULL UNIQUE
+		);
+		
+		
+13) CREATE TABLE PRIMARY KEY on multiple columns
+		
+		CREATE TABLE EMPLOYEE
+		(
+		EMP_NAME VARCHAR(20),
+		EMP_MNO BIGINT,
+		EMP_NAME VARCHAR(20) NOT NULL,
+		EMP_CITY VARCHAR(20) NOT NULL UNIQUE,
+		PRIMARY KEY(EMP_NAME,EMP_MNO)
+		);
+		
+14) CREATE TABLE WITH FOREIGN KEY CONSTRAINT
+	
+		
+	
+
+15) CREATE TABLE with FOREIGN KEY CONSTRAINT on multiple columns
+
+16) CREATE TABLE with FOREIGN KEY CONSTRAINT on multiple tables
+	CHILD TABLE MAP WITH TWO PARENT
+	
+	CREATE TABLE NEWPURCHASE
+	(
+	INVOICE_NO INT PRIMARY KEY,
+	ORD_NO VARCHAR(20),
+	BOOK_ID VARCHAR(20),
+	CATE_ID VARCHAR(4),
+	FOREIGN KEY(ORD_NO,BOOK_ID) REFERENCES NEWORDER(ORDER_NO,BOOK_ID),
+	FOREIGN KEY(CATE_ID) REFERENCE CATEGORY(CATE_ID)
+	);
+	
+
+17) CREATE TABLE with CASCADE
+	
+	CREATE TABLE NEWPURCHASE
+	(
+	INVOICE_NO INT PRIMARY KEY,
+	ORD_NO VARCHAR(20),
+	BOOK_ID VARCHAR(20),
+	CATE_ID VARCHAR(4),
+	FOREIGN KEY(ORD_NO,BOOK_ID) REFERENCES NEWORDER(ORDER_NO,BOOK_ID),
+	FOREIGN KEY(CATE_ID) REFERENCE CATEGORY(CATE_ID) ON DELETE CASCADE
+	);
+		
+18) CREATE TABLE with SET NULL
+
+	CREATE TABLE NEWPURCHASE
+	(
+	INVOICE_NO INT PRIMARY KEY,
+	ORD_NO VARCHAR(20),
+	BOOK_ID VARCHAR(20),
+	CATE_ID VARCHAR(4),
+	FOREIGN KEY(ORD_NO,BOOK_ID) REFERENCES NEWORDER(ORDER_NO,BOOK_ID),
+	FOREIGN KEY(CATE_ID) REFERENCE CATEGORY(CATE_ID) ON UPDATE CASCADE ON DELETE SET NULL
+	);
+
+CREATE TABLE with NO ACTION
+
+
+
+
+
+
+
+
+
+
+
+

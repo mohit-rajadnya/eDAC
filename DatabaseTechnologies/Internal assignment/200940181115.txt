@@ -1,0 +1,163 @@
+												- Internal Assignment -
+												  ===================
+
+Q1. Display the Employee’s ID, Column with the concatenation of First Name and Last Name,Salary who is living in ‘London’.
+
+Query==
+
+-	select employee_id , concat(first_name , " " , last_name)as "Full name" , salary from employees as e
+		inner join departments as d on e.department_id = d.department_id
+		inner join locations as l on l.location_id = d.location_id
+			where city = "London";
+
+----------------------------------------------------------------------------------------------------------
+Q2. Display the Employee’s Last name whose name starts with ‘s’.
+
+Query==
+
+-	select last_name from employees where first_name like "s%";
+
+----------------------------------------------------------------------------------------------------------
+Q3.Find the Employee Joining date on the first Monday in October month.
+
+Query==
+
+-	select * from employees where month(hire_date) = 10 and day(hire_date) <= 7 
+	and dayname(hire_date) = "Monday";
+
+----------------------------------------------------------------------------------------------------------
+Q4. Display the employee name and city in capital letters.
+
+Query==
+
+-	select ucase(concat(first_name , " " , last_name)) as "Full name" , ucase(city) as "Location" 
+		from employees as e inner join departments as d 
+			on e.department_id = d.department_id
+				inner join locations as l 
+				on l.location_id = d.location_id; 
+
+-----------------------------------------------------------------------------------------------------------
+Q5. Display the department and their max salary of the same department.
+
+Query==
+
+-	select department_name , max(salary) as "Max_salary" 
+		from employees as e inner join departments as d 
+			on e.department_id = d.department_id
+				group by e.department_id;
+	
+-----------------------------------------------------------------------------------------------------------
+Q6. Find the second lowest salary among the employees, who are working in the same department.
+
+Query==
+
+-	select min(salary) , department_id from employees as e1
+		where salary > (select min(salary) from employees as e2 where e1.department_id = e2.department_id)
+			group by department_id ;
+
+-----------------------------------------------------------------------------------------------------------
+Q7. Create a report that has employee name , department name , job_id , manager name have a salary in the range 10000 to 25000 and 
+department = 90.
+
+Query==
+
+-	select e1.first_name as "First name" , department_name , e1.job_id , e2.first_name as "Manager name" 
+		from employees as e1 inner join employees as e2 on e1.manager_id = e2.employee_id
+			inner join departments as d on e1.department_id = d.department_id
+				where e1.salary between 10000 and 25000 and e1.department_id = 90;
+
+-----------------------------------------------------------------------------------------------------------
+Q8. Display job title, employee name , and the difference betweenthe salary of the employee and the min salary for the job.
+
+Query==
+
+-	select job_title , concat(first_name ," ", last_name) as "Employee name" , e.salary - j.min_salary as "Sal Diff"
+		from employees e inner join jobs as j on e.job_id = j.job_id;
+
+----------------------------------------------------------------------------------------------------------
+Q9. Write a query to display department name , name(first_name , last_ name) , hire_date , the salary of the manager for all managers
+whose experience is more than 15 years.
+
+Query==
+
+-	select concat(e2.first_name," ",e2.last_name)  as "Manager name" , department_name , e2.hire_date , e2.salary 
+		from employees as e1 inner join employees as e2 on e1.manager_id = e2.employee_id
+			inner join departments as d on e1.department_id = d.department_id
+				where timestampdiff(year,e2.hire_date,curdate()) > 15;
+	
+-----------------------------------------------------------------------------------------------------------
+Q10. Create a procedure to insert and update the record in the employee table and whenever there is any update , 
+create the logs for the same keeping old value and new value , date , and new username.
+
+Procedure==
+
+- delimiter //
+drop procedure if exists emp_insert//
+create procedure emp_insert(
+							emp_id int , fname varchar(30), lname varchar(30), mail varchar(50), ph_no int , hire date , j_id int , 
+							sal bigint , comm decimal(4,2) , mgr_id int , dept_id int
+							) 
+							
+begin
+insert into employees values(
+							emp_id , fname , lname , mail , ph_no  , hire  , j_id  , sal  , comm  , mgr_id  , dept_id 
+							) ;
+
+end; //
+delimiter ;
+
+
+Trigger==
+
+create table Emp_audit_table like employees;
+
+alter table emp_audit_table add ( 
+									old_emp_id int , old_fname varchar(30) , old_lname varchar(30), 
+									old_email varchar(50) , old_ph_no varchar(20) , old_hire_date date , 
+									old_job_id int , old_salary decimal(8,2) , old_commission decimal(4,2) , old_mgr_id int , 
+									old_dept_id int,Changedate date , User varchar(30)
+								);
+create trigger Emp_Update
+	after update on employees
+		for each row 
+			insert into emp_audit_table
+				set
+					employee_id = new.employee_id,
+					first_name = new.first_name,
+					last_name = new.last_name,
+					email = new.email,
+					phone_number = new.phone_number,
+					hire_date = new. hire_date,
+					job_id = new.job_id,
+					salary = new.salary,
+					commission_pct = new.commission_pct,
+					manager_id = new.manager_id,
+					department_id = new.department_id,
+					old_emp_id = old.employee_id,
+					old_fname = old.first_name,
+					old_lname = old.last_name,
+					old_email = old.email,
+					old_ph_no = old.phone_number,
+					old_hire_date = old.hire_date,
+					old_job_id = old.job_id,
+					old_salary = old.salary,
+					old_commission = old.commission_pct,
+					old_mgr_id = old.manager_id,
+					old_dept_id = old.department_id,
+					changedate = now(),
+					User = user();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,220 @@
+								DAY 13
+								
+lET SEE COVERED IN THE LAST 12 DAYS DURATION :- 
+
+				RDBMS : 
+		DATABASES > TABLES > COLUMNS / ROWS > DATA 
+		
+		STORING IN THE TABLES : ARE COMPLETLY STRUCTURED DATA 
+		
+		INSERT INTO TABLE :- 
+		
+				WE HAVE TO INSERT A COMPLETE RECORDS
+					MEANS WITH COMPLETE COLUMN VALUES FOR CREATING 
+						A RECORD......
+		
+		TABLES :- 
+		
+				SQL TO WORK WITH THE DATABASE 
+					
+					CLIENT : USER 
+							NEED TO DO WITH YOUR DATABASE 
+								SQL COMMANDS....
+				
+				DML / DDL / DCL / DTL / DQL
+				
+			JOIN :-
+					
+			SELECT : FETCH THE DATA....
+			
+			SUB QUERIES.....
+			
+			RELATING YOUR SUB QUERIES :-
+			
+					CORRELATED SUB QUERIES...
+				
+			VIEW  :- 
+					ENCAPSULATE
+					
+				PROVIDE ACCESS ON THE VIEW...
+				
+======================================================================
+
+PROGRAMING WITH SQL :- 
+
+		PROCEDURES
+		FUNCTIONS
+		CURSORS
+		TRIGGERS
+		EXCEPTION HANDLING
+		
+		THIS ALL ALLOWS ME TO DO A PROGRAMMING INSIDE THE DATABASE....
+		
+		STORED IN THE DATABASE...
+			WHEN EVER I REQUIRED I CAN GET THE COMPLETE INFORMATION
+			
+				GET THE SYNTAX, GET THE CREATE COMMANDS...
+		
+	
+		===========================================================
+					
+					
+					
+		CURRENT SITUATION :- 
+		
+				1) NOT ABOUT THE MEMORY
+				2) HUGE - MEMORY 
+				3) CONSISTENCY : 
+					I UPLOADED 200 IMAGES 
+							SOME OF MY FRIEND 
+									ABLE TO VIEW THAT DATA 
+										AFTER 4 HOURS
+										
+					NEVER MATTERS ME ...
+					NEVER BOTHER ME
+					
+				-- DEFINATLY MY FRIEDS WILL BE ABLE TO VIEW THE DATA..
+
+
+		CONSISTENCY  : EVENTUALLY CONSISTECYY.....
+		
+		1 SECONDS 
+			1SECONDS  * 100000
+				100000 SECONDS
+						
+					
+					
+	SERVER  :
+			8 GB RAM 
+					1TB 
+			16 GB
+			
+					500TB
+					
+			
+			32 GB
+				
+					1000TB 
+					
+		SERVER CAPICITY 
+:					MULTPLE MACHINE IS PARALLEL....
+
+			MACHINE 
+					STILLING FACING ISSUES IN THE RETERIVAL 
+					
+					RETRIES DIFFERENT MACHINE 
+					
+					RDBM : WRITE AND READ FROM SINGLE SERVR....
+					
+				
+				DOCUMENT ORIENTED DATABASE :- 
+
+MONGODB :-
+
+			EVERYTHING GET STORED IN THE DOCUEMNT 
+			
+	ALL DOCUMENT COMES UNDER A COLLECTION
+	
+	
+	BASICS : 
+		MONGODB 							RDBMS
+		
+		DATABASE							DATABASE
+											
+		COLLECTIONS							TABLES
+	
+		DOCUMENTS 							ROWS 
+		
+		MAY HAVE SEPERATE 			EVERY ROW HAVE A SAME STRUCTURED
+		STRUCTURE OF EVERY 
+		DOCUMENTS
+	
+		D1 : NAME AND SALARY
+		D2 : ID , NAME, SALARY , ADDRESS
+		D3 : ID, SALARY, ADDRESS, ALLOCATION
+			DEPARTMENT, PHONE NUMBER....
+			
+		STORES DATA IN THE FORMAT 
+			OF JSON
+			
+		JAVA SCRIPT OBJECT NOTATION
+		
+		
+		KEY VALUES : 
+		
+		AND PRESENT INSIDE A SINGLE 
+			OBJECT 
+			
+		D1 : 
+			{
+			NAME : RAHUL,
+			SALARY : 50000,
+			ADDRESS : PUNE,
+			DEPARTMENT : 20
+			}
+			
+			{
+			NAME : "RAHUL",
+			SALARY : 50000,
+			ADDRESS :
+					{
+						HOUSENO : 103,
+						CITY : "PUNE",
+						COUNTRY : "INDIA"
+					},
+			DEPARTMENT_ID : 10
+			}
+		
+		
+		COMPLETLY :- WORKED ON JSON 
+					STORE DATA IN BSON...
+					
+					BINARY OF JSON....
+					
+					
+		
+		
+		
+		
+			
+			
+			
+			
+			
+		
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+		

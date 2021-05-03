@@ -1,0 +1,84 @@
+Functions
+
+1. Write a program to take the input as empno and return the experience of employee in terms of number of years.
+- delimiter //
+drop function if exists empexp//
+create function empexp(empid int)
+returns int deterministic
+begin
+declare yearsofexp int;
+select timestampdiff(year, hire_date , curdate()) as 'exp' into yearsofexp from employees
+where employee_id = empid; 
+return yearsofexp;
+end//
+delimiter ; 
+
+select  empexp(104);
+------------------------------------------------------------------------------------
+2. Write a program to take the input as deptno and return the comma separated list of employee names
+- delimiter //
+drop function if exists emp_name//
+create function emp_name(dept_id int)
+returns varchar(5000) deterministic
+begin
+Declare employee_names varchar(5000) ;
+SELECT  GROUP_CONCAT(FIRST_NAME)  AS 'COMMA SEPERATED LIST' 
+INTO EMPLOYEE_NAMES FROM 
+EMPLOYEES WHERE DEPARTMENT_ID =dept_id;
+ RETURN EMPLOYEE_NAMES;
+end; //
+delimiter ;
+
+select emp_name(80)
+------------------------------------------------------------------------------------
+3. Add a new column incentive to emp table. Write a program to calculate and update the incentive using following logic.
+     If employees salary is more then avg salary of dept then incentive is 0
+	 If employees salary is less then avg salary of dept then incentive is 10% of salary
+
+alter table employees add column Incentives int; 
+
+delimiter $$
+drop function if exists EmpIncentive_3$$
+
+create function EmpIncentive_3(emp_no int)
+returns int deterministic
+begin
+
+declare emp_incent int ;
+declare sal int;
+declare avg_sal int;
+
+select avg(salary) into avg_sal from employees;
+
+select salary into sal from employees where employee_id = emp_no;
+
+
+if sal > avg_sal then
+set emp_incent = 0 ;
+elseif sal < avg_sal then
+set emp_incent = sal*1.1;
+end if; 
+
+return emp_incent;
+
+end$$
+delimiter ;
+
+
+
+SET @temp_var = (select EmpIncentive_3(106));
+update employees set incentives = @temp_var where employee_id =106;
+
+------------------------------------------------------------------------------------
+4. Write a program to get the count of employees working in provided deptno
+- delimiter //
+drop function if exists count_emp//
+create function count_emp(dept_id int)
+returns int deterministic
+begin
+declare emp_count int;
+select count(employee_id) into emp_count from employees where department_id = dept_id;
+return emp_count;
+end; //
+
+select count_emp(50);

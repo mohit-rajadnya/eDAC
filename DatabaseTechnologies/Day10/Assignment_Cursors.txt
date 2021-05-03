@@ -1,0 +1,125 @@
+Cursors
+---------
+
+1. Prepare a program to display the comma separated list of employee names in following format
+
+   Deptno    Employees
+   -------   ------------
+   10        Scott, Smith, Jones
+   20        Allen, Ford
+   30 
+
+DELIMITER $$
+   DROP PROCEDURE IF EXISTS DEPT_EMP_COMMA_SEPERATED_LIST_SP$$
+   CREATE PROCEDURE DEPT_EMP_COMMA_SEPERATED_LIST_SP()
+   BEGIN
+    DECLARE FINISHED INTEGER DEFAULT 0;
+    DECLARE ENAME VARCHAR(500);
+    DECLARE DEPT_NO INT ;
+    
+    
+    DECLARE ENAME_CR CURSOR 
+    FOR 
+   SELECT   DEPARTMENT_ID  , group_concat( FIRST_NAME) AS 'FIRST_NAME'  FROM EMPLOYEES
+   GROUP BY DEPARTMENT_ID  ;
+   
+   DECLARE CONTINUE HANDLER
+   FOR NOT FOUND SET FINISHED =1;
+    
+    CREATE TEMPORARY TABLE log
+    (DEPT_NO int,EMPLOYEES_NAMES  varchar(5000));
+   -- DELARE NOT FOUND HANDEL
+    OPEN ENAME_CR;
+    GET_ENAMES : LOOP
+    FETCH ENAME_CR INTO DEPT_NO,ENAME; 
+    IF FINISHED =1
+    THEN 
+    LEAVE GET_ENAMES;
+    END IF ;
+    -- SET NAME_LIST_PARA = CONCAT( DEPARTMENT_ID ,'--------',ENAME_LIST, ',', NAME_LIST_PARA);
+    INSERT INTO log(DEPT_NO, EMPLOYEES_NAMES)
+      SELECT DEPT_NO , ENAME AS EMPLOYEES_NAMES ;
+    END LOOP GET_ENAMES;
+	CLOSE ENAME_CR;
+    SELECT * FROM log;
+    DROP TABLE log;
+   END $$
+-------------------------------------------------------------------------------
+
+2. Prepare a program to show the details in following format
+
+    Deptno   Dname      Employees
+	-------  -------    -------------
+	10        SALES     Scott, Smith, Jones
+	
+delimiter //
+drop procedure if exists c1//
+create procedure c1()
+begin
+declare finished int default 0;
+declare d_name varchar(20);
+declare dept_id int;
+declare e_name varchar(5000);
+
+declare cur cursor for select d.department_id , department_name , group_concat(first_name) as 'Employees'
+from employees e inner join departments d on d.department_id = e.department_id 
+group by e.department_id;
+
+declare continue handler for not found set finished = 1;
+
+create temporary table log(dept int, deptname varchar(50) , ename varchar(5000));
+open cur;
+lloop : loop
+fetch cur into dept_id , d_name , e_name;
+if finished = 1 then
+leave lloop;
+end if;
+insert into log values (dept_id , d_name , e_name);
+end loop lloop;
+close cur;
+select * from log;
+drop table log;
+end;//
+delimiter ;
+
+call c1();
+-----------------------------------------------------------------------------------------
+
+3. For performance testing we are trying to increase number of records by 10 times for each department. For eg: If there are 3 employees in dept 10 then we should be able to increase the employee count to 30 using same / random values 
+
+eg:
+
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
+
+
+should become
+
+
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7783 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7784 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7785 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7786 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7787 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+...........
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7840 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7841 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7842 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7843 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+...........
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
+	
+	
+	
+4. Prepare a program to create clone of all tables in given schema
+

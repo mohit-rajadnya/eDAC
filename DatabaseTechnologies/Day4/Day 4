@@ -1,0 +1,561 @@
+							DAY 4
+							
+Topics Covered :-
+
+Covered the Create Command
+	With DataTypes
+		With Different Type Of Constraints
+			With Multiple Constraints allied on the signle columns
+				With Multiple constraints between multiple tables////
+				
+				
+				DDL : Data Defination Language
+---------------------------------------------------------------------
+
+	Our Session :- 
+			Raw Data 
+				Grouped Logically and Created Different Tables 
+					As Required
+					
+
+Data : Raw Information which need to be inserted or manipulated with in the database....
+
+		When we talk about a data :-
+			
+				DML : Data Manipulation Language
+				
+				1) Insert 
+				2) Update
+				3) Delete 
+
+			Only works with data inside the tables......
+			
+				Nevere Ever touch your Structure of the tables
+				
+	1) Insert :-
+
+			Is the command used to insert the complete record in the table.
+			
+			Or New Record
+			
+Syntax 1:-
+			
+	INSERT INTO TABLENAME 
+		VALUES(ALL YOU COLUMNS VALUES SEPERATED WITH COMMA);
+
+				CREATE TABLE EMPLOYEES
+				(
+				ID INT,
+				NAME VARCHAR(20),
+				DEPT_ID INT,
+				SAL INT
+				);
+				
+		BEFORE INSERTION :-
+				WE HAVE TO LEARN THAT
+				
+					NUMBER VALUES WILL BE INSERTED AS IT
+					STRINGS AND DATE : MUST CONTAINS ''
+							TO IDENTIFY THAT IT'S A STRING OR DATE
+	
+				
+		INSERT INTO EMPLOYEES 
+				VALUES(101,'RAHUL',10,5000);
+				
+				
+SO IF WE NEED TO INSERT MULTIPLE RECORDS AT A SAME TIME :-
+
+		MODIFIED THE INSERT IN THE LATEST DATABASES :-
+	
+SYNTAX 2:- 
+	
+		INSERT INTO EMPLOYEES 
+				VALUES(101,'RAHUL',10,89898),(102,'NIKHIL',20,23433);
+				
+	
+===================================================================
+
+SO BE A SITUATION THAT TABLE CONTAINS 50 COLUMN AND I ONLY HAVE 3,4,5,6 VALUES WITH ME...
+
+SYNTAX 3 :- 
+
+		INSERT INTO TABLEAME(COLUMN NAMES SEPERATED WITH COMMA)
+				VALUES(COLUMN VALUES SEPERATED WITH COMMA);
+				
+		BUT WE HAVE TO MAKE SURE THAT VALUES WILL BE IN THE SAME SEQUENCE IN WHICH COLUMNS NAME ARE USED IN THE INSERT STATEMENT
+
+			CREATE TABLE EMPLOYEES
+				(
+				ID INT,
+				NAME VARCHAR(20),
+				DEPT_ID INT,
+				SAL INT
+				);
+				
+		INSERT INTO EMPLOYEES(ID,NAME)
+					VALUES(103,'KRISHAN');
+		DATABASE :- 
+		
+				INSERT 103 IN ID	
+					KRISHAN IN NAME
+					NULL IN SAL
+					NULL IN DEPT_ID
+
+	THIS IS THE STANDARD AND RECOMMENDED SYNTAX WHILE USING INSERT INTO YOU PROGRAMMING.....
+
+		
+		===================================
+
+				CREATE TABLE EMPLOYEES
+				(
+				ID INT,
+				NAME VARCHAR(20),
+				DEPT_ID INT,
+				SAL INT,
+				EMP_ADDRESS VARHCAR(50) -- SOMEBODY ADDED A NEW COLUMN
+				
+				);
+			
+		INSERT INTO EMPLOYEES 		
+			VALUES(101,'RAHUL',10,89898),(102,'NIKHIL',20,23433);
+
+				START FAILING : 
+					DBMS SYNTAX SAYS : INSERT REQUIRED ALL THE COLUMN VALUES
+					
+	----------------------------------------------------------
+
+STANDARD INSERT QUERY :- 
+		
+		INSERT INTO EMPLOYEES(ID,NAME)
+					VALUES(103,'KRISHAN');
+					
+		INSERT INTO EMPLOYEES(NAME,ID)
+					VALUES('KRISHAN',103);
+					
+		INSERT INTO EMPLOYEES(VARCHAR,INT)
+					VALUES('KRISHAN',103);
+
+
+		RULES :- 
+			1) SEQUENCE OF ENTERING VALUES MUST BE SAME AS TABLE STRUCTURE OR COLUMNS DEFINES AT THE TIME OF INSERT
+			
+			2) YOU HAVE TO MAKE SURE ALL THE MANDATORY COLUMNS WILL BE ADDED HERE....
+			SKIP THE MANDATORY COLUMN :
+				NOT NULL COLUMNS......
+				
+				
+=========================================================================					
+UPDATE :-
+
+		USED TO UPDATE THE EXISTING VALUES OF YOUR COLUMNS PRESENT IN THE ROWS OF YOUR TABLE....
+		
+		MODIFY THE EXISTING VALUES OF THE TABLE
+			UDATE STATEMENT.....
+			
+		SYNTAX :- 
+		
+			UPDATE TABLENAME SET COLUMNNAME = VALUE;
+			
+			** UPDATE IS A POWERFULL STATEMENT 
+				IF WE RAN THE UPDATE STATEMENT WITHOUT THE CONDITION
+					IT WILL IMPACT THE COMPELTE TABLE ROWS....
+					
+			
+			CREATE TABLE EMPUPDATE
+			( 
+				ID INT,
+				NAME VARCHAR(20),
+				SAL INT
+			);
+			
+			INSERT INTO EMPUPDATE VALUES(101,'RAHUL',4000),(102,'NIKHIL',3000),(103,'KRISHAN',565465);
+			
+			----------------------------------------------
+			
+SYNTAX :- 
+
+			UPDATE TABLENAME SET COLUMN = VALUE WHERE CONDITION;
+			
+			
+			UPDATE EMUPDATE 
+				SET NAME = 'RAMESH'
+					WHERE ID = 102;
+					
+---------------------------------------------------------------------
+
+NEED TO UPDATE MULTIPLE COLUMN VALUES OF THE RECORD OR ROWS
+
+		UPDATE NAME AND DEPARTMENT_ID
+		
+		
+		UPDATE EMPUPDATE
+			SET NAME = 'LAKHAN',SAL=7989 
+					WHERE ID = 102;
+			
+	iF ANY OF THE SENARIO : 
+		WHERE CONDITION RETURNS MORE THEN ONE RECORD
+			UPDATE WILL UPDATE  THE COLUMN		
+				OF ALL THE RECORDS RETURN FROM THE WHERE CLAUSE
+				
+				
+	* MAKE SURE YOU RUN UPDATE QUERIES WITH THE USE OF UNIQUE OR PRIMARY KEY COLUMNS FOR UPDATE....
+			SO THAT IT WILL ONLY UPDATE A PERTICULAR RECORD WHICH YOU WANT TO UPDATE...
+			
+			
+	IN RARE SCENARIO :- 
+			WHEN YOUR TABLE DOES NOT HAVE ANY UNIQUE COLUMNS...
+			
+			SO MAKE SURE TO USE CONMPARISION IN SUCH A WAY THAT 
+				YOU'LL ABLE TO GET THAT PERTICULAR WHICH YOU WANT TO UPDATE
+				
+				
+			UPDATE EMPUPDATE
+				SET NAME = 'SUMITA'
+					WHERE SAL = 6000 AND ID = 103;
+					
+			SELECT * FROM EMPUPDATE 
+					WHERE SAL = 6000 AND ID = 103;
+					
+					
+		SYNTAX :-
+
+			UPDATE TABLE 
+				SET COLUMN = VALUE,COLUMN2=VALUE
+					WHERE MULTIPLE CONDITIONS SEPERATED WITH OPERTORS
+					
+						AND - OPERATOR 
+
+	=============================================================		
+			
+DELETE  :- 
+
+			IS USED TO DELETE THE RECORD FROM THE TABLE
+				REMOVE THE COMPLETE RECORDS :-
+					DELETE STATEMENT.....
+					
+					
+		SYNTAX :- 
+		
+			DELETE FROM TABLE WHERE CONDITION ;
+			
+		IS ALSO AS POWERFULL COMMAND AS YOUR UPDATE...
+		
+		IF WE RUN DELETE WITHOUT ANY CONDITION:- 
+			IT WILL DELETE MY COMPLETE TABLE.........
+			
+		DELETE FROM EMPUPDATE
+			WHERE ID = 102;
+			
+		DELETE FROM EMPUPDATE WHERE CONDITION SEPERATED WITH OPERATORS..;
+		
+==========================================================================
+
+QUESTION :- 
+
+			REMOVE THE VALUES OF DEPARTMENT FINANCE
+				NEED TO REMOVE FINANCE FOR ID 20
+				
+=========================================================================
+
+DELETE  :-
+
+			1) REMOVE THE COMPLETE RECORD
+			2) DELETE WORKS WITH WHERE CLAUSE
+			3) DELETE ONLY DELETE THE RECORD, NOT RELEASE THE MEMORY ALLOCATED TO THAT PERTICULAR RECORD.....
+			4) STRUCTURE REMAINS AS IS
+			
+			
+			101 RAHUL 20 3000
+			103484575475
+			.....................
+			348457857858
+			
+			
+REMOVE COMLETE TABLE ROWS WITH THE SPACE :- 
+
+				TRUNCATE TABLE TABLENAME;
+				
+			1) NEVER WORKS WITH WHERE CLAUSE
+			2) USED TO REMOVE THE DATA FROM THE TABLE
+				WITH THE SPACE ALLOCATED TO IT....
+			3) STRUCTURE REMAINS AS IS
+				
+========================================================================
+			
+			EVERY ROW IS BOUND WITH A UNIQUE ID	
+						INTERNLLY NY DBMS
+			
+			ORACLE :- 
+					(ROWID)
+					
+			SELECT ROWID,ID, NAME FROM EMPLOYEES;
+			
+			
+=========================================================================
+ONE MORE POINT FOR DML :-
+
+	DML COMMANDS ARE NOT AUTOCOMMIT IN NATURE...
+	
+		DML COMMANDS NEVER EVER IMPACT YOUR DATABASE DIRECTLY
+	
+		DDL COMMANDS ARE AUTOCOMMIT IN NATURE.....
+
+=========================================================================			
+
+COMMIT : IS A STATEMENT WHICH FORCE ALL CHANGES DONE IN THE SESSION
+			AND MOVE IN THE PYSICAL LOCATION OF THE DATABASE.....
+			
+			
+CONSIDER A EXAMPLE :-
+
+				TRANSACTION IN YOU ATM MACHINE
+				
+					YOU ARE WITHDRAW 2000 RS FROM ATMMACHINE
+					
+					- READ THE AMOUNT FROM MY ACCOUNT
+						READ : 6000
+					- DO CALCUATION
+						6000 - 2000 = 4000
+						
+					- WRITE TO MY ACCOUNT
+						4000
+						
+					- COMMIT : ALL THE TRANSACTION WILL MOVE TO THE DATABASE....
+					
+==================================================================
+
+Commands which impact your data with dml commands
+					never impact direclty
+					
+					
+=================================================================
+
+				CREATE TABLE EMPCOMMIT
+				(
+					ID INT,
+					NAME VARHCAR(20)
+				);
+				
+				
+	TRANSACTIONAL :-
+			INSERT  /  UPDATE / DELETE 
+			
+			
+			PROGRAM :- SINGLE TRANSACTION WHICH INCLUDE YOUR VARIOUS 
+					INSERT, UPDATE ,DELETE....
+					
+					
+			
+				SELECT SALARY FROM EMPLOYEES WHERE ID = 102;
+				
+				VAR SAL = SALARY;
+
+				SAL = SAL * 0.2;
+				
+				UPDATE EMPLOYEES SET SALARY = SAL WHERE ID = 102;
+				
+=====================================================================
+
+		DTL : DATA TRANSACTIONAL LANGUAGE
+		
+
+COMMIT :- 
+	COMMITS THE DATA FROM THE TEMP MEM TO THE PHYSICAL LOCATION OF YOU DATABASE
+	
+ROLLBACK :- REMOVES ALL THE CHANGES DONE IN MY SESSION AFTER THE LAST COMMIT ;
+
+	COMMIT  :- 
+		MAY COME WHILE USING 
+			COMMIT - EXPLICIT COMMAND
+			OR DDL COMMAND GOT EXECUTED....
+			
+	
+			
+==========================================================================			
+			
+			SELECT  : DQL
+			INSERT/UPDATE/DELETE : DML
+			CREATE/ALTER/DROP : DDL
+			GRANT/REVOKE 	: DCL
+			
+			COMMIT/ROLLBACK : DTL
+			
+========================================================================
+
+** CREATE TABLE / INSERT DATA / MANIPULATE THE DATA(UPDATE OR DELETE )
+
+========================================================================
+
+FETCH THE DATA FROM MY DATABASE :-
+
+SELECT  : DQL (DATA QUERY LANGUAGE)
+
+				ONE OF THE POWERFULL COMMAND AND MOSTLY USED BY 
+					90 % USER 
+					
+		SELECT  : 
+			NEVER EVER IMPACT YOUR DATA OR STRUCTURE OF YOUR DATABASE....
+			
+====================================================================
+
+** SYNTAX :- 
+
+	SELECT COLUMNS NAMES SEPERATED WITH COMMA 
+			FROM 
+				TABLES SEPERATED WITH COMMA.....
+				
+	EMPLOYEES :- 
+			ID / NAME / SAL / ADDRESS / DEPT_ID
+			
+	FETCH CERTAIN COLUMN LIKE ID, NAME
+	
+	** RESTRICTING / ALLOWING USER TO FETCH CERTAINT COLUMN WHICH IS REQUIRED
+	
+		SELECT ID,NAME FROM EMPLOYEES;
+		
+	** USER WANT TO VIEW THE COMPLETE TABLE VALUES
+
+		SELECT INCLUDE ALL THE COLUMN SEPERATED WITH COMMA 
+			FROM EMPLOYEES;
+			
+		Or
+		
+		SELECT *   -- (STAR : ALL THE COLUMNS)
+			FROM EMPLOYEES;
+			
+			WITH ALL THE COLUMNS WITH ALL ROWS....
+			
+			
+----------------------
+
+	** YOU NEED TO HAVE A RESTRICTION FOR ROWS...
+	
+	DATABASE  : 
+			INTRODUCES A WHERE CLAUSE
+			
+				WHERE CONDITION;
+				
+				* THIS IS THE FIRST CLAUSE EXECUTED FROM YOUR STATEMENT...
+				* EXECUTED ON THE DATABASE DIRECTLY
+				
+	QUESTION : 
+		FETCH ALL EMPLOYEES DATA OF DEPARTMENT 20
+		
+		
+		SELECT 
+			COLUMNS SEPERATED WITH COMMA
+			FROM
+				TABLENAME
+					WHERE
+						CONDITION ;
+						
+						
+		SELECT 
+			*
+			FROM 
+				EMPLPOYEES 
+					WHERE CONDITION;
+	
+CONDITION COMES IN WHERE CLAUSE 
+		COMES WITH OPERATORS :- 
+		
+OPERATORS :- 
+	
+			RATIONAL OPERATORS :- 
+			
+			= , < , > , <= ,  >= , !=
+			
+			
+		SELECT * FROM EMPLPOYEES WHERE DEPARTMENT_ID = 20;
+		
+			* EXECUTE - RUN WHERE CLAUSE 
+			* MATCH WITE CONDITION 
+				ROWS MATCHES THE CONDITION, COMES IN THE TEMP MEM
+			* THROWS THAT OUTPUT TO THE CONSOLE...
+				
+		
+									COLUMNNAME = VALUE....
+									
+		SELECT 
+			COLUMNS
+				FROM 
+					TABLE
+						WHERE 
+							CONDITION;
+							
+		
+	* LOGICAL OPERATOR	
+			* AND Or NOT
+			
+				AND  : COMES BETWEEN TWO CONDITION
+						AND FORCE THEM TO BE TRUE
+						
+					ROW WILL COME IN THE OUTPUT ONLY WHEN 
+					
+						TRUE AND TRUE 
+						
+		LIKE :- 
+
+			NEED TO FIND THE EMPLOYYE DATA WHICH BELONGS TO DEPARTMENT 20
+				AND SALARY = 6000
+				
+			
+mULTIPLE CONDITION:-
+
+				SELECT 
+					*
+					FROM 
+						TABLE
+							WHERE 
+								CONDITION1 OPERATOR CONDITION2......
+								
+		SELECT * FROM EMPLOYEES 
+				WHERE DEPARTMENT_ID = 20 AND SALARY = 6000;
+			
+	OR :- 
+		
+			OPERATOR 
+				ANY OF THE CONDITION WILL BE TRUE
+					
+				ROWS COMES ON OUTPUT 
+
+					TRUE OR FALSE
+					FALSE OR TRUE
+					TRUE OR TRUE
+					
+				SKIP THOSE ROWS WHERE 
+				
+					FALSE OR FALSE
+					
+				
+		
+		SELECT * FROM EMPLOYEES 
+				WHERE DEPARTMENT_ID = 20 OR SALARY = 6000;
+				
+			101 RAHUL 20 3000
+			102 NIKHIL 30 5000
+			103 KRISHAN 20 8990
+			104 NIKHIL 50 6000
+			
+			OUTPUT :-
+			
+			101 RAHUL 20 3000
+			103 KRISHAN 20 8990
+			104 NIKHIL 50 6000
+		
+		
+		SELECT 
+			COLUMN 
+				FROM 
+					TABLENAME
+						WHERE CONDITIONS (RATIONAL , LOGICAL OPERATORS)
+						
+						
+=========================================================================
+	Arithmetic Operators :-
+		Order by clause
+			DDL 
+				Alter and DROP
+			DCL : 
+				Grant and Revoke..
+				

@@ -1,0 +1,153 @@
+Able To Connect To MYSQL :- 
+
+
+1) Show Databases;
+
+2) Use DatabaseName;
+
+3) Select database();
+
+4) Session Variable : 
+
+	Show variables like '%version%';
+	
+5) Show tables;
+
+6) View the structure of the tables
+	desc
+	
+7) Execute the sql file from the command line
+
+source C:\Users\Priyanka Goel\Desktop\DAC August 2020\hrschema.sql
+
+Source FileName
+
+Error :- 
+
+\U not recognized.......
+
+source C:/Users/Priyanka Goel/Desktop/DAC August 2020/hrschema.sql
+
+======================================================================
+
+** 
+
+	Whenever you want to fetch the data from the database
+	You'll going to use a single command named as
+	
+		Select :- Fetch Data
+		
+				:- Is near by 2 millions line of code
+					wriiten behind this command
+					
+					2 years time to develop all command (9 command)
+					
+		Most of the people in these organizational 
+		
+				They'll only be using Select....
+						90 % people only use this....
+								atleast 2 years of exp....
+								
+		
+	- Fetch data from table employees
+
+		Select * from employees;
+		
+		Select 	All Columns and All Rows From Table Employees;
+		
+		
+					
+	Fire ON CMD (Client)						Server(Mysql)
+
+		Select * from employees;
+		
+												Select * from employees;
+												Process Here
+												Get the output
+												Throws the output to the client machine
+		Data / Output
+		Shows on the console...
+		
+		
+
+		Select * from employees;
+		
+		; User ends his statement
+		
+		; terminating operator
+		
+	
+	SQL : Select (Columns seperated with comma) from employees;
+	
+			
+		Select first_name, last_name, salary from employees;
+		
+		
+		mysql> desc employees;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| employee_id    | int unsigned | NO   | PRI | NULL    |       |
+| first_name     | varchar(20)  | YES  |     | NULL    |       |
+| last_name      | varchar(25)  | NO   |     | NULL    |       |
+| email          | varchar(25)  | NO   |     | NULL    |       |
+| phone_number   | varchar(20)  | YES  |     | NULL    |       |
+| hire_date      | date         | NO   |     | NULL    |       |
+| job_id         | varchar(10)  | NO   | MUL | NULL    |       |
+| salary         | decimal(8,2) | NO   |     | NULL    |       |
+| commission_pct | decimal(2,2) | YES  |     | NULL    |       |
+| manager_id     | int unsigned | YES  | MUL | NULL    |       |
+| department_id  | int unsigned | YES  | MUL | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+mysql> desc employees;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| employee_id    | int unsigned | NO   | PRI | NULL    |       |
+| first_name     | varchar(20)  | YES  |     | NULL    |       |
+| last_name      | varchar(25)  | NO   |     | NULL    |       |
+| email          | varchar(25)  | NO   |     | NULL    |       |
+| phone_number   | varchar(20)  | YES  |     | NULL    |       |
+| hire_date      | date         | NO   |     | NULL    |       |
+| job_id         | varchar(10)  | NO   | MUL | NULL    |       |
+| salary         | decimal(8,2) | NO   |     | NULL    |       |
+| commission_pct | decimal(2,2) | YES  |     | NULL    |       |
+| manager_id     | int unsigned | YES  | MUL | NULL    |       |
+ department_id  	int
++----------------+--------------+------+-----+---------+-------+
+
+Department
+  department_id  	int
+| department_name | varchar(30)  | NO   |     | NULL    |       |
+| manager_id      | int unsigned | YES  | MUL | NULL    |       |
+| location_id     | int unsigned | YES  | MUL | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

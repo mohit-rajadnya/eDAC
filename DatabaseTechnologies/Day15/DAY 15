@@ -1,0 +1,651 @@
+								DAY 15
+								
+Topic :- 
+		Mongodb :- 
+		
+			JSON : 
+				{
+					key : value
+				}
+			
+			TOP OF IT :- 
+					MONGODB HAS ITS OWN QUERY LANGUAGE 
+						IT INTRACTS WITH THE DATABASE.....
+			
+			
+				db.collection.insert();
+				
+		find the records :- 
+
+			Select : Where filter the data : Columns need to printed
+			
+		db.collectionname.find(query, projection);
+		
+			query  : where 
+			projection : column required to be an output..
+						0 : need to exclude 
+						1 : need to include
+						
+		operators : 
+					find : query 
+					
+			$lt,$gt,$in,$nin,:,$ne,$lte,$gte.....
+			
+		operators :- 
+				multiple condition in your selection criteria
+				
+					and or 
+					$and 
+					$or
+					
+			
+			Select * from employees where department_id = 90;
+			
+			db.employees.find({department_id : 90},{"_id" : 0});
+			
+Order By Clause :- 
+
+			sorting the data on the screen....
+			
+				order by  : 	sort()
+				
+				asc				positive
+				
+				desc			negetive
+					
+					
+in order to control order your query will return the matching documents, just to append sort() to the output....
+
+			syntax :- 
+
+				db.employees.find(
+							{department_id : 90},
+							{salary : 1,department_id : 1,"_id" : 0}
+							).sort({salary:1})
+							;
+					
+	Select salary,department_id,job_id from employees
+			where department_i in (20,90)
+				order by salary , job_id;
+				
+				
+		db.employees.find(
+						{department_id : {$in : [20,90]}},
+						{salary : 1, department_id : 1,job_id : 1,"_id" : 0}
+						).sort({salary:1,job_id:-1});
+						
+	without the where clause :- 
+	
+		db.employees.find(
+				{},
+				{salary : 1, department_id : 1,job_id : 1,"_id" : 0}
+				).sort({salary:1,job_id:-1});
+			
+			
+		db.employees.find().sort({salary:1,job_id:-1});				
+	==========================================================
+
+				BASIC DATA AGGREGATION OPERATIONS 
+				
+				
+**  COUNT : RETURNS THE COUNT OF DOCUMENTS THAT WOUPLD MACTCH A FIND() QUERY ....
+		JUST APPEND THE COUNT() METHOD TO A FIND() QUERY TO RETUN THE NUMBER OF DOCUMENTS....
+		
+			SYNTAX :- 
+			
+		db.collection.find(<query>,<projection>).count();
+		
+	** Select count(*) from employees;
+		
+		
+		db.employees.find({}).count();
+					
+	** Select count(*) from employees where department_id =  90;
+
+		db.employees.find({department_id : 90}).count();
+		
+
+** distinct : find the distinct values for a specific field within a single collection and returns results
+
+		SYNTAX:- 
+			
+		db.collectionname.distinct(field);
+		
+		db.employees.distinct("department_id");
+			retuen array of distinct values of department_id field
+					from all the documents in the employees table...
+					
+					
+		{
+			name : "rahul",
+			salary : 90000,
+			address : 
+					{
+						houseno : 1084,
+						street : "chandan nagar",
+						state : "MH",
+						country : "INDIA"
+						
+					}
+		}		
+			
+		db.employees.distinct("address.country");
+		
+		db.employes.find({"address.country" : "INDIA"});
+				returns all the documents where 
+						country = INDIA
+						
+====================================================================
+
+find / insert / 
+
+UPDATE : modify existing records or documents of a collection....
+
+	SYNTAX :- 
+	
+		db.collection.update(<query>,<update>,<options>);
+		
+		query : corresponds to where statement in mysql...
+				selection criteria...
+				
+		update : set operator, allows me to update certain column values
+					set in mysql
+		
+		** By default update() method updates a single document,
+			just similar to the 
+			update statement in mysql with limit 1;
+			
+			update employees set salary = 8000;
+					by default : to update all the records of you table 
+						with the value of salary = 8000
+						
+		update() : to update single document...
+		
+		Need to update multiple documents togeather :- 
+		
+				multi : is an option which allows to update 
+							multiple documents to geather...
+							
+		* prarametes of the update() method 
+
+			* query : selection criteria
+			* update : modification to apply
+			* Option : specifies wheather to perorm a multiple update 
+				or an upsert{----}
+				
+* if update parameter of update method contains any updated operation 
+
+				$set to update the documents...
+				
+				
+	* to update values of a field , use $set 
+	
+		** update employees set salary = 9000 where employee_id = 102;
+		
+		
+	db.employees.update(
+					{employee_id : 102},
+					{$set : {salary : 19000}}
+					);
+					
+	update coutry from india to us :- 
+	
+		{
+			name : "rahul",
+			salary : 90000,
+			address : 
+					{
+						houseno : 1084,
+						street : "chandan nagar",
+						state : "MH",
+						country : "INDIA"
+						
+					}
+		}
+		
+			db.employees.update(
+							{name : "rahul",salary : 90000},
+							{$set : {"address.country" : "USA"}}						
+								);
+---------------------------------------------------------------								
+NEED TO INCREASE THE VALUES OF THE FIELDS :- 
+
+* INC : $inc 
+		increment the values of a field by a specified amount
+		
+		increase the salary by 2000 
+		
+		db.employees.update(
+						{employee_id : 102},
+						{$inc : {salary : 2000}}
+						);
+		-- update the employee 102 salary 
+				with 2000 
+				
+				salary = salary + 2000 
+				
+		need to update all employees salary by 3000....
+		
+		
+		db.employees.update(
+						{},
+						{$inc : {salary : 3000}}
+					);
+		---- defaut update the 1st document of the collectio....
+		
+		<option> : multi...
+
+		db.employees.update(
+					{},
+					{$inc : {salary : 3000}},
+					{multi:true}
+			)
+			
+		multi : if selection criteria return more then one document 
+				and we want to update ALL documents column value,,
+					we will be going to 
+					multi: true
+				
+--------------------------------------------------------------------		
+Example : 
+			db.employees.update(
+					{department_id : 90},
+					{$inc : {salary : 3000}}
+			);
+			
+======================================================================
+
+IF WE NEED TO ADD NEW FIELD TO A DOCUMENT....
+
+	MYSQL : ALTER TABLE TABLENAME ADD COLUMN DATATYPE ;
+	
+	* UPDATE PARAMETER MAY CONTAIN FIELDS THAT DO NOT EXIST IN THE DOCUMENT...
+	IN SUCH CASE, UPDATE() WILL ADD THE NEW FIELDS TO THE DOCUMENT...
+	
+	I NEED HAVE A AGE FIELD IN THE DOCUMENT 102
+	
+		{
+			EMPLOYEES_ID : 102,
+			SALARY : 9000
+		}
+	
+	db.employees.update(	
+						{employee_id : 102},
+						{$set : {age : 60}}
+						);
+						
+	update the document in the employees collection and add to it a new fiels age and set its value to 60 
+	
+---------------------------------------------------------
+
+Remove a field from the document :-
+
+		MYSQL : 
+				DDL : Create / Alter / Drop 
+				
+			alter table employee drop column columnname;
+			
+			
+	field from the document....
+	
+		$set   :  $unset
+		$unset : operator remove the fields from the document
+			
+		
+		db.employees.update(
+						{employee_id : 102},
+						{$unsert : {age : 60}}
+						);
+		value to the field in the $unset statement has no impace..
+			i.e 
+				same result in the above example
+			
+			{$unset : {age : ""}}
+
+		* in case your document where you are doing $unset 
+		
+			with the query matches and bring the results..
+			
+			does not have that fields in the document ..
+			
+			{
+			EMPLOYEES_ID : 102,
+			SALARY : 9000
+			}
+			db.employees.update(
+							{employee_id : 102},
+							{$unset : {age : ""}}
+							);
+							
+			there is no field age, the document will have no effect...
+			
+----------------------------------------------------------
+
+	NEED TO ADD THAT PERTICULAR COLUMN TO ALL THE DOCUMENTS RETURNS FROM THE SELECTION CRITERIA
+		THEN USE THIRD PARAMETER OF THE UPDATE METHOD
+		
+		
+		db.employees.update(
+						{department_id = 90},
+						{$set : {age : 67}},
+						{multi:true}
+						);
+		
+		ALTER TABLE EMPLOYEES ADD AGE INT;
+		
+		UPDATE EMPLOYEES SET AGE = 67 WHERE DEPARTMENT_ID = 90;
+		
+----------------------------------------------------------------------
+
+NEED TO REPLACE THE EXISTING DOCUMENT WITH A NEW VALUES...
+
+
+		db.employees.update(
+					{employee_id : 102},
+					{first_name : "ritesh",last_name : "bansal",age : 78}
+					);
+					
+	** update all the fields except the _id field...
+======================================================================
+
+upsert : 
+	
+		instead of having a query for the existence of a record before performing update or insert you can use upsert...
+		
+	* update() opertaion can accept <upsert> as an option in the arguments..
+	
+	*** 
+		* first check based on the selection criteria any document exist in the collection 
+		* if there is no document with that selection criteria 
+		then it insert a new document with the json provided..
+		
+		* of document exist then it update the document with the new values..
+		
+
+			
+			if (document exist based on the selection)
+				{
+						update existing document
+				}
+			else 
+				{
+						insert a new document.
+				}
+		
+			db.employees.update(
+						{"age" : 89},
+						{
+							"first_name" : "rahul",
+							"last_name" : "sharma",
+							"age" : 89,
+							"gender" : "M"
+						},
+						{upsert:true}
+						);
+			
+			
+		****************** 5 minute break *********************
+
+		
+		
+		upsert :- 
+				option used to perform two opertion at atime 
+				
+				1) validate that the selection criteria provided..
+					in the collection...
+					either document exist with that criteria
+					or not exist.
+				2) if exists
+					then update the document withe update 
+				   if not exist 
+					then insert the new record....
+					
+			
+------------------------------------------------------------------------
+
+Remove the document from a collection : -
+
+	remove() method deletes a document from the collection....
+	
+	SYNTAX : 
+		
+		
+		db.collection.remove(<query>,<justone>);
+		
+		query : as similar as update, specifies the matching criteria
+		
+		justone : takes a boolean if you wish to remove a single document
+		
+		remove document with employee_id  = 102
+		
+		db.employees.remove({employee_id : 102});
+			removes/ delete a document where employee_id = 102
+			
+		delete from employees where employee_id = 102;
+		
+		
+	***** 
+		delete from employees where salary > 17000;
+		
+		db.employees.remove(
+						{salare : {$gt : 17000}}					
+						);
+		
+		
+		remove only single document
+			
+		
+		db.employees.remove(
+						{salare : {$gt : 17000}},
+						1						
+						);
+						
+		removed a single document fro the employees collection for which 
+			value of fields salary > 17000
+			
+			
+	*** if you do not specify which documents to remove ...
+		<query> is empty ...
+
+		then all the documents will be removed from the collection.
+		
+			delete from employees;
+			
+			db,employees.remove();
+			
+-------------------------------------------------------------------
+
+** NEED TO RENAME THE FIELDS FOR YOUR 			
+			
+		$RENAME : OPERATOR 
+
+	rename the specific column name of your documents
+	
+	SYNTAX : 
+			db.collectionname.update(
+								{selection},
+								{$rename : {"oldname" : "newname"}}
+								);
+								
+					
+		db.employees.update(
+						{salary : 17000},
+						{$rename : {"department_id" : "dept_id"}}
+						);
+		
+		db.employees.update(
+						{},
+						{$rename : {"department_id" : "dept_id"}}
+						);		
+			
+			
+		db.employees.update(
+						{},
+						{$rename : {"department_id" : "dept_id"}}
+						{multi:true}
+						);		
+		
+	------------------------------------------------------
+
+RENAME COLLECTION :
+		
+			renameCollection(collectionname)...
+			
+			Syntax : 
+				db.collection.renameCollection(NewName);
+				
+--------------------------------------------------------------------
+
+Aggregate Methods :- 
+			* group by clause
+			* sum
+			* min
+			* max
+			* avg
+			
+Syntax : 
+		db.collection.aggregate(
+					[
+						{$group :
+							{"_id" : "$department_id",
+							"sal" : {$sum : "$salary"}
+							}
+						}
+					]
+					);
+
+		select department_id ,sum(salary) from employees
+					group by department_id ;
+					
+					
+		db.employees.aggregate(
+					[
+						{$group :
+							{"_id" : "$department_id",
+							"sal" : {$sum : "$salary"}
+							}
+						}
+					]
+					);			
+					
+		db.employees.aggregate(
+					[
+						{$group :
+							{"_id" : 
+								{"deptid" : "$department_id"},
+							"sal" : {$sum : "$salary"}
+							}
+						}
+					]
+					);			
+								
+--------------------------------------------------------------------
+
+		salary : salary * 1.15
+
+		
+			db.employees.aggregate(
+					[
+					{$project : 
+					{employee_id : 1,
+						sumsal : {$multiply : ["$salary",1.15]}
+					}
+					}
+					]
+					);
+					
+					
+
+
+
+
+
+
+
+
+
+
+		db.employees.aggregate(
+		[ 
+		{$group : 
+			{ "_id" : 
+				{"deptid" : "$department_id"} , 
+			"sal" : {$sum : "$salary"}
+			} 
+		} 
+		]);
+				
+
+				
+		
+		
+		
+		
+				
+				
+				
+				
+				
+				
+	
+	
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+					
+					
+					
+					
+						
+						
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											

@@ -1,0 +1,623 @@
+
+	Good Morning
+	
+	DAY 2 :-
+	
+		Database : 
+				Data :
+					History Behind the RDBMS
+					
+				Data + DBMS = DATABASE
+
+				Codd's Rule
+					Which is a foundation for any of the RDMS
+		
+		
+			Room > Directory > Files
+			
+			Database > Tables > Row and Column > Data
+			
+1) Relational Database :- 
+
+				Table > Columns DataType
+				
+				
+1.1) DataType :- 
+
+				Are grouped in three parts :- 
+				
+				1) Numeric Datatype
+				
+					Used to store numbers
+					
+					Tinyint - A very Small Integer (-128 to 127)
+					
+					SmallInt - (-32768 to 32767)
+					MediumInt - (-8388608 to 8388607)
+					
+					Int - (-2147483648 to 2147483647)
+					
+					Bigint - (-9223372036854775808 to 9223372036854775807)
+					
+					Float(4,2)  - 4 - Number
+								  2 - Pre
+								  67.56
+								  34.67
+								  76.78
+								  
+					Float(5,3)	  56.789
+								  
+								  
+								Length 4
+									2 are my precision
+								  
+				
+				2) String Datatype
+				
+						Used to store string values
+				
+					Char  Range 0 to 255 characters
+						
+						Char(20)  : Column will contain 20 characters
+							
+						Char(1)   : Column will contain 1 character
+						
+					Varchar2  Range 0 to 65535 
+						
+						
+						varchar2(20) : Column will contain 20 characters
+							
+						varchar2(2)  : Column will contain 2 characters
+						
+					Char 							Varchar2
+	
+					Fixed Lenght					Dynamic Lenght
+
+Char(5)	'abc'    Padded the value 
+Varchar2(20)		 and make the length	
+					of the value same as column
+					size
+	
+Char(5)	'abc'		'abc  '  5byte		
+varchar2(5)	'abc'									'abc' 4 byte
+	
+'acbedff'			'acbed'	5byte					'acbed' 6 byte
+													1 byte for prefix 
+													prefix : length of your string									
+					Character Search is must 
+					Faster then the Varchar2
+	
+	
+						Text  2 power 8 bytes
+						
+Char(20)  'Rahul'  										'Rahul' 6 bytes
+				 'Rahul             ' 20 byte			1 byte for prefix
+														lenght of your string
+				3) Date and Time
+				
+					* Date
+							Date without the time
+							Stores Date in my datebase
+								'2020-10-10'
+					
+					* DateTime
+							Date with time 
+							'2020-10-10 23:09:23'
+							
+					* Timestamp 
+							Date with time with locality
+							locality it stores values in the table
+							
+							UTC +5.30
+					Dubai   UTC +3.30		
+							
+							
+=========================================================================
+
+SQL :- 
+
+		Eemployee  
+			Emp_id	int
+			Emp_name varchar2
+			Emp_sal int
+			Addeddate date
+			
+Interact to my database : Structured Query Language inplace
+
+
+	Sql :- Able To Talk my database
+
+			IBM took around 2 years of time to design 9 basic commands
+			
+			Fetch   Select
+			Insert 	Insert
+			Update 	Update
+			Remove	Delete
+			New Table	Create
+			Modify 		Alter
+			Remove my table 	Drop
+			Provide 	Grant
+			Remove the access 	Revoke
+			
+	Select , Insert , Update , Delete , Create , Alter, Drop , Grant , Revoke
+
+		Cateogries Complete 9 commands into 4 sub parts based on the 
+				Nature :-	
+				
+		SQL :- 
+
+		DQL : Data Query Language
+						Select
+						
+				DML : Data Manipulation Language
+					  Manipulate the data....
+					  Modification on your data we are going to use DML
+					  
+					  INSERT  
+							Used to insert new record in the table
+					  
+					  Update
+							Modify the existing record 
+							Update is used to update the existing values of your table.....
+								
+					  Delete
+							Remove the row/rows from your table
+							We'll going to use a command delete
+							
+	Tables :- 
+
+			Structure  : Column Names, DataType, Constraints
+			Data : 		Values of your columns / Rows
+						Int, String, Date
+		
+		
+		DDL :- Data Defination Language
+						Structure of your tables
+						
+						
+					Create
+					
+							Used to create a new structure / Table
+							in my database
+
+					Alter
+					
+							Whenever i need to modify the existing structre of my tables 
+							I'll be using command named as Alter
+							
+							Structure  : Column Names, DataType, Constraints
+					
+					Drop
+						
+							Whenever we need to remove the complete structrue with data from my database
+							
+							Drop command will be used
+							
+==========================================================================
+
+
+		DCL : Data Control Language
+				
+						Grant 
+							Used to provide permission to the users
+						
+						Revoke 
+							Used to remove the permission from the users
+					
+======================================================================					
+					
+DDL :- Data Defination Language 
+			
+	Create :- 
+	
+			Used to create new structure / table in the database
+			
+			Syntax :- 
+			
+				Create Table TableName
+				(
+					ColumnName  DataType Constraint,
+					ColumnName1 Datatype Constraint,
+					ColumnName2 Datatype,
+					.
+					.
+					.
+					ColumnName1 Datatype Constraint
+				);
+					
+				
+			Employee
+				Emp_id, Emp_Name, Emp_Sal, Emp_HireDate,Emp_Age
+				
+				Create Table Employee
+				(
+					Emp_id int,
+					Emp_Name varchar(50), 
+					Emp_Sal int,
+					Emp_HireDate datetime,
+					Emp_Age smallint
+				);
+				
+	Database > Tables > Row and Column > Data...
+
+			Create database databasename;
+			
+			Create Database HRSchema;
+			
+			Move Inside My Database :- 
+			
+				Use DatabaseName ;
+				
+			Use HRSchema;
+			
+			
+			View the structre of my table
+			
+				Desc : Which shows the structrue of your tables
+				Describe : Which shows the structrue of your tables
+			
+			View All the tables in my database :- 
+			
+				Show Tables;
+				
+				==============================
+				
+				Hight : 165.3 , 123.45, 125.22, 145
+				
+				Float : Float(M,D)
+						
+						Float(5,3)  : 
+								Lenght of my column will 5 in digits
+									From these 5 digit 3 will be precision
+										Value after the decimal
+										
+							13.456
+							
+							12  12.000
+							
+	==========================================================
+
+		Oracle : 
+				Varchar   2000 byte
+				
+				Varchar2  4000 byte
+				
+				
+		Mysql :	
+				varchar 2 power 8
+				
+				varchar(20)  : 20 characters	(20+1) 21 byte
+				
+				Varchar(20)  : 
+				
+					Rahul = Rajesh
+				
+				varchar(3)   Rahul : Won't Allow
+				
+				
+				Char : Fixed Lenght 
+				
+				Varchar Dynamic
+				
+===============================================================
+
+							int(3)
+							Depricate......
+						
+						
+						Int default will be 2 or 4 bytes
+						
+						if the range less then 32767
+								then 2 byte
+						else
+								4 byte
+								
+								
+						bigint  : 2 power 63 byte
+						
+==========================================================================
+
+
+Database > Tables > Columns > Datatype 
+
+
+			Create table tablename
+			(
+			columnname datatype constraint,
+			.
+			.
+			.
+			);
+			
+Constraint : Applying restriction for the end user to enter values in the columns......
+				
+			Like 
+				
+					Column In my Employees
+							Emp_Id : Int (declartion)
+							Don't want duplicate entries
+							Unique : Every employee will receive the unique employee id
+							
+							Like DAC : All received a roll numbers
+										Unique
+										
+							
+								101 Rahul
+								101 Ritesh
+								101 Jitesh
+				
+Different Constraints :- 
+
+Primary Key :- 
+		
+				1) Won't accept Null Values
+				2) No Duplicate values accpeted
+				3) Single primary key in the table
+				
+				Emp_id 101 in my table
+				Againt somebody try to enter 101, it won't allow
+				
+				
+				Create Table Employee
+				(
+				Emp_Id int Primary Key, -- 
+				Emp_Name varchar(50),
+				Emp_Sal int
+				);
+				
+				
+				Not Allowed :- 
+				As per the defination : We do not have two primary key in my table
+				
+				Create Table Employee
+				(
+				Emp_Id int Primary Key,
+				Emp_Name varchar(50) Primary Key,  Not Allowed
+				Emp_Sal int
+				);
+	
+Any of the reason : I am in situation to have multiple column values to be uniquly enter then :- 
+
+		System : You can have a Composite Primary Key 
+		
+		Composite Primary Key : Combination of the columns
+		
+		Consider A Example :- 
+		
+			Patient's Data :- 
+			
+				Name , Dob, MobileNumber, Prescription, Address
+				
+			
+			Create table tablename
+			(
+			Column datatype,
+			Column1 datatype,
+			Column2 datatype,
+			Primary key(Column, Column1)
+			);
+			
+			Create table patient
+			(
+			Name varchar(20),
+			DOB date,
+			mobileno bigint,
+			prescription int,
+			address varchar(500),
+			Primary Key(Name,DOB,mobileno)
+			);
+			
+	Name	Dob			mobileno	prescriotion	address	
+		
+	Rahul	1987-10-10	677678686	198				Viman Nagar
+		
+	Rahul	1987-10-10	677678344	198				Viman Nagar	
+
+	Rahul	1983-10-10	677678686	198				Viman Nagar	
+	
+	Nikhil	1983-10-10
+				
+==================================================================
+
+
+Show databases;
+
+information_schema
+
+	We do with my database metadata (Structures)
+		All get stored inside information_schema
+		
+			- Tables
+			- Columns
+			- Table_Contraint
+mysql
+
+=================================================================
+
+Provision to have self named constriants
+
+	I can define the name to the constraint
+	
+		Create Table TableName
+		(
+		Column datatype,
+		Constraint contastraintname definations
+		);
+		
+		Create Table Employee
+		(
+		Emp_Id int,
+		Emp_Name varchar(20),
+		Emp_sal int,
+		Constraint Employee_Pk Primary Key(Emp_Id)
+		);
+		
+		In Terms of your Primary 
+			MySQL : Primary
+		
+==================================================================
+
+Primary Key  Rules :- 		
+				1) Single Primary 
+				2) No Duplicate
+				3) No Null Values
+				
+Situation : Having another column then the primary key as uniquly identified...
+
+======================================================================
+
+Unique :- 
+
+		1) N no of unique constraint in the table
+		2) Won't allow duplicate values
+		3) It allows Null 
+		
+				Persecption : there will only one null in that column
+				
+		Every Null in the database is unique in nature :- 
+		
+		Null = Null Always return False
+		
+			Null :-
+					Missed Value
+					No Value
+					Data not known
+					Null 
+
+				
+		Create Table Employees
+		(
+			Emp_id int Primary Key,
+			Emp_Name varchar(20),
+			Emp_Sal int,
+			Emp_Mobileno bigint Unique,
+			Emp_Address
+		);
+		
+=====================================================================
+
+Not Null :- 
+
+			1) Not Allowed Null......
+			
+			
+		Create Table Employees
+		(
+			Emp_id int Primary Key,
+			Emp_Name varchar(20),
+			Emp_Sal int Not Null,
+			Emp_Mobileno bigint Unique,
+			Emp_Address
+		);
+			
+			
+=======================================================================
+
+Foreign Key :- 
+
+				1) Parent Table and Child Table
+				
+
+				* Create relationship between two table
+				* Need to force people not to enter values in the child table , which doesn;t exist in the parent table.
+				
+	Eample :- 
+
+		Emp     						Dept
+		
+		Emp_Id							Dept_id
+		Emp_Name						Dept_Name
+		Emp_Sal
+		Emp_Adress
+		Emp_Mobno
+		Dept_id
+		
+		Dept  : Becomes Parent
+		Emp   : Becomes Child
+		
+		Need to have all employees belongs to the department
+		departmentid mapped with each employee must exist in the 
+			department table....
+			
+			
+		
+			
+	100000							10 dept	
+									10		Marketing
+									20		Finance
+									30		Devlopment
+
+				
+Syntax :- 
+
+				Create Table Department
+				(
+					dept_id int primary key,
+					dept_name varchar(20)
+				);
+				
+				
+				Create Table Employee
+				(
+				Emp_id int primary key,
+				Emp_name varchar(20),
+				Emp_Sal int not null,
+				Emp_MobNo bigint unique,
+				Dept_id int,
+				Constraint Employee_fk 
+					Foreign Key(Dept_id) references Department(dept_id)
+				);
+				
+	Foreign Key(Dept_id) references Department(dept_id)	
+
+	Key(Child Column) references ParentTable(rence parent table column)
+				
+				
+				
+				
+				** You allowed to have null
+				
+				
+				
+				
+			Create Table Department
+				(
+					department_id int primary key,
+					dept_name varchar(20)
+				);
+				
+				
+				Create Table Employee
+				(
+				Emp_id int primary key,
+				Emp_name varchar(20),
+				Emp_Sal int not null,
+				Emp_MobNo bigint unique,
+				Dept_id int,
+				Constraint Employee_fk 
+					Foreign Key(Dept_id) references Department(department_id)
+				);		
+=======================================================================			
+						Thanks For Today 
+						
+						
+				 
+				 
+				 
+				 
+				 
+				 
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			

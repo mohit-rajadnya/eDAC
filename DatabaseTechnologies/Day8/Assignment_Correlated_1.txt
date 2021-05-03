@@ -1,0 +1,11 @@
+1. List department details in which no employee is working.
+
+2. Find list of employees which are earning less then avg salary of there department
+
+3. Display list of employees which are earning more then the corresponding manager.
+
+4. Display list of employees which are not managed by anyone
+
+5. Display department details where avg salary is more then 1000
+
+
