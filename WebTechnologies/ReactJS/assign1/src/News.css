@@ -1,0 +1,8 @@
+.News{
+    width:100%;
+    margin:16px auto;
+    border: 2px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    padding: 16 px;
+    text-align: center;
+}
