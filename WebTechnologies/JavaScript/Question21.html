@@ -1,0 +1,30 @@
+
+<html>
+    <head>
+        <title>AssignmentQ21</title>
+        <script>
+            function tables()
+            {
+                var strt = document.getElementById("start").value;
+                var end = document.getElementById("end").value;
+                var m = document.getElementById("divisor").value;
+                var res = "";
+                 for(var i = strt ; i<=end ; i++)
+                {
+                   res = res + i + " times " + m + " = " + parseInt(i*m) + '\n';
+                    
+                }
+                document.getElementById("printtable").innerHTML = res
+            }
+        </script>
+        <body>
+            <form>
+           Start Number: <input type = "number" id="start"> 
+           End Number: <input type = "number" id="end">
+           Multiply By: <input type = "number" id="divisor"><br><br>
+           <center> <input type="button" id="button" value = "Times Table" onclick = "tables()"> </center><br>
+           <center> <input type="reset" id="button1" value = "Reset"> </center><br>
+           <center><textarea id="printtable" rows = "20" cols="100"></textarea></center>
+        </form>
+        </body>
+</html>

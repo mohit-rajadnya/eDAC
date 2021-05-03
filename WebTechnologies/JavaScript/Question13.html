@@ -1,0 +1,32 @@
+<html>
+    <head>
+       <title>AssignmentQ13</title> 
+    </head>
+    <body>
+        <script>
+        
+            
+            var str = new String(new Date());
+            var arr = str.split(" ");
+            var date = new Date();
+            document.write("Today is " + arr[0] + " , " + arr[2] + " " + arr[1] + " " + arr[3] + " , Welcome,"  );
+            
+           if(date.getHours() < 12)
+            {
+                document.write("Good Morning to you!!");
+            }
+           if( date.getHours() >= 12 && date.getHours() <= 17 )
+            {
+                document.write("Good Afternoon to you!!");
+            }
+           else
+            {
+                document.write("Good Evening to you!!" + "<br>");
+            }
+            var end = new Date(date.getFullYear(),11,31);
+            var one_day = 1000*3600*24;
+            document.write("Days left in this year = " + (Math.ceil((end.getTime()- date.getTime())/one_day)));
+            
+        </script>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>AssignmentQ20</title>
+        <script>
+                function calculation(){
+                var r = document.getElementById("rad").value;
+                document.getElementById("area").innerHTML = parseInt(Math.PI * r * r);
+                document.getElementById("area1").value = parseInt(Math.PI * r * r);
+                document.getElementById("circum").innerHTML = parseInt(2 * Math.PI * r);
+                }
+        </script>
+    </head>
+    
+    <body>
+        Enter radius: <input type ="number" id="rad"><br>
+        <input type="button" id="submit" value="Display" onclick="calculation()"><br>
+        Area = <span id="area">    </span><br>
+        Area = <input type="text" name="area" id="area1" value ="Area will be printed"> <br>
+        Circumference = <span id="circum"></span>
+    </body>
+</html>
+

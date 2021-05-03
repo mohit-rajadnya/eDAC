@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>
+            AssignmentQ15
+        </title>
+        <script>
+            var empName = [];
+            function addEmp()
+            {
+                
+                var nm = document.getElementById("name").value;
+                empName.push(nm);
+                document.getElementById("name").value = ""
+                
+            }
+            function displayEmp()
+            {
+                
+                empName.sort();
+                for(var i=0 ; i<empName.length ; i++)
+                {
+                    document.write("Employee No." + i + " " + empName[i] + "<br>");
+                } 
+                
+            }
+        </script>
+    </head>
+    <body>
+        <input type = "text" id = "name">
+        <input type = "submit" id = "submit" value = "Add" onclick="addEmp()">
+        <input type = "submit" id = "submit1" value = "Display" onclick="displayEmp()">
+    </body>
+</html>

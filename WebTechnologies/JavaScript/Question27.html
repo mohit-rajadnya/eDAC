@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>AssignmentQ27</title>
+        <script>
+            function datecheck(){
+                var bdate = document.getElementById("bdate").value;
+                var sdate = document.getElementById("sdate").value;
+                if (bdate > sdate)
+                alert("Billing date can't be greater than shipping date");
+            }
+
+            function display(){
+                var Onum = document.getElementById("Onum").value;
+                var name = document.getElementById("name").value;
+                var bdate = document.getElementById("bdate").value;
+                var sdate = document.getElementById("sdate").value;
+                var total = document.getElementById("total").value;
+
+
+                var obj = {
+                            "OrderID": Onum,
+                            "CustomerName" : name,
+                            "BillingDate" : bdate,
+                            "ShippingDate" : sdate,
+                            "OrderTotal" : total
+                }
+                var myObj = JSON.stringify(obj);
+                var myWindow = window.open("","Order details");
+                myWindow.document.write(myObj);
+
+                myWindow.document.write("Order ID = " + obj.OrderID + "<br>" + "Customer name = " + obj.CustomerName
+                + "<br>" + "BillingDate = " + obj.BillingDate + "<br>" + "Shipping date = " +  obj.ShippingDate
+                + "<br>" + "Order Total = " + obj.OrderTotal);
+            }
+        </script>
+    </head>
+    <body>
+        Order ID: <input type = "number" id = "Onum"><br>
+        Customer name : <input type = "text" id="name" minlength="6"><br>
+        Enter billing date : <input type = "date" id = "bdate"><br>
+        Enter shipping date : <input type = "date" id = "sdate" onchange="datecheck()"><br>
+        Order Total : <input type="number" id = "total" ><br>
+        <input type="submit" id="submit" value = "Display" onclick = "display()">
+
+    </body>
+</html>

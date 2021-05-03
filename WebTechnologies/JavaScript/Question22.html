@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <title>AssignmentQ22</title>
+        <script>
+                function calc(){
+                if(document.getElementById("search").checked)
+               {
+                   
+                    var s1 = document.getElementById("str1").value;
+                    var s2 = document.getElementById("str2").value;
+                
+                    if(s1.includes(s2))
+                    document.write("String found");
+                    else
+                    document.write("Not found");
+               }
+               if(document.getElementById("ucase").checked)
+               {
+                    var s1 = document.getElementById("str1").value;
+                    
+                    var res = s1.toUpperCase();
+                    document.write ("Updated String : " + res);
+
+               }
+               if(document.getElementById("lcase").checked)
+               {
+                    var s1 = document.getElementById("str1").value;
+                    
+                    var res = s1.toLowerCase();
+                    document.write ("Updated String : " + res);
+               }
+               if(document.getElementById("trim").checked)
+               {
+                    var s1 = document.getElementById("str1").value;
+                    
+                    var res = s1.trim();
+                    document.write ("Updated String : " + res);
+               }
+               if(document.getElementById("concat").checked)
+               {
+                    var s1 = document.getElementById("str1").value;
+                    var s2 = document.getElementById("str2").value;
+                    
+                    var res = s1.concat(s2);
+                    document.write ("Updated String : " + res);
+
+               }
+               if(document.getElementById("replace").checked)
+               {
+                    var s1 = document.getElementById("str1").value;
+                    var s3 = document.getElementById("str3").value;
+                    
+                    var res = s1.replace(s1 , s3);
+                    document.write (" String after replacement : " + res + "<br>");
+                    
+                    
+
+               }
+                }
+        </script>
+    </head>
+    
+    <body>
+        <form>
+        Enter string: <input type ="text" id="str1"><br>
+        Enter sub string: <input type ="text" id="str2"><br>
+        Replace with string: <input type ="text" id="str3"><br>
+        <input type="radio" name = "r1" id="search" >Search substring in main string
+        <input type="radio" name = "r1" id="ucase" >To Upper Case
+        <input type="radio" name = "r1" id="lcase" >To Lower Case
+        <input type="radio" name = "r1" id="trim" >Trim spaces
+        <input type="radio" name = "r1" id="concat" >Concatenate
+        <input type="radio" name = "r1" id="replace" >Replace<br>
+        <input type="submit" id = "submit" value="Submit Query" onclick="calc()">
+      </form>
+    </body>
+</html>

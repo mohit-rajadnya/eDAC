@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>
+            AssignmentQ14
+        </title>
+    </head>
+    <body>
+        <script>
+            
+            function getWeekDay(date){
+            var days = ['SU', 'MO', 'TU','WE' , 'TH', 'FR', 'SA'];
+           
+            return days[date.getDay()];
+            }
+            var date = new Date(1996 , 11, 01);
+            alert(getWeekDay(date));
+            var days = ['SU', 'MO', 'TU','WE' , 'TH', 'FR', 'SA'];
+            days.push('sunday');
+            for (var i =0 ; i<days.length ; i++);
+            {
+                document.write(days[i]);
+            }
+        </script>
+    </body>
+</html>

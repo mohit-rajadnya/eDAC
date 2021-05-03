@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Problem1</title>
+    <script>
+        function printMsg()
+        {
+		var a = document.getElementById("num").value;
+		var b = document.getElementById("msg").value;
+        var txt = "";
+        for(var i = 0 ; i<a ; i++)
+		{
+            document.write(txt);
+            txt = txt + b + '<br>';
+        }
+    }
+    </script>
+</head>
+<body>
+    Enter a number:
+    <input type = "number" id="num">
+    Enter a string:
+    <input type = "text"  id = "msg">
+    <button type="button" onclick="printMsg()">Submit</button>
+    
+</body>
+</html>

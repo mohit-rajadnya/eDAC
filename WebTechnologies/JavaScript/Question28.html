@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>AssignmentQ27</title>
+        <script>
+
+            function display(){
+                var name = document.getElementById("name").value;
+                var month = document.getElementById("month").value;
+                var day = document.getElementById("day").value;
+                var year = document.getElementById("year").value;
+                var email = document.getElementById("email").value;
+                
+
+                var obj = {
+                            "OrderID": Onum,
+                            "CustomerName" : name,
+                            "BillingDate" : bdate,
+                            "ShippingDate" : sdate,
+                            "OrderTotal" : total
+                }
+                var myObj = JSON.stringify(obj);
+                var myWindow = window.open("","Order details");
+                myWindow.document.write(myObj);
+
+                myWindow.document.write("Order ID = " + obj.OrderID + "<br>" + "Customer name = " + obj.CustomerName
+                + "<br>" + "BillingDate = " + obj.BillingDate + "<br>" + "Shipping date = " +  obj.ShippingDate
+                + "<br>" + "Order Total = " + obj.OrderTotal);
+            }
+        </script>
+    </head>
+    <body>
+        <table>
+            <tr>
+        <td>Name:</td>
+        <td> <input type = "text" id = "name" required maxlength="10"></td>
+    </tr>
+    <tr>
+       <td> Birth Date: </td> 
+       <td><input type = "text" name = "month" id = "month">
+        <datalist id="month">
+            <option value = "January">
+                <option value = "February">
+                    <option value = "March">
+                        <option value = "April">
+                            <option value = "May">
+                                <option value = "June">
+                                    <option value = "July">
+                                        <option value = "August">
+                                            <option value = "September">
+                                                <option value = "October">
+                                                    <option value = "November">
+                                                        <option value = "December">
+        </datalist>
+    &nbsp; <input type="number" name="day" id="day" max ="31" min="1" required >
+    &nbsp; <input type="number" name="year" id = "year" min = "1970" max="2020" required>
+    </td>
+    </tr>
+    <tr>
+       <td> Email Address: </td>
+       <td><input type="email" required></td>
+    </tr>
+    <tr> <td>Gender: </td>
+        <td><input type="radio" name="r1" id="m"> Male<br>
+    
+            <input type="radio" name="r1" id="f">  Female  </td>
+        </tr>
+    <tr>
+        <td>
+            Lucky number:
+        </td>
+        <td><input type="number" name="lnum" id="lucky" required min="1000" max="9999"></td>
+    </tr>
+    <tr>
+        <td>Favourite food</td>
+        <td><input type="checkbox" name="food" id="c1">Pizza <br>
+        <input type="checkbox" name="food" id="c2">Pasta
+    <br><input type="checkbox" name="food" id="c3">Chinese</td>
+    </tr>
+    </table>
+    <input type="button" name="Send " id="send" value ="Send Data" onclick="display()">
+    </body>
+</html>

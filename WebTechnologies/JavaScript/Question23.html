@@ -1,0 +1,29 @@
+
+<html>
+    <head>
+        <title>AssignmentQ21</title>
+        <script>
+            function calc()
+            {
+             var n = document.getElementById("num").value;
+             if(n>1000 || n<0)
+             return document.write("Entered number is out of range")
+
+             var temp = n ; 
+             var sum = 0; 
+             while (temp>0)
+             {
+                 sum = sum + (temp%10);
+                 temp = parseInt(temp/10); 
+             }  
+             document.write("Sum of digits of " + n + " = " + sum);
+            }
+        </script>
+        <body>
+            <form>
+           Enter Number: <input type = "number" id="num" placeholder="Enter an integer less than 1000"> 
+           <center> <input type="button" id="button" value = "Submit" onclick = "calc()"> </center><br>
+          
+        </form>
+        </body>
+</html>

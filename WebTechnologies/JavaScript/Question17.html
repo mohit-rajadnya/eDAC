@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>AssingmentQ17</title>
+    </head>
+    <body>
+        <script>
+            function circle(radius)
+            {
+                this.radius = radius;
+                this.display = function()
+                {
+                    var area = this.radius * this.radius;
+                    document.write("Area of circle =" + area+ "<br>");
+                    var circum = this.radius * 2 * Math.PI;
+                    document.write("Circumference of circle =" + circum+ "<br>");
+                }
+            }
+            function rect(length , breadth)
+            {
+                this.length = length;
+                this.breadth = breadth;
+                this.display = function()
+                {
+                    var area = this.length * this.breadth;
+                    document.write("Area of rectangle = " + area + "<br>");
+                    var perimeter = (this.length + this.breadth) * 2;
+                    document.write("Perimeter of rectangle = " + perimeter + "<br>");
+                }
+            }
+
+            var c1 = new circle(5);
+            var r1 = new rect(5,10);
+            
+            c1.display();
+            r1.display();
+
+
+
+            /*Enter length: <input type = "number" id="len"><br>
+        Enter breadth: <input type = "number" id="brd"><br>
+        Enter radius: <input type ="number" id="rad"><br>
+        <input type="button" id="submit" value="Submit" onclick="calcArea()"><br>
+        Area of rectangle = <span id="rectArea"></span><br>
+        Perimeter of rechtangle = <span id="rectPeri"></span><br>
+        Area of circle = <span id="circleArea"></span><br>
+        Circumference of circle = <span id="circum"></span><br>*/
+        </script>
+        
+</body>
+</html>
+
+        

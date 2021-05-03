@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<script>
+			var employees = [
+			{
+				"emp_id":101,
+				"empname":"Snigdha",
+				"salary":60000,
+			},
+			{
+				"emp_id":102,
+				"empname":"Shalabh",
+				"salary":50000,
+			},
+			{
+				"emp_id":103,
+				"empname":"Moni",
+				"salary":40000,
+			},
+			{
+				"emp_id":104,
+				"empname":"Minty",
+				"salary":60000,
+			},
+			]
+		document.write("<table>");
+		for(i=0;i<4;i++)
+		{	
+			document.write("<tr>"+"<td>"+employees[i].emp_id+" "+"</td>"+"<td>"+employees[i].empname+" "+"</td>"+"<td>"
+			+employees[i].salary+" "+"<br>"+"</td>"+"</tr>");
+		}
+		document.write("</table>");
+		</script>
+	</head>
+</html>

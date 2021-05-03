@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>AssignmentQ26</title>
+        <script>
+                function compute(){
+                    var amt = (document.getElementById("amt").value);
+                    var roi = (document.getElementById("roi").value);
+                    var prd = (document.getElementById("prd").value);
+
+                    var total = amt * Math.pow((1+(roi/100)),prd);
+                    var interest = total - amt;
+                    var emi = total / (prd*12);
+                    document.getElementById("total").value = total;
+                    document.getElementById("emi").value = emi;
+                    document.getElementById("interest").value = interest;
+
+                }
+        </script>
+    </head>
+    <body>
+        <!-- <form> -->
+        <table>
+            <tr>
+                    <td><h2>Enter Loan Information</h2></td>
+            </tr>
+            <tr>
+                <td> 1) Amount of the loan (any currency)</td>
+                <td> <input type = "number" id = "amt" required max = "1500000"></td>
+            </tr>
+            <tr>
+                <td>2) Annual percentage rate of interest</td> 
+                 <td><input type = "number" id = "roi" required ></td>
+            </tr>
+                <td>3) Repayment period in years</td> 
+                 <td><input type = "number" id = "prd" required max = "15" min = "7"></td>
+            </tr>
+            <tr>
+                <td colspan =2 ><input type="submit" id="Compute" value = "Compute" onclick ="compute()">
+                <h2>Payment Information</h2> </td>
+            </tr>
+            <tr>
+                <td> 4) Your monthly payment will be</td>
+                <td> <input type = "text" id = "emi" readonly ></td>
+            </tr>
+            <tr>
+                <td>5) Your total payment will be</td> 
+                 <td><input type = "text" id = "total" readonly ></td>
+            </tr>
+                <td>6) Your interest payments will be</td> 
+                 <td><input type = "text" id = "interest" readonly></td>
+            </tr>     
+        </table>
+    <!-- </form> -->
+    </body>
+</html>

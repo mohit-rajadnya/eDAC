@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>
+            AssignmentQ16
+        </title>
+        <script>
+            function verify()
+            {
+                var arr = [1,46,2,34,28];
+                var n = document.getElementById("num").value;
+                for(var i=0 ; i<arr.length ; i++)
+                {
+                    if(n == arr[i])
+                    {
+                       return document.write("BINGO");
+                        
+                    }
+                } document.write("Better luck next time");
+            }
+        </script>
+    </head>
+    <body>
+        <input type = "number" id="num" placeholder = "Enter num between 1-50">
+        <input type = "submit" id="verify" onclick = "verify()">
+    </body>
+</html>

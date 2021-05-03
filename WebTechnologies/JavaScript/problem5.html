@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Problem5</title>
+</head>
+<body>
+	<script>
+		
+		var a = 51245;
+		var temp;
+		var sum = 0;
+		temp=a;
+		var remainder;
+		while(temp!=0)
+		{
+			remainder = temp%10;
+			sum = sum + remainder;
+			temp = temp/10;
+		}
+		document.writeln(sum);
+
+		var str = "hello";
+		var str2 = "world";
+		var str3 = "!!!!";
+		var str4 = str.concat(str2,str3);
+		document.write(str4);
+	</script>
+</body>
+</html>
